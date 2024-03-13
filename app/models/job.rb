@@ -4,6 +4,7 @@ class Job < ApplicationRecord
                 'Forestry',
                 'Plant Hire & Earthworks',
                 'Farm Labour'].freeze
+  CATEGORIES.each(&:freeze)
 
   SUBCATEGORIES = {
     'Agri Contracting' => ['Application (Spraying & Spreading)',
@@ -25,17 +26,18 @@ class Job < ApplicationRecord
                     'General Yard Duties',
                     'Picking',
                     'Machinery Driving & Operation']
-  }
+}.freeze
+SUBCATEGORIES.values.each(&:freeze)
 
   belongs_to :user
   validates :category, :subcategory, :headline, :description, presence: true
   validates :category, inclusion: { in: CATEGORIES }
   validates :subcategory, inclusion: { in: SUBCATEGORIES.values.flatten }
   # inclusion expects an array, but SUBCATEGORIES.values returns an array of arrays --> flatten solves the issue
-  validate :subcategory_nested_under_category
+  validate :valid_subcategory_for_category
 
 
-  def subcategory_nested_under_category
+  def valid_subcategory_for_category
     return if category.blank? || subcategory.blank?
 
     valid_subcategories = SUBCATEGORIES[category]
