@@ -1,0 +1,20 @@
+<h1>New Job</h1>
+
+<%= simple_form_for @job do |f| %>
+  <div>
+    <%= f.input :headline %>
+  </div>
+  <div>
+    <%= f.input :description %>
+  </div>
+  <div data-controller="category" data-category-url-value="<%= subcategories_jobs_path %>">
+    <div>
+      <%= f.input :category, collection: @categories, input_html: { data: { action: "change->category#change" } } %>
+    </div>
+    <div>
+      <%= f.input :subcategory, as: :select, collection: @subcategories, input_html: { data: { category_target: "subcategory"}} %>
+    </div>
+    <%= f.input :user_id %>
+  </div>
+  <%= f.button :submit, 'Create Job' %>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_12_153528) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_19_111401) do
   create_table "jobs", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -22,6 +22,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_12_153528) do
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
+  create_table "services", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "job_id", null: false
+    t.string "name"
+    t.index ["job_id"], name: "index_services_on_job_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -29,4 +37,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_12_153528) do
   end
 
   add_foreign_key "jobs", "users"
+  add_foreign_key "services", "jobs"
 end

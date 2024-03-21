@@ -16,10 +16,6 @@ RSpec.describe Job, type: :model do
     expect(job.description).to eq('Decent Job')
   end
 
-  it 'belongs to a user' do
-    expect(job.user).to eq(user)
-  end
-
   it 'has a category' do
     expect(job.category).to eq('Agri Contracting')
   end
@@ -28,7 +24,18 @@ RSpec.describe Job, type: :model do
     expect(job.subcategory).to eq('Application (Spraying & Spreading)')
   end
 
-  describe 'CATEGORIES' do
+  describe 'Associations' do
+    it 'belongs to a user' do
+      expect(job.user).to eq(user)
+    end
+
+    it 'has many services' do
+      expect(job).to respond_to(:services)
+    end
+  end
+
+
+  describe 'Categories' do
     it 'is an array' do
       expect(Job::CATEGORIES).to be_an(Array)
     end
@@ -42,7 +49,7 @@ RSpec.describe Job, type: :model do
     end
   end
 
-  describe 'SUBCATEGORIES' do
+  describe 'Subcategories' do
     it 'is a hash' do
       expect(Job::SUBCATEGORIES).to be_a(Hash)
     end

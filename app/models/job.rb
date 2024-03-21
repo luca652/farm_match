@@ -2,7 +2,7 @@ class Job < ApplicationRecord
 
   CATEGORIES = ['Agri Contracting',
                 'Forestry',
-                'Plant Hire & Earthworks',
+                'Plant Hire and Earthworks',
                 'Farm Labour'].freeze
   CATEGORIES.each(&:freeze)
 
@@ -20,7 +20,7 @@ class Job < ApplicationRecord
                            'Painting & Powerwashing',
                            'Soil Prepartion'],
     'Forestry' => ['Tree Cutting & Forestry'],
-    'Plant Hire & Earthworks' => ['Plant Hire & Earthworks'],
+    'Plant Hire and Earthworks' => ['Plant Hire & Earthworks'],
     'Farm Labour'=> ['Animal Care',
                     'Milking',
                     'General Yard Duties',
@@ -30,6 +30,7 @@ class Job < ApplicationRecord
 SUBCATEGORIES.values.each(&:freeze)
 
   belongs_to :user
+  has_many :services
   validates :category, :subcategory, :headline, :description, presence: true
   validates :category, inclusion: { in: CATEGORIES }
   validates :subcategory, inclusion: { in: SUBCATEGORIES.values.flatten }
