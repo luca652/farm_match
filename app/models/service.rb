@@ -1,5 +1,4 @@
 class Service < ApplicationRecord
-  belongs_to :job
 
   SERVICES = {
     'Application (Spraying and Spreading)' => ['Fertilizer Spreading', 'Lime Spreading', 'Spraying (specialised)', 'Spraying (standard)'],
@@ -38,4 +37,16 @@ class Service < ApplicationRecord
   }.freeze
   SERVICES.values.each(&:freeze)
 
+  belongs_to :job
+  validates :name, presence: true
+  validate :valid_service_for_job
+
+  def valid_service_for_job
+    subcategory = job.subcategory
+    valid_services = SERVICES[subcategory]
+
+    unless valid_services.include?(name)
+      errors.add(:name, "is not valid for this job")
+    end
+  end
 end

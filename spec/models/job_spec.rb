@@ -6,7 +6,7 @@ RSpec.describe Job, type: :model do
                          description: 'Decent Job',
                          user_id: user.id,
                          category: 'Agri Contracting',
-                         subcategory: 'Application (Spraying & Spreading)')}
+                         subcategory: 'Application (Spraying and Spreading)')}
 
   it 'has a headline' do
     expect(job.headline).to eq('First Job')
@@ -21,7 +21,7 @@ RSpec.describe Job, type: :model do
   end
 
   it 'has a subcategory' do
-    expect(job.subcategory).to eq('Application (Spraying & Spreading)')
+    expect(job.subcategory).to eq('Application (Spraying and Spreading)')
   end
 
   describe 'Associations' do
@@ -61,7 +61,7 @@ RSpec.describe Job, type: :model do
       end
     end
 
-    it 'cannot be changed' do
+    it 'has fixed categories' do
       expect { Job::SUBCATEGORIES['new_category'] = 'new_subcategory'}.to raise_error(FrozenError)
     end
 
@@ -142,7 +142,7 @@ RSpec.describe Job, type: :model do
     end
 
     it 'does return an error if the subcategory is not valid for the selected category' do
-      job.subcategory = 'Tree Cutting & Forestry'
+      job.subcategory = 'Tree Cutting and Forestry'
       job.valid?
       expect(job.errors[:subcategory]).to include("is not valid for the selected category")
     end

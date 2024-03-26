@@ -8,7 +8,7 @@ RSpec.describe "Jobs", type: :request do
         headline: 'New Job',
         description: 'A good job',
         category: 'Agri Contracting',
-        subcategory: 'Drilling & Sowing',
+        subcategory: 'Drilling and Sowing',
         user_id: user.id
       }
     }
