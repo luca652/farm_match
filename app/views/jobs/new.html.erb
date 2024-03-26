@@ -9,12 +9,12 @@
   </div>
   <div data-controller="category" data-category-url-value="<%= subcategories_jobs_path %>">
     <div>
-      <%= f.input :category, collection: @categories, input_html: { data: { action: "change->category#change" } } %>
+      <%= f.input :category, as: :select, collection: @categories, input_html: { data: { action: "change->category#change" } } %>
     </div>
     <div>
-      <%= f.input :subcategory, as: :select, collection: @subcategories, input_html: { data: { category_target: "subcategory"}} %>
+      <%= f.input :subcategory, collection: [], input_html: { data: { category_target: "subcategory"}} %>
     </div>
-    <%= f.input :user_id %>
+    <%= f.hidden_field :user_id, value: 1 %>
   </div>
   <%= f.button :submit, 'Create Job' %>
 <% end %>

@@ -1,16 +1,20 @@
 class JobsController < ApplicationController
 
+  def show
+    @job = Job.find(params[:id])
+  end
+
   def new
     @job = Job.new
     @categories = Job::CATEGORIES
-    @subcategories = Job::SUBCATEGORIES[@job.category]
   end
 
   def create
     @job = Job.new(job_params)
+    @categories = Job::CATEGORIES
 
     if @job.save
-      redirect_to job_path(@job)
+      redirect_to job_path(@job), notice: 'Job was successfully created'
     else
       render :new, status: :unprocessable_entity
     end

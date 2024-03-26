@@ -10,8 +10,8 @@ export default class extends Controller {
   change(event) {
     let category = event.target.value
     let target = this.subcategoryTarget.id
+
     let url = this.urlValue
-    console.log("category: ", category)
 
     get(`${url}?target=${target}&category=${category}`, {
       responseKind: "turbo-stream"

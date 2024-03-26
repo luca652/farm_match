@@ -103,13 +103,12 @@ RSpec.describe Job, type: :model do
       end
     end
 
-    # THIS FAILS THE CUSTOM VALIDATION BECAUSE THE SUBCATEGORY IS NIL - not sure if I should keep
-    # it 'cannot be created with an invalid category' do
-    #   job.category = 'Some other category'
-    #   expect(job).not_to be_valid
-    #   expect(job.errors[:category]).to eq ["is not included in the list"]
-    #   expect(job.errors[:subcategory]).to include("")
-    # end
+    it 'cannot be created with an invalid category' do
+      job = Job.new(headline: 'Invalid Job', description: 'This job is not valid', user_id: user.id)
+      job.category = 'Some invalid category'
+      expect(job).not_to be_valid
+      expect(job.errors[:category]).to eq ["is not included in the list"]
+    end
 
     it 'must have a subcategory' do
       job.subcategory = nil
