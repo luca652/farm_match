@@ -4,17 +4,37 @@
   <div>
     <%= f.input :headline %>
   </div>
+
   <div>
     <%= f.input :description %>
   </div>
-  <div data-controller="category" data-category-url-value="<%= subcategories_jobs_path %>">
-    <div>
-      <%= f.input :category, as: :select, collection: @categories, input_html: { data: { action: "change->category#change" } } %>
-    </div>
-    <div>
-      <%= f.input :subcategory, collection: [], input_html: { data: { category_target: "subcategory"}} %>
-    </div>
+
+  <div>
     <%= f.hidden_field :user_id, value: 1 %>
   </div>
-  <%= f.button :submit, 'Create Job' %>
+
+  <div data-controller="category" data-category-url-value="<%= subcategories_jobs_path %>">
+    <div>
+      <%= f.input :category, collection: @categories,
+                  input_html: { data: { action: "change->category#subcategory" } } %>
+    </div>
+    <div>
+      <%= f.input :subcategory,
+                  collection: [],
+                  input_html: { data: { category_target: "subcategory",
+                                                 action: "change->category#subcategory_select"} } %>
+    </div>
+  </div>
+
+  <h1> Services </h1>
+  <%= f.simple_fields_for :services do |service_form| %>
+    <% @service_options.each do |option|%>
+      <%= check_box_tag "job[services_attributes][][name]", option %>
+      <%= label_tag option %><br>
+    <% end %>
+  <% end %>
+
+  <div>
+    <%= f.button :submit, 'Create Job' %>
+  </div>
 <% end %>

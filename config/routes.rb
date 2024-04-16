@@ -8,5 +8,8 @@ Rails.application.routes.draw do
     collection do
       get :subcategories
     end
+
+    resources :services, only: [:new, :create, :index]
+
   end
 end

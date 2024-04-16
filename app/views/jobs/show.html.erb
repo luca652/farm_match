@@ -1,2 +1,5 @@
 <h1>Job Showpage</h1>
 <%= @job.headline %>
+<% @job.services.each do |service| %>
+  <%= service.name %>
+<% end %>

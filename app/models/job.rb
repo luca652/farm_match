@@ -31,7 +31,7 @@ class Job < ApplicationRecord
 
   belongs_to :user
   has_many :services
-  # accepts_nested_attributes_for :services
+  accepts_nested_attributes_for :services
 
   validates :category, :subcategory, :headline, :description, presence: true
   validates :category, inclusion: { in: CATEGORIES }

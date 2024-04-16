@@ -62,5 +62,23 @@ RSpec.describe Service, type: :model do
         expect(service).not_to be_valid
       end
     end
+
+    describe '#valid_service_for_job' do
+
+      context 'when the service is valid for the job it belongs to' do
+        it 'does not return an error' do
+          service.valid?
+          expect(job.errors[:job]).to be_empty
+        end
+      end
+
+      context 'when the service is not valid for the job it belongs to' do
+        it 'returns an error' do
+          service.name = 'Tree Cutting and Forestry'
+          service.valid?
+          expect(service.errors.full_messages).to include("Name is not valid for this job")
+        end
+      end
+    end
   end
 end

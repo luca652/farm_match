@@ -7,6 +7,8 @@ class JobsController < ApplicationController
   def new
     @job = Job.new
     @categories = Job::CATEGORIES
+    @service_options = Service::SERVICES['Application (Spraying and Spreading)']
+    @job.services.build
   end
 
   def create
@@ -33,6 +35,7 @@ class JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:headline, :description, :category, :subcategory, :user_id)
+    params.require(:job).permit(:headline, :description, :category, :subcategory, :user_id,
+                                services_attributes: [:name])
   end
 end
