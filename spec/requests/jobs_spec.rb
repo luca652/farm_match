@@ -8,12 +8,14 @@ RSpec.describe "Jobs", type: :request do
         headline: 'New Job',
         description: 'A good job',
         category: 'Agri Contracting',
-        subcategory: 'Drilling and Sowing',
-        user_id: user.id
+        subcategory: 'Application (Spraying and Spreading)',
+        user_id: user.id,
+        services_attributes: [{ name: 'Fertilizer Spreading' }]
       }
     }
   end
   let(:job) { Job.new(job_params[:job])}
+  let(:service) { Service.new(job_id: job.id, name: 'Fertilizer Spreading' ) }
 
   describe "POST #create" do
     it 'creates a new instance of the Job class' do

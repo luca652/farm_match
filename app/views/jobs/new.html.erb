@@ -1,6 +1,13 @@
 <h1>New Job</h1>
 
 <%= simple_form_for @job do |f| %>
+
+  <% if @job.errors.any? %>
+    <div class="error-message">
+      <%= @job.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
+
   <div>
     <%= f.input :headline %>
   </div>
@@ -27,7 +34,7 @@
   </div>
 
   <h1> Services </h1>
-  <%= f.simple_fields_for :services do |service_form| %>
+  <%= f.simple_fields_for :services, @job.services.build do |service_form| %>
     <% @service_options.each do |option|%>
       <%= check_box_tag "job[services_attributes][][name]", option %>
       <%= label_tag option %><br>

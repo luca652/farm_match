@@ -42,7 +42,9 @@ class Service < ApplicationRecord
   validate :valid_service_for_job
 
   def valid_service_for_job
+    p self
     subcategory = job.subcategory
+    return if subcategory.blank?
     valid_services = SERVICES[subcategory]
 
     unless valid_services.include?(name)

@@ -14,6 +14,7 @@ class JobsController < ApplicationController
   def create
     @job = Job.new(job_params)
     @categories = Job::CATEGORIES
+    @service_options = Service::SERVICES['Application (Spraying and Spreading)']
 
     if @job.save
       redirect_to job_path(@job), notice: 'Job was successfully created'
