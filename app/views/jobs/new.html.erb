@@ -23,13 +23,12 @@
   <div data-controller="category" data-category-url-value="<%= subcategories_jobs_path %>">
     <div>
       <%= f.input :category, collection: @categories,
-                  input_html: { data: { action: "change->category#subcategory" } } %>
+                  input_html: { data: { action: "change->category#subcategory", category_target: "category" } } %>
     </div>
     <div>
       <%= f.input :subcategory,
                   collection: [],
-                  input_html: { data: { category_target: "subcategory",
-                                                 action: "change->category#subcategory_select"} } %>
+                  input_html: { data: { category_target: "subcategory"} } %>
     </div>
   </div>
 
