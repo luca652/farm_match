@@ -30,17 +30,7 @@
                   collection: [],
                   input_html: { data: { category_target: "subcategory"} } %>
     </div>
-  </div>
 
-  <h1> Services </h1>
-  <%= f.simple_fields_for :services, @job.services.build do |service_form| %>
-    <% @service_options.each do |option|%>
-      <%= check_box_tag "job[services_attributes][][name]", option %>
-      <%= label_tag option %><br>
-    <% end %>
-  <% end %>
-
-  <div>
     <%= f.button :submit, 'Create Job' %>
   </div>
 <% end %>
