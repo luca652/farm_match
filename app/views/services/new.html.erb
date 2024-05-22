@@ -1,0 +1,22 @@
+<h1>Create Services</h1>
+
+
+
+<h2>Try this instead</h2>
+
+<form action=<%="/jobs/#{@job.id}/services"%> name="services[]" method="post">
+  <fieldset>
+    <% @services_options.each_with_index do |service, index| %>
+      <div>
+        <input type="checkbox"
+               id=<%="service_#{index}"%>
+               name=<%="services[]"%>
+               value="<%="#{service}"%>" >
+        <label for=<%="service_#{index}"%>> <%= service %></label>
+      </div>
+    <% end %>
+  </fieldset>
+  <div class="form-example">
+    <input type="submit" value="Create Services" />
+  </div>
+</form>

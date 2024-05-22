@@ -17,7 +17,7 @@ class JobsController < ApplicationController
     @service_options = Service::SERVICES['Application (Spraying and Spreading)']
 
     if @job.save
-      redirect_to job_path(@job), notice: 'Job was successfully created'
+      redirect_to new_job_service_path(@job), notice: 'Job was successfully created'
     else
       render :new, status: :unprocessable_entity
     end

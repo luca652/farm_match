@@ -30,7 +30,7 @@ class Job < ApplicationRecord
   SUBCATEGORIES.values.each(&:freeze)
 
   belongs_to :user
-  has_many :services
+  has_many :services, dependent: :destroy
   accepts_nested_attributes_for :services
 
   validates :category, :subcategory, :headline, :description, presence: true
