@@ -1,0 +1,36 @@
+<h1>New Job</h1>
+
+<%= simple_form_for @job do |f| %>
+
+  <% if @job.errors.any? %>
+    <div class="error-message">
+      <%= @job.errors.full_messages.to_sentence.capitalize %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.input :headline %>
+  </div>
+
+  <div>
+    <%= f.input :description %>
+  </div>
+
+  <div>
+    <%= f.hidden_field :user_id, value: 1 %>
+  </div>
+
+  <div data-controller="category" data-category-url-value="<%= subcategories_jobs_path %>">
+    <div>
+      <%= f.input :category, collection: @categories,
+                  input_html: { data: { action: "change->category#subcategory", category_target: "category" } } %>
+    </div>
+    <div>
+      <%= f.input :subcategory,
+                  collection: [],
+                  input_html: { data: { category_target: "subcategory"} } %>
+    </div>
+
+    <%= f.button :submit, 'Create Job' %>
+  </div>
+<% end %>
