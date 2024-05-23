@@ -18,7 +18,6 @@ export default class extends Controller {
   }
 
   subcategory(event) {
-    console.log("category: ", )
     let category = event.target.value
     let target = this.subcategoryTarget.id
     let url = this.urlValue

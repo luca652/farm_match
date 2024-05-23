@@ -1,0 +1,29 @@
+<h1>Create Services</h1>
+
+
+
+<h2>Try this instead</h2>
+
+<% if flash[:alert] %>
+  <p style="color: red;"><%= flash[:alert] %></p>
+<% end %>
+
+<form action=<%="/jobs/#{@job.id}/services"%> name="services[]" method="post" data-controller="checkbox" data-action="submit->checkbox#preventEmptySubmission">
+
+  <fieldset>
+    <% @services_options.each_with_index do |service, index| %>
+      <div>
+        <input type="checkbox"
+               id=<%="service_#{index}"%>
+               name=<%="services[][name]"%>
+               value="<%="#{service}"%>"
+               data-checkbox-target="checkbox"
+               data-action="click->checkbox#consoleLogChecked">
+        <label for=<%="service_#{index}"%>> <%= service %></label>
+      </div>
+    <% end %>
+  </fieldset>
+  <div>
+    <input type="submit" value="Create Services">
+  </div>
+</form>
