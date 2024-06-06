@@ -1,5 +1,13 @@
 <h1>Job Showpage</h1>
-<%= @job.headline %>
-<% @job.services.each do |service| %>
-  <%= service.name %>
-<% end %>
+
+<div>
+  <h4>Job</h4>
+    <p>headline: <%= @job.headline %> </p>
+    <p>category: <%= @job.category %> </p>
+    <p> subcategory: <%= @job.subcategory %> </p>
+
+  <h4>Services</h4>
+  <% @job.services.each do |service| %>
+    <%= service.name %>
+  <% end %>
+</div>

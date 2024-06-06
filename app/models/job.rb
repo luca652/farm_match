@@ -8,30 +8,29 @@ class Job < ApplicationRecord
 
   SUBCATEGORIES = {
     'Agri Contracting' => ['Application (Spraying and Spreading)',
-                           'Drilling and Sowing',
-                           'Fencing and Hedging',
+                           'Drilling & Sowing',
+                           'Fencing & Hedging',
                            'Grassland Harvesting',
                            'Crop Harvesting',
                            'Hedge Cutting',
-                           'Machine and Tractor Hire',
+                           'Machine & Tractor Hire',
                            'Maize Harvesting',
                            'Mobile feeding',
-                           'Muck and Slurry',
-                           'Painting and Powerwashing',
+                           'Muck & Slurry',
+                           'Painting & Powerwashing',
                            'Soil Preparation'],
-    'Forestry' => ['Tree Cutting and Forestry'],
+    'Forestry' => ['Tree Cutting & Forestry'],
     'Plant Hire and Earthworks' => ['Plant Hire and Earthworks'],
     'Farm Labour'=> ['Animal Care',
                     'Milking',
                     'General Yard Duties',
                     'Picking',
-                    'Machinery Driving and Operation']
+                    'Machinery Driving & Operation']
   }.freeze
   SUBCATEGORIES.values.each(&:freeze)
 
   belongs_to :user
   has_many :services, dependent: :destroy
-  accepts_nested_attributes_for :services
 
   validates :category, :subcategory, :headline, :description, presence: true
   validates :category, inclusion: { in: CATEGORIES }
