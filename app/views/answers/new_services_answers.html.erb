@@ -1,0 +1,28 @@
+<h1>Let's get some answers</h1>
+
+<%# create a form that will collect all answers in one go %>
+<%# iterate over questions %>
+<%# have case statement that renderes the correct markup %>
+
+<%# path: job_service_answers_path %>
+
+<%= simple_form_for :answers, url: create_services_answers_job_services_path, method: "post" do |f| %>
+ <% @services.each do |service| %>
+
+  <h4><%= service.name %></h4>
+
+  <% Answer::QUESTIONS[service.name].each do |question| %>
+
+    <%= f.hidden_field :label, value: question[:label] %>
+
+    <% case question[:kind].to_sym %>
+      <% when :multiple_choice %>
+        <%= f.input :answer, label: question[:wording], collection: question[:options], as: :radio_buttons %>
+      <% when :area %>
+        <%= f.input :answer, label: question[:wording] %>
+      <% end %>
+    <% end %>
+
+    <%= f.submit %>
+  <% end %>
+<% end %>

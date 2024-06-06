@@ -10,7 +10,10 @@ Rails.application.routes.draw do
     end
 
     resources :services, only: [:new, :create, :index] do
-      resources :answers, only: [:new, :create]
+      collection do
+        get 'new_services_answers', to: 'answers#new_services_answers'
+        post 'create_services_answers', to: 'answers#create_services_answers'
+      end
     end
 
   end

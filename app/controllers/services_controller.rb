@@ -14,7 +14,7 @@ class ServicesController < ApplicationController
     end
 
     if @services.all?(&:save)
-      redirect_to job_path(@job), notice: 'Services were added to your job.'
+      redirect_to new_services_answers_job_services_path(@job), notice: 'Services were added to your job.'
     else
       flash.now[:alert] = "You must select at least one service."
       render :new, status: :unprocessable_entity
