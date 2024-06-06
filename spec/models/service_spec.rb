@@ -6,10 +6,9 @@ RSpec.describe Service, type: :model do
                          description: 'Decent Job',
                          user_id: user.id,
                          category: 'Agri Contracting',
-                         subcategory: 'Application (Spraying and Spreading)',
-                         services_attributes: [{ name: 'Fertilizer Spreading' }])
+                         subcategory: 'Application (Spraying & Spreading)')
                         }
-  let(:service) { job.services.first}
+  let(:service) { Service.create(name: 'Fertilizer Spreading', job_id: job.id)}
 
   it 'has a name' do
     expect(service.name).to eq('Fertilizer Spreading')
@@ -31,12 +30,12 @@ RSpec.describe Service, type: :model do
     end
 
     it 'has frozen values that cannot be changed' do
-      expect { Service::SERVICES['Drilling and Sowing'][0] = 'new_value'}.to raise_error(FrozenError)
+      expect { Service::SERVICES['Drilling & Sowing'][0] = 'new_value'}.to raise_error(FrozenError)
     end
 
     describe 'each hash value' do
       it 'has a fixed number of elements' do
-        expect {Service::SERVICES['Drilling and Sowing'] << 'new_value'}.to raise_error(FrozenError)
+        expect {Service::SERVICES['Drilling & Sowing'] << 'new_value'}.to raise_error(FrozenError)
       end
     end
   end
@@ -76,7 +75,7 @@ RSpec.describe Service, type: :model do
 
       context 'when the service is not valid for the job it belongs to' do
         it 'returns an error' do
-          service.name = 'Tree Cutting and Forestry'
+          service.name = 'Tree Cutting & Forestry'
           service.valid?
           expect(service.errors.full_messages).to include("Name is not valid for this job")
         end
