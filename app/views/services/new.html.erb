@@ -1,25 +1,16 @@
 <h1>Create Services</h1>
 
-<% if flash[:alert] %>
-  <p style="color: red;"><%= flash[:alert] %></p>
-<% end %>
-
-<form action=<%="/jobs/#{@job.id}/services"%> name="services[]" method="post" data-controller="checkbox" data-action="submit->checkbox#preventEmptySubmission">
-
-  <fieldset>
+<%= simple_form_for :services,
+                    url: "/jobs/#{@job.id}/services",
+                    method: "post",
+                    html: { name: "services[]", data: { controller: "checkbox", action: "submit->checkbox#preventEmptySubmission" } } do |f| %>
+  <div>
     <% @services_options.each_with_index do |service, index| %>
       <div>
-        <input type="checkbox"
-               id=<%="service_#{index}"%>
-               name=<%="services[][name]"%>
-               value="<%="#{service}"%>"
-               data-checkbox-target="checkbox"
-               data-action="click->checkbox#consoleLogChecked">
-        <label for=<%="service_#{index}"%>> <%= service %></label>
+        <%= check_box_tag 'services[][name]', service, false, id: "service_#{index}", data: { checkbox_target: "checkbox", action: "click->checkbox#consoleLogChecked" } %>
+        <%= label_tag "service_#{index}", service %>
       </div>
     <% end %>
-  </fieldset>
-  <div>
-    <input type="submit" value="Create Services">
   </div>
-</form>
+  <%= f.submit "Create Services" %>
+<% end %>
