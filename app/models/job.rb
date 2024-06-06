@@ -2,12 +2,12 @@ class Job < ApplicationRecord
 
   CATEGORIES = ['Agri Contracting',
                 'Forestry',
-                'Plant Hire and Earthworks',
+                'Plant Hire & Earthworks',
                 'Farm Labour'].freeze
   CATEGORIES.each(&:freeze)
 
   SUBCATEGORIES = {
-    'Agri Contracting' => ['Application (Spraying and Spreading)',
+    'Agri Contracting' => ['Application (Spraying & Spreading)',
                            'Drilling & Sowing',
                            'Fencing & Hedging',
                            'Grassland Harvesting',
@@ -20,7 +20,7 @@ class Job < ApplicationRecord
                            'Painting & Powerwashing',
                            'Soil Preparation'],
     'Forestry' => ['Tree Cutting & Forestry'],
-    'Plant Hire and Earthworks' => ['Plant Hire and Earthworks'],
+    'Plant Hire & Earthworks' => ['Plant Hire & Earthworks'],
     'Farm Labour'=> ['Animal Care',
                     'Milking',
                     'General Yard Duties',
