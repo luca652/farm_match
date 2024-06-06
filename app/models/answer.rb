@@ -4,6 +4,8 @@ class Answer < ApplicationRecord
   validates :answer, presence: true
   validates :label, presence: true
 
+  # kind is used to divide questions into categories, so that when iterating in the view
+  # the correct mark-up is rendered.
   enum kind: { multiple_choice: 0,
                multiple_choice_with_other: 1,
                multiple_choice_with_effect_on_next: 2,

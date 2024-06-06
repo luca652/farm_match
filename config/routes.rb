@@ -9,7 +9,9 @@ Rails.application.routes.draw do
       get :subcategories
     end
 
-    resources :services, only: [:new, :create, :index]
+    resources :services, only: [:new, :create, :index] do
+      resources :answers, only: [:new, :create]
+    end
 
   end
 end
