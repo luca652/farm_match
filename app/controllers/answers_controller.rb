@@ -4,4 +4,8 @@ class AnswersController < ApplicationController
     @job = Job.find(params[:job_id])
     @services = @job.services
   end
+
+  def create
+    raise
+  end
 end

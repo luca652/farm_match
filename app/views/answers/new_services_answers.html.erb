@@ -11,11 +11,11 @@
 
   <h4><%= service.name %></h4>
 
-  <% Answer::QUESTIONS[service.name].each do |question| %>
+  <% Answer::QUESTIONS[service.name].each_with_index do |question, index| %>
 
     <%= f.hidden_field :label, value: question[:label] %>
 
-    <% case question[:kind].to_sym %>
+    <% case question[:kind] %>
       <% when :multiple_choice %>
         <%= f.input :answer, label: question[:wording], collection: question[:options], as: :radio_buttons %>
       <% when :area %>
