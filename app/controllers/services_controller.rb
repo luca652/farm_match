@@ -7,7 +7,7 @@ class ServicesController < ApplicationController
 
   def create
     @job = Job.find(params[:job_id])
-    @service_names = service_params[:services] || []
+    @service_names = service_params || []
 
     @services = @service_names.map do |service|
       @job.services.build(name: service[:name])
@@ -24,7 +24,6 @@ class ServicesController < ApplicationController
   private
 
   def service_params
-    params.require(:services)
-    params.permit(:job_id, services: [:name])
+    params.require(:services).map { |s| s.permit(:name) }
   end
 end
