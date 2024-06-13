@@ -9,5 +9,8 @@
   <h4>Services</h4>
   <% @job.services.each do |service| %>
     <%= service.name %>
+    <% service.answers.each do |answer| %>
+      <%= answer.details %>
+    <% end %>
   <% end %>
 </div>

@@ -13,13 +13,16 @@
 
   <% Answer::QUESTIONS[service.name].each_with_index do |question, index| %>
 
-    <%= f.hidden_field :label, value: question[:label] %>
+    <%= f.hidden_field "[#{index}][service_id]", value: service.id %>
+    <%= f.hidden_field "[#{index}][label]", value: question[:label] %>
 
     <% case question[:kind] %>
       <% when :multiple_choice %>
-        <%= f.input :answer, label: question[:wording], collection: question[:options], as: :radio_buttons %>
+        <%= f.input "[#{index}][details][answer]", label: question[:wording], collection: question[:options], as: :radio_buttons %>
       <% when :area %>
-        <%= f.input :answer, label: question[:wording] %>
+        <%= f.input "[#{index}][details][unit]", collection: question[:options], as: :select, label: question[:wording] %>
+        <%= f.input "[#{index}][details][value]", label: false %>
+
       <% end %>
     <% end %>
 

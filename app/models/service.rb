@@ -38,6 +38,7 @@ class Service < ApplicationRecord
   SERVICES.values.each(&:freeze)
 
   belongs_to :job
+  has_many :answers
   validates :name, presence: true
   validate :valid_service_for_job
 
