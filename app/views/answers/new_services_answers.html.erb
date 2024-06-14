@@ -23,7 +23,8 @@
       <% when :area %>
         <%= f.input "[#{index}][details][unit]", collection: question[:options], as: :select, label: question[:wording] %>
         <%= f.input "[#{index}][details][value]", label: false %>
-
+      <% when :description %>
+        <%= f.input "[#{index}][details][description]", label: question[:wording], as: :text %>
       <% end %>
     <% end %>
 

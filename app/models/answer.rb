@@ -15,11 +15,13 @@ class Answer < ApplicationRecord
                distance: 5,
                short_length: 6,
                long_length: 7,
-               quantity: 8
+               quantity: 8,
+               description: 9
   }.freeze
 
   QUESTIONS = { 'Fertilizer Spreading' => [{ kind: :multiple_choice, wording: "What type of fertilizer do you want spread?", label: "Type of fertilizer", options: ["granular", "liquid"]},
-                                           { kind: :area, wording: "Estimated number of acres/hectacres?", label: "Number of acres/hectacres", options: ["acres", "hectares"]}],
+                                           { kind: :area, wording: "Estimated number of acres/hectacres?", label: "Number of acres/hectacres", options: ["acres", "hectares"]},
+                                           { kind: :description, wording: "Please write a short decription of the job", label: "description"}],
                 'Lime Spreading' => [],
                 'Spraying (specialised)' => [],
                 'Spraying (standard)' => []
