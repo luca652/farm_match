@@ -3,6 +3,8 @@ class Answer < ApplicationRecord
 
   validates :label, presence: true
 
+  before_save :convert_and_store_area
+
   # kind is used to divide questions into categories, so that when iterating in the view
   # the correct mark-up is rendered.
   enum kind: { multiple_choice: 0,
@@ -22,4 +24,16 @@ class Answer < ApplicationRecord
                 'Spraying (specialised)' => [],
                 'Spraying (standard)' => []
               }
+
+  def convert_and_store_area
+    if details["unit"] == "acres"
+      details["acres"] = details["value"]
+      details["hectares"] = (details["value"].to_i * 0.404686).to_s
+    elsif details["unit"] == "hectares"
+      details["hectares"] = details["value"]
+      details["acres"] = (details["value"].to_i * 2.47105).to_s
+    end
+    details.delete("unit")
+    details.delete("value")
+  end
 end
