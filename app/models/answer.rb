@@ -1,7 +1,6 @@
 class Answer < ApplicationRecord
   belongs_to :service
 
-  # validates :answer, presence: true
   validates :label, presence: true
 
   # kind is used to divide questions into categories, so that when iterating in the view
