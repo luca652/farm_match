@@ -13,6 +13,7 @@
 
   <% Answer::QUESTIONS[service.name].each_with_index do |question, index| %>
 
+    <%= f.hidden_field "[#{index}][kind]", value: question[:kind] %>
     <%= f.hidden_field "[#{index}][service_id]", value: service.id %>
     <%= f.hidden_field "[#{index}][label]", value: question[:label] %>
 

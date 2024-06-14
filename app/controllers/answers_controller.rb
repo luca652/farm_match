@@ -6,13 +6,12 @@ class AnswersController < ApplicationController
   end
 
   def create_services_answers
+
     @job = Job.find(params[:job_id])
 
     @answers = []
-    params[:answers].each do |index, answer|
-      @answers << Answer.new(service_id: answer[:service_id],
-                    label: answer[:label],
-                    details: answer[:details])
+    answers_params.each do |index, answer|
+      @answers << Answer.new(answer_params(answer))
     end
 
     if @answers.all?(&:save!)
@@ -21,5 +20,15 @@ class AnswersController < ApplicationController
       @services = @job.services
       render :new_services_answers, status: :unprocessable_entity
     end
+  end
+
+  private
+
+  def answers_params
+    params.require(:answers)
+  end
+
+  def answer_params(answer)
+    answer.permit(:service_id, :kind, :label, details: [:answer, :unit, :value])
   end
 end
