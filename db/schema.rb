@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_14_170533) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_14_201535) do
   create_table "answers", force: :cascade do |t|
     t.string "label"
     t.integer "service_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "details", default: {}
+    t.integer "kind"
     t.index ["service_id"], name: "index_answers_on_service_id"
   end
 

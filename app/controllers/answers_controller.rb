@@ -6,11 +6,12 @@ class AnswersController < ApplicationController
   end
 
   def create_services_answers
-
     @job = Job.find(params[:job_id])
+
 
     @answers = []
     answers_params.each do |index, answer|
+      p "params! #{answer_params(answer)}"
       @answers << Answer.new(answer_params(answer))
     end
 

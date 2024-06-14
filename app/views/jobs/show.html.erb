@@ -10,7 +10,13 @@
   <% @job.services.each do |service| %>
     <%= service.name %>
     <% service.answers.each do |answer| %>
-      <%= answer.details %>
+      <%= answer.label %>
+      <% case answer.kind.to_sym %>
+        <% when :multiple_choice %>
+          <%= answer.details["answer"] %>
+        <% when :area %>
+          <%= answer.details["acres"] %>
+        <% end %>
+      <% end %>
     <% end %>
-  <% end %>
 </div>
