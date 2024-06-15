@@ -18,6 +18,12 @@
           <%= answer.details["acres"] %>
         <% when :description %>
           <%= answer.details["description"] %>
+        <% when :multiple_choice_with_other %>
+          <% if answer.details["other"] %>
+            <%= answer.details["other"] %>
+          <% else %>
+           <%= answer.details["answer"]%>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>

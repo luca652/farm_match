@@ -29,6 +29,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params(answer)
-    answer.permit(:service_id, :kind, :label, details: [:unit, :value, :answer, :description])
+    answer.permit(:service_id, :kind, :label, details: [:unit, :value, :answer, :description, :other])
   end
 end
