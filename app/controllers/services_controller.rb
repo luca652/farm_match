@@ -7,7 +7,7 @@ class ServicesController < ApplicationController
 
   def create
     @job = Job.find(params[:job_id])
-    @service_names = service_params || []
+    @service_names = service_params
 
     @services = @service_names.map do |service|
       @job.services.build(name: service[:name])

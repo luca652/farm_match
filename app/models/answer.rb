@@ -35,11 +35,11 @@ class Answer < ApplicationRecord
 
   def convert_and_store_area
     if details["unit"] == "acres"
-      details["acres"] = details["value"]
-      details["hectares"] = (details["value"].to_i * 0.404686).to_s
+      details["acres"] = details["value"].to_i
+      details["hectares"] = (details["value"].to_i * 0.404686)
     elsif details["unit"] == "hectares"
-      details["hectares"] = details["value"]
-      details["acres"] = (details["value"].to_i * 2.47105).to_s
+      details["hectares"] = details["value"].to_i
+      details["acres"] = (details["value"].to_i * 2.47105)
     end
     details.delete("unit")
     details.delete("value")
