@@ -11,7 +11,6 @@ class AnswersController < ApplicationController
 
     @answers = []
     answers_params.each do |index, answer|
-      p "params! #{answer_params(answer)}"
       @answers << Answer.new(answer_params(answer))
     end
 

@@ -40,6 +40,7 @@ class Service < ApplicationRecord
   belongs_to :job
   has_many :answers
   validates :name, presence: true
+  validates :name, uniqueness: { scope: :job_id, message: "should be unique for the task" }
   validate :valid_service_for_job
 
   def valid_service_for_job
@@ -52,4 +53,5 @@ class Service < ApplicationRecord
       errors.add(:name, "is not valid for this job")
     end
   end
+
 end
