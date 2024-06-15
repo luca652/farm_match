@@ -1,11 +1,11 @@
 class AnswersController < ApplicationController
 
-  def new_services_answers
+  def new_answers
     @job = Job.find(params[:job_id])
     @services = @job.services
   end
 
-  def create_services_answers
+  def create_answers
     @job = Job.find(params[:job_id])
 
 
@@ -19,7 +19,7 @@ class AnswersController < ApplicationController
       redirect_to job_path(@job)
     else
       @services = @job.services
-      render :new_services_answers, status: :unprocessable_entity
+      render :new_answers, status: :unprocessable_entity
     end
   end
 

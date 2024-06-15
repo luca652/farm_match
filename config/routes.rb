@@ -11,8 +11,8 @@ Rails.application.routes.draw do
 
     resources :services, only: [:new, :create, :index] do
       collection do
-        get 'new_services_answers', to: 'answers#new_services_answers'
-        post 'create_services_answers', to: 'answers#create_services_answers'
+        get 'new_answers', to: 'answers#new_answers'
+        post 'create_answers', to: 'answers#create_answers'
       end
     end
 

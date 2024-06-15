@@ -6,7 +6,7 @@
 
 <%# path: job_service_answers_path %>
 
-<%= simple_form_for :answers, url: create_services_answers_job_services_path, method: "post" do |f| %>
+<%= simple_form_for :answers, url: create_answers_job_services_path, method: "post" do |f| %>
  <% @services.each do |service| %>
 
   <h4><%= service.name %></h4>
