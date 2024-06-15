@@ -15,11 +15,11 @@
         <% when :multiple_choice %>
           <%= answer.details["answer"] %>
         <% when :area %>
-          <%= answer.details["acres"] %>
+          <p><%= answer.details["acres"] %> acres / <%= answer.details["hectares"] %> hectares</p>
         <% when :description %>
           <%= answer.details["description"] %>
         <% when :multiple_choice_with_other %>
-          <% if answer.details["other"] %>
+          <% if answer.details["answer"].nil? %>
             <%= answer.details["other"] %>
           <% else %>
            <%= answer.details["answer"]%>

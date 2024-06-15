@@ -19,7 +19,7 @@ class Answer < ApplicationRecord
                description: 9
   }.freeze
 
-  AREA_QUESTION = { kind: :area, wording: "Estimated number of acres/hectacres?", options: ["acres", "hectares"], label: "Number of acres/hectacres"}
+  AREA_QUESTION = { kind: :area, wording: "Estimated number of acres/hectacres?", options: ["acres", "hectares"], label: "Area"}
   DESCRIPTION_QUESTION = { kind: :description, wording: "Please write a short decription of the job", label: "Description"}
 
   QUESTIONS = { 'Fertilizer Spreading' => [{ kind: :multiple_choice, wording: "What type of fertilizer do you want spread?", label: "Type of fertilizer", options: ["granular", "liquid"]},
@@ -40,10 +40,12 @@ class Answer < ApplicationRecord
                                                AREA_QUESTION, DESCRIPTION_QUESTION],
                 'Potatoes - Drilling' => [AREA_QUESTION, DESCRIPTION_QUESTION],
                 'Sugar Beet - Drilling' => [AREA_QUESTION, DESCRIPTION_QUESTION],
-                'Vegetables - Drilling' => [{ kind: :multiple_choice_with_other, wording: "What type of vegetables are you sowing?", label: "Type of vegetable", options: [ "Broccoli", "Cabbage", "Carrots", "Cauliflower", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Rhubarb", "Turnip", "Other"]}]
-                                            }
+                'Vegetables - Drilling' => [{ kind: :multiple_choice_with_other, wording: "What type of vegetables are you sowing?", label: "Type of vegetable", options: [ "Broccoli", "Cabbage", "Carrots", "Cauliflower", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Rhubarb", "Turnip", "Other"]},
+                                            AREA_QUESTION, DESCRIPTION_QUESTION ],
+                'Fence Erection' => [{ kind: :multiple_choice, wording: "What type of fence do you require?", label: "Type of fence", collection: ["Post and four barb", "Post and three rails", "Post, stock, net and two barb"]},
+                                     { kind: :short_length, wording: "Estimated length of mowing required? (Pick one measurement)", label: "Estimated length", collection: ["Feet", "Meters", "Miles", "Kilometers"]}]
 
-
+                }
   def convert_and_store_area
     if details["unit"] == "acres"
       details["acres"] = details["value"].to_i
