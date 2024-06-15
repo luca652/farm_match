@@ -40,7 +40,7 @@ class Answer < ApplicationRecord
                                                AREA_QUESTION, DESCRIPTION_QUESTION],
                 'Potatoes - Drilling' => [AREA_QUESTION, DESCRIPTION_QUESTION],
                 'Sugar Beet - Drilling' => [AREA_QUESTION, DESCRIPTION_QUESTION],
-                'Vegetables - Drilling' => [{ kind: :multiple_choice_with_other, wording: "What type of vegtables are you sowing?", options: [ "Broccoli", "Cabbage", "Carrots", "Cauliflower", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Rhubarb", "Turnip", "Other"]}]
+                'Vegetables - Drilling' => [{ kind: :multiple_choice_with_other, wording: "What type of vegetables are you sowing?", options: [ "Broccoli", "Cabbage", "Carrots", "Cauliflower", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Rhubarb", "Turnip", "Other"]}]
                                             }
 
 

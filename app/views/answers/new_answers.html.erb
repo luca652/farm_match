@@ -19,12 +19,28 @@
 
     <% case question[:kind] %>
       <% when :multiple_choice %>
-        <%= f.input "[#{index}][details][answer]", label: question[:wording], collection: question[:options], as: :radio_buttons %>
+        <div>
+          <%= f.input "[#{index}][details][answer]", label: question[:wording], collection: question[:options], as: :radio_buttons %>
+        </div>
       <% when :area %>
-        <%= f.input "[#{index}][details][unit]", collection: question[:options], as: :select, label: question[:wording] %>
-        <%= f.input "[#{index}][details][value]", label: false %>
+        <div>
+          <%= f.input "[#{index}][details][unit]", collection: question[:options], as: :select, label: question[:wording] %>
+          <%= f.input "[#{index}][details][value]", label: false %>
+        </div>
       <% when :description %>
-        <%= f.input "[#{index}][details][description]", label: question[:wording], as: :text %>
+        <div>
+          <%= f.input "[#{index}][details][description]", label: question[:wording], as: :text %>
+        </div>
+      <% when :multiple_choice_with_other %>
+        <div data-controller="question">
+          <%= f.input "[#{index}][details][answer]", collection: question[:options],
+                                                     label: question[:wording],
+                                                     as: :select,
+                                                     input_html: { data: { action: "change->question#displayOther"}} %>
+          <%= f.input "[#{index}][details][other]", label: "Please specify",
+                                                    wrapper_html: { class: "hidden",
+                                                                  data: { question_target: "other"} } %>
+        </div>
       <% end %>
     <% end %>
 
