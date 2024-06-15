@@ -29,7 +29,18 @@ class Answer < ApplicationRecord
                 'Spraying (specialised)' => [{ kind: :multiple_choice, wording: "What type of spraying do you require?", options: ["ATV spraying", "Avadex application", "Slug pelleting", "Weed wiping", "Other"]},
                                              AREA_QUESTION, DESCRIPTION_QUESTION],
                 'Spraying (standard)' => [{ kind: :multiple_choice, wording: "What type of spraying do you require?", options: ["Arable spraying", "Grassland spraying"]},
-                                          AREA_QUESTION, DESCRIPTION_QUESTION]
+                                          AREA_QUESTION, DESCRIPTION_QUESTION],
+                'Cereals - Drilling' => [{ kind: :multiple_choice, wording: "Preferred method of drilling?", options: ["Any method", "Combi-drill", "Conventional", "Direct"]},
+                                         AREA_QUESTION, DESCRIPTION_QUESTION],
+                'Grass Seed - Drilling' => [{ kind: :multiple_choice, wording: "Preferred method of drilling?", options: ["Any method", "Broadcast", "Cross Drilling", "Harrow"]},
+                                            AREA_QUESTION, DESCRIPTION_QUESTION],
+                'Maize - Drilling' => [{ kind: :multiple_choice, wording: "Preferred method of drilling?", options: ["Precision", "Under film"]},
+                                       AREA_QUESTION, DESCRIPTION_QUESTION],
+                'Oil Seed Rape - Drilling' => [{ kind: :multiple_choice, wording: "Preferred method of drilling?", options: [] },
+                                               AREA_QUESTION, DESCRIPTION_QUESTION],
+                'Potatoes - Drilling' => [AREA_QUESTION, DESCRIPTION_QUESTION],
+                'Sugar Beet - Drilling' => [AREA_QUESTION, DESCRIPTION_QUESTION],
+                'Vegetables - Drilling' => [{ kind: :multiple_choice_with_other, wording: "What type of vegtables are you sowing?", options: [ "Broccoli", "Cabbage", "Carrots", "Cauliflower", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Rhubarb", "Turnip", "Other"]}]
                                             }
 
 
