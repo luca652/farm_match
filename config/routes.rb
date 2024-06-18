@@ -9,7 +9,12 @@ Rails.application.routes.draw do
       get :subcategories
     end
 
-    resources :services, only: [:new, :create, :index]
+    resources :services, only: [:new, :create, :index] do
+      collection do
+        get 'new_answers', to: 'answers#new_answers'
+        post 'create_answers', to: 'answers#create_answers'
+      end
+    end
 
   end
 end

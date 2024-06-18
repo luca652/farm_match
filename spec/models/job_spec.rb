@@ -2,14 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Job, type: :model do
   let(:user) { User.create(name: 'Marco')}
-  let(:job) { Job.create(headline: 'First Job',
+  let(:job) { Job.create!(headline: 'First Job',
                          description: 'Decent Job',
                          user_id: user.id,
                          category: 'Agri Contracting',
-                         subcategory: 'Application (Spraying and Spreading)',
-                         services_attributes: [{ name: 'Fertilizer Spreading' }])
+                         subcategory: 'Application (Spraying & Spreading)')
                         }
-  let(:service) { job.services.first }
+  let(:service) { Service.create(name: 'Fertilizer Spreading', job_id: job.id)}
 
   it 'has a headline' do
     expect(job.headline).to eq('First Job')
@@ -24,7 +23,7 @@ RSpec.describe Job, type: :model do
   end
 
   it 'has a subcategory' do
-    expect(job.subcategory).to eq('Application (Spraying and Spreading)')
+    expect(job.subcategory).to eq('Application (Spraying & Spreading)')
   end
 
   describe 'Associations' do

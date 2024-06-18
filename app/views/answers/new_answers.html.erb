@@ -1,0 +1,49 @@
+<h1>Let's get some answers</h1>
+
+<%# create a form that will collect all answers in one go %>
+<%# iterate over questions %>
+<%# have case statement that renderes the correct markup %>
+
+<%# path: job_service_answers_path %>
+
+<%= simple_form_for :answers, url: create_answers_job_services_path, method: "post" do |f| %>
+ <% @services.each do |service| %>
+
+  <h4><%= service.name %></h4>
+
+  <% Answer::QUESTIONS[service.name].each_with_index do |question, index| %>
+
+    <%= f.hidden_field "[#{index}][kind]", value: question[:kind] %>
+    <%= f.hidden_field "[#{index}][service_id]", value: service.id %>
+    <%= f.hidden_field "[#{index}][label]", value: question[:label] %>
+
+    <% case question[:kind] %>
+      <% when :multiple_choice %>
+        <div>
+          <%= f.input "[#{index}][details][answer]", label: question[:wording], collection: question[:options], as: :radio_buttons %>
+        </div>
+      <% when :area %>
+        <div>
+          <%= f.input "[#{index}][details][unit]", collection: question[:options], as: :select, label: question[:wording] %>
+          <%= f.input "[#{index}][details][value]", label: false %>
+        </div>
+      <% when :description %>
+        <div>
+          <%= f.input "[#{index}][details][description]", label: question[:wording], as: :text %>
+        </div>
+      <% when :multiple_choice_with_other %>
+        <div data-controller="question">
+          <%= f.input "[#{index}][details][answer]", collection: question[:options],
+                                                     label: question[:wording],
+                                                     as: :select,
+                                                     input_html: { data: { action: "change->question#displayOther"}} %>
+          <%= f.input "[#{index}][details][other]", label: "Please specify",
+                                                    wrapper_html: { class: "hidden",
+                                                                  data: { question_target: "other"} } %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <%= f.submit %>
+  <% end %>
+<% end %>
