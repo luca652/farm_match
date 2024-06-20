@@ -7,23 +7,16 @@ class ServicesController < ApplicationController
 
   def create
     @job = Job.find(params[:job_id])
-    @service_names = service_params
+    @params = services_params
 
-    @services = @service_names.map do |service|
-      @job.services.build(name: service[:name])
-    end
-
-    if @services.all?(&:save)
-      redirect_to new_answers_job_services_path(@job), notice: 'Services were added to your job.'
-    else
-      flash.now[:alert] = "You must select at least one service."
-      render :new, status: :unprocessable_entity
+    Service.transaction do
+      @services = Service.create!(services_params)
     end
   end
 
   private
 
-  def service_params
-    params.require(:services).map { |s| s.permit(:name) }
+  def services_params
+    params.permit(:commit, :job_id, :authenticity_token, services: [:name]).require(:services)
   end
 end
