@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
   def create_answers
     @job = Job.find(params[:job_id])
 
-
+    raise
     @answers = []
     answers_params.each do |index, answer|
       @answers << Answer.new(answer_params(answer))
