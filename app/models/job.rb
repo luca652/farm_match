@@ -32,7 +32,7 @@ class Job < ApplicationRecord
   belongs_to :user
   has_many :services, dependent: :destroy
 
-  validates :category, :subcategory, :headline, :description, presence: true
+  validates :category, :subcategory, :headline, :description, :latitude, :longitude, presence: true
   validates :category, inclusion: { in: CATEGORIES }
   validates :subcategory, inclusion: { in: SUBCATEGORIES.values.flatten }
   # inclusion expects an array, but SUBCATEGORIES.values returns an array of arrays --> flatten solves the issue
