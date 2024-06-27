@@ -28,6 +28,6 @@ class ServicesController < ApplicationController
   private
 
   def services_params
-    params.permit(:commit, :job_id, :authenticity_token, services: [:name]).require(:services)
+    params.require("services").map { |param| param.permit(:name) }
   end
 end
