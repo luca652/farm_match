@@ -30,6 +30,17 @@
                   collection: [],
                   input_html: { data: { category_target: "subcategory"} } %>
     </div>
+  </div>
+
+  <h4>Where do you want your task done?</h4>
+  <div data-controller="map" data-map-api-key-value="<%= Rails.application.credentials.mapbox_token %>">
+    <div style="width: 40%; height: 300px;" id="map">
+    </div>
+    <pre id="coordinates" class="coordinates" data-map-target="coordinates"></pre>
+      <%= f.input :longitude, wrapper_html: { class: "hidden"}, input_html: { data: { map_target: "longitude"}} %>
+      <%= f.input :latitude, wrapper_html: { class: "hidden"}, input_html: { data: { map_target: "latitude"}} %>
+  </div>
+
 
     <%= f.button :submit, 'Create Job' %>
   </div>
