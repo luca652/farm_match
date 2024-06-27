@@ -9,7 +9,8 @@ class ServicesController < ApplicationController
     @job = Job.find(params[:job_id])
     @services_options = Service::SERVICES[@job.subcategory]
 
-    full_params = services_params.map { |service_param| service_param.merge(job_id: @job.id) }
+    @services_params = services_params
+    full_params = @services_params.map { |service_param| service_param.merge(job_id: @job.id) }
 
     begin
       Service.transaction do
@@ -28,6 +29,6 @@ class ServicesController < ApplicationController
   private
 
   def services_params
-    params.require("services").map { |param| param.permit(:name) }
+    params.require(:services).map { |param| param.permit(:name) }
   end
 end
