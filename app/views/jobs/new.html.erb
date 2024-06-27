@@ -8,40 +8,29 @@
     </div>
   <% end %>
 
-  <div>
-    <%= f.input :headline %>
-  </div>
-
-  <div>
-    <%= f.input :description %>
-  </div>
-
-  <div>
-    <%= f.hidden_field :user_id, value: 1 %>
-  </div>
+  <%= f.input :headline %>
+  <%= f.input :description %>
+  <%= f.hidden_field :user_id, value: 1 %>
 
   <div data-controller="category" data-category-url-value="<%= subcategories_jobs_path %>">
-    <div>
-      <%= f.input :category, collection: @categories,
-                  input_html: { data: { action: "change->category#subcategory", category_target: "category" } } %>
-    </div>
-    <div>
-      <%= f.input :subcategory,
-                  collection: [],
-                  input_html: { data: { category_target: "subcategory"} } %>
-    </div>
+
+    <%= f.input :category, collection: @categories,
+                input_html: { data: { action: "change->category#subcategory", category_target: "category" } } %>
+
+    <%= f.input :subcategory,
+                collection: [],
+                input_html: { data: { category_target: "subcategory"} } %>
+
   </div>
 
   <h4>Where do you want your task done?</h4>
   <div data-controller="map" data-map-api-key-value="<%= Rails.application.credentials.mapbox_token %>">
-    <div style="width: 40%; height: 300px;" id="map">
-    </div>
-    <pre id="coordinates" class="coordinates" data-map-target="coordinates"></pre>
+    <div style="width: 40%; height: 300px;" id="map"></div>
+    <%# <pre id="coordinates" class="coordinates" data-map-target="coordinates"></pre> %>
       <%= f.input :longitude, wrapper_html: { class: "hidden"}, input_html: { data: { map_target: "longitude"}} %>
       <%= f.input :latitude, wrapper_html: { class: "hidden"}, input_html: { data: { map_target: "latitude"}} %>
   </div>
 
+  <%= f.button :submit, 'Create Job' %>
 
-    <%= f.button :submit, 'Create Job' %>
-  </div>
 <% end %>
