@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_14_201535) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_27_141920) do
   create_table "answers", force: :cascade do |t|
     t.string "label"
     t.integer "service_id", null: false
@@ -29,6 +29,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_14_201535) do
     t.integer "user_id", null: false
     t.string "category"
     t.string "subcategory"
+    t.float "latitude"
+    t.float "longitude"
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 

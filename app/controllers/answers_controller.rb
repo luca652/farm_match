@@ -8,18 +8,25 @@ class AnswersController < ApplicationController
   def create_answers
     @job = Job.find(params[:job_id])
 
-    raise
-    @answers = []
-    answers_params.each do |index, answer|
-      @answers << Answer.new(answer_params(answer))
-    end
 
-    if @answers.all?(&:save!)
+    # @answers = []
+    # answers_params.each do |index, answer|
+    #   @answers << Answer.new(answer_params(answer))
+    # end
+
+
+    begin
+      Answer.transaction do
+        @answers = Service.create!(answers_params)
+      end
+
       redirect_to job_path(@job)
-    else
-      @services = @job.services
+
+    rescue ActiveRecord::RecordInvalid => exception
+      @errors = exception.record.errors
       render :new_answers, status: :unprocessable_entity
     end
+
   end
 
   private
@@ -29,6 +36,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params(answer)
-    answer.permit(:service_id, :kind, :label, details: [:unit, :value, :answer, :description, :other])
+    answer.permit(:service_id, :kind, :label, details: [:unit, :value, :answer, :description, :other]).to_h
   end
 end
