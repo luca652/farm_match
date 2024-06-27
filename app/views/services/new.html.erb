@@ -1,5 +1,16 @@
 <h1>Create Services</h1>
 
+<% if @errors && @errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@errors.count, "error") %> prohibited this service from being saved:</h2>
+    <ul>
+      <% @errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= simple_form_for :services,
                     url: "/jobs/#{@job.id}/services",
                     method: "post",
@@ -12,5 +23,6 @@
       </div>
     <% end %>
   </div>
+
   <%= f.submit "Create Services" %>
 <% end %>
