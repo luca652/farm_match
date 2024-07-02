@@ -37,20 +37,20 @@ class Service < ApplicationRecord
   }.freeze
   SERVICES.values.each(&:freeze)
 
-  belongs_to :job
+  belongs_to :task
   has_many :answers
   validates :name, presence: true
-  validates :name, uniqueness: { scope: :job_id, message: "should be unique for the task" }
-  # validate :valid_service_for_job
+  validates :name, uniqueness: { scope: :task_id, message: "should be unique for the task" }
+  # validate :valid_service_for_task
 
-  # def valid_service_for_job
-  #   subcategory = job.subcategory
+  # def valid_service_for_task
+  #   subcategory = task.subcategory
 
   #   return if subcategory.blank?
   #   valid_services = SERVICES[subcategory]
 
   #   unless valid_services.include?(name)
-  #     errors.add(:name, "is not valid for this job")
+  #     errors.add(:name, "is not valid for this task")
   #   end
   # end
 

@@ -12,7 +12,7 @@
 <% end %>
 
 <%= simple_form_for :services,
-                    url: "/jobs/#{@job.id}/services",
+                    url: "/tasks/#{@task.id}/services",
                     method: "post",
                     html: { name: "services[]", data: { controller: "checkbox", action: "submit->checkbox#preventEmptySubmission" } } do |f| %>
   <div>

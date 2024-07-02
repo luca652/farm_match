@@ -1,4 +1,4 @@
-class Job < ApplicationRecord
+class Task < ApplicationRecord
 
   CATEGORIES = ['Agri Contracting',
                 'Forestry',

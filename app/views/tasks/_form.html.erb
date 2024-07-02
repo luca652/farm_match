@@ -1,10 +1,10 @@
-<h1>New Job</h1>
+<h1>New Task</h1>
 
-<%= simple_form_for @job do |f| %>
+<%= simple_form_for @task do |f| %>
 
-  <% if @job.errors.any? %>
+  <% if @task.errors.any? %>
     <div class="error-message">
-      <%= @job.errors.full_messages.to_sentence.capitalize %>
+      <%= @task.errors.full_messages.to_sentence.capitalize %>
     </div>
   <% end %>
 
@@ -13,7 +13,7 @@
   <%= f.input :description %>
   <%= f.hidden_field :user_id, value: 1 %>
 
-  <div data-controller="category" data-category-url-value="<%= subcategories_jobs_path %>">
+  <div data-controller="category" data-category-url-value="<%= subcategories_tasks_path %>">
     <div>
       <%= f.input :category, collection: @categories,
                   input_html: { data: { action: "change->category#subcategory", category_target: "category" } } %>
@@ -33,5 +33,5 @@
     <% end %>
   </div>
 
-  <%= f.button :submit, 'Create Job' %>
+  <%= f.button :submit, 'Create Task' %>
 <% end %>

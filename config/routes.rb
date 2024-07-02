@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  resources :jobs, only: [:new, :create, :show] do
+  resources :tasks, only: [:new, :create, :show] do
     collection do
       get :subcategories
     end

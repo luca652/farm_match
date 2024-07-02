@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_27_141920) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_02_154736) do
   create_table "answers", force: :cascade do |t|
     t.string "label"
     t.integer "service_id", null: false
@@ -21,7 +21,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_27_141920) do
     t.index ["service_id"], name: "index_answers_on_service_id"
   end
 
-  create_table "jobs", force: :cascade do |t|
+  create_table "services", force: :cascade do |t|
+    t.string "name"
+    t.integer "task_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_services_on_task_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "headline"
@@ -31,15 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_27_141920) do
     t.string "subcategory"
     t.float "latitude"
     t.float "longitude"
-    t.index ["user_id"], name: "index_jobs_on_user_id"
-  end
-
-  create_table "services", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "job_id", null: false
-    t.string "name"
-    t.index ["job_id"], name: "index_services_on_job_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,6 +49,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_27_141920) do
   end
 
   add_foreign_key "answers", "services"
-  add_foreign_key "jobs", "users"
-  add_foreign_key "services", "jobs"
+  add_foreign_key "services", "tasks"
+  add_foreign_key "tasks", "users"
 end

@@ -20,7 +20,7 @@ class Answer < ApplicationRecord
   }.freeze
 
   AREA_QUESTION = { kind: :area, wording: "Estimated number of acres/hectacres?", options: ["acres", "hectares"], label: "Area"}
-  DESCRIPTION_QUESTION = { kind: :description, wording: "Please write a short decription of the job", label: "Description"}
+  DESCRIPTION_QUESTION = { kind: :description, wording: "Please write a short decription of the task", label: "Description"}
 
   QUESTIONS = { 'Fertilizer Spreading' => [{ kind: :multiple_choice, wording: "What type of fertilizer do you want spread?", label: "Type of fertilizer", options: ["granular", "liquid"]},
                                            AREA_QUESTION, DESCRIPTION_QUESTION],

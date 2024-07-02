@@ -1,12 +1,12 @@
 class AnswersController < ApplicationController
 
   def new_answers
-    @job = Job.find(params[:job_id])
-    @services = @job.services
+    @task = Task.find(params[:task_id])
+    @services = @task.services
   end
 
   def create_answers
-    @job = Job.find(params[:job_id])
+    @task = Task.find(params[:task_id])
 
 
     # @answers = []
@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
         @answers = Service.create!(answers_params)
       end
 
-      redirect_to job_path(@job)
+      redirect_to task_path(@task)
 
     rescue ActiveRecord::RecordInvalid => exception
       @errors = exception.record.errors
