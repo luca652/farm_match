@@ -4,9 +4,9 @@
 <%# iterate over questions %>
 <%# have case statement that renderes the correct markup %>
 
-<%# path: job_service_answers_path %>
+<%# path: task_service_answers_path %>
 
-<%= simple_form_for :answers, url: create_answers_job_services_path, method: "post" do |f| %>
+<%= simple_form_for :answers, url: create_answers_task_services_path, method: "post" do |f| %>
  <% @services.each_with_index do |service, service_index| %>
 
   <h4><%= service.name %></h4>

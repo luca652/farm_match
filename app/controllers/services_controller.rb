@@ -1,23 +1,23 @@
 class ServicesController < ApplicationController
 
   def new
-    @job = Job.find(params[:job_id])
-    @services_options = Service::SERVICES[@job.subcategory]
+    @task = Task.find(params[:task_id])
+    @services_options = Service::SERVICES[@task.subcategory]
   end
 
   def create
-    @job = Job.find(params[:job_id])
-    @services_options = Service::SERVICES[@job.subcategory]
+    @task = Task.find(params[:task_id])
+    @services_options = Service::SERVICES[@task.subcategory]
 
     @services_params = services_params
-    full_params = @services_params.map { |service_param| service_param.merge(job_id: @job.id) }
+    full_params = @services_params.map { |service_param| service_param.merge(task_id: @task.id) }
 
     begin
       Service.transaction do
         @services = Service.create!(full_params)
       end
 
-      redirect_to new_answers_job_services_path
+      redirect_to new_answers_task_services_path
 
     rescue ActiveRecord::RecordInvalid => exception
       @errors = exception.record.errors

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'New Job', js: true do
+RSpec.describe 'New Task', js: true do
 
   # it 'displays a form to create a new job' do
   #   visit new_job_path
