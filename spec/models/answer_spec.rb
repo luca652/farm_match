@@ -2,13 +2,13 @@ require 'rails_helper'
 
 RSpec.describe Answer, type: :model do
   let(:user) { User.create(name: 'Marco')}
-  let(:job) { Job.create!(headline: 'First Job',
-                         description: 'Decent Job',
+  let(:task) { Task.create!(headline: 'First Task',
+                         description: 'Decent Task',
                          user_id: user.id,
                          category: 'Agri Contracting',
                          subcategory: 'Application (Spraying & Spreading)')
                         }
-  let(:service) { Service.create(name: 'Fertilizer Spreading', job_id: job.id)}
+  let(:service) { Service.create(name: 'Fertilizer Spreading', task_id: task.id)}
   let(:answer) { Answer.create(answer: "Yes", label: "Test Label", service_id: service.id)}
 
   it 'has an answer' do
