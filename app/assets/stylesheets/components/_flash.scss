@@ -1,0 +1,37 @@
+
+.notice {
+  background-color: var(--color-background);
+  padding: 2rem;
+  box-shadow: 4px 2px var(--color-primary);
+  border: 1px solid var(--color-text-muted);
+  border-radius: var(--border-radius);
+
+  h1, h2, h4 {
+    text-align: center;
+  }
+
+  p {
+    text-align: center;
+  }
+}
+
+.flash-notice {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 40%;
+}
+
+.btn-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  .fa-regular {
+    font-weight: 600;
+  }
+}
+
+.alert {
+  box-shadow: 4px 2px rgb(240, 79, 79);
+}

@@ -32,10 +32,17 @@ class AnswersController < ApplicationController
   private
 
   def answers_params
-    params.require(:answers)
-  end
+    params.require(:answers).permit(
 
-  def answer_params(answer)
-    answer.permit(:service_id, :kind, :label, details: [:unit, :value, :answer, :description, :other]).to_h
+      [
+        # This allows any number of nested hashes within 'answers'
+        # treating it as an array of hashes
+        :kind,
+        :service_id,
+        :label,
+        [ details: [:answer, :unit, :value, :description] ]
+      ]
+
+  )
   end
 end

@@ -35,6 +35,8 @@ gem "redis", "~> 4.0"
 
 gem 'simple_form'
 
+gem 'sassc-rails'
+
 gem 'requestjs-rails'
 
 gem 'pry-byebug'
