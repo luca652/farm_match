@@ -1,0 +1,101 @@
+.btn {
+  display: inline-block;
+  padding: var(--space-xxs) var(--space-m);
+  border-radius: var(--border-radius);
+  border: solid 2px transparent;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 2px 2px var(--color-text-header);
+  border: 1px solid var(--color-text-header);
+  font-size: var(--font-size-l);
+
+  &:hover,
+  &:focus,
+  &:focus-within,
+  &:active {
+    transition: all 250ms, color 200ms;
+  }
+
+  &--primary {
+    color: var(--color-white);
+    background-color: var(--color-primary);
+
+    &:hover,
+    &:active {
+      color: var(--color-white);
+      background-color: var(--color-secondary);
+    }
+  }
+
+  &--tertiary {
+    color: var(--color-dark);
+    background-color: var(--color-tertiary);
+
+    &:hover,
+    &:active {
+      filter: saturate(1.2) brightness(110%);
+    }
+  }
+}
+
+.tab {
+  display: inline-block;
+  padding: var(--space-xxs) var(--space-xxs);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 2px 2px var(--color-text-header);
+  border-top: 1px solid rgb(194, 194, 194);
+  border-left: 1px solid rgb(194, 194, 194);
+  border-right: 1px solid rgb(194, 194, 194);
+  border-bottom: none;
+  width: 10.5rem;
+
+  @include media(md) {
+    width: 12rem;
+    padding: var(--space-xxs) var(--space-m);
+  }
+
+  &:hover,
+  &:focus,
+  &:focus-within,
+  &:active {
+    transition: all 250ms, color 200ms;
+  }
+
+  &--farmers {
+    background-color: var(--color-background);
+
+    &--selected {
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 0.25rem var(--color-secondary);
+      font-weight: bolder;
+    }
+
+    &:hover {
+      background-color: var(--color-secondary);
+    }
+  }
+
+  &--contractors {
+    color: var(--color-black);
+    background-color: var(--color-background);
+    box-shadow: none;
+    font-weight: 400;
+
+    &--selected {
+      border-color: var(--color-tertiary);
+      box-shadow: 0 0 0 0.25rem #f1e691;
+      font-weight: bolder;
+    }
+
+    &:hover {
+      background-color: #f0e27c;
+    }
+  }
+
+}

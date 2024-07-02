@@ -1,0 +1,15 @@
+.separator-line--gray {
+  border-bottom: 2px solid var(--color-text-muted);
+  width: 70%;
+  margin: 0 auto;
+  border-radius: 5px;
+  opacity: 1;
+  margin-top: var(--space-l);
+  margin-bottom: var(--space-l);
+
+  @include media(md) {
+    width: 40%;
+    margin-top: var(--space-xxxxl);
+    margin-bottom: var(--space-xxxxl);
+  }
+}

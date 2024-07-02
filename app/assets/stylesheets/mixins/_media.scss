@@ -1,0 +1,21 @@
+@mixin media($query) {
+  @if $query == sm {
+    @media (min-width: 640px) { @content; }
+  }
+
+  @if $query == md {
+    @media (min-width: 768px) { @content; }
+  }
+
+  @if $query == lg {
+    @media (min-width: 1024px) { @content; }
+  }
+
+  @if $query == xl {
+    @media (min-width: 1280px) { @content; }
+  }
+
+  @if $query == xxl {
+    @media (min-width: 1536px) { @content; }
+  }
+}

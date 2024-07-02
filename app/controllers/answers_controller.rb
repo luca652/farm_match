@@ -8,27 +8,41 @@ class AnswersController < ApplicationController
   def create_answers
     @job = Job.find(params[:job_id])
 
-    raise
-    @answers = []
-    answers_params.each do |index, answer|
-      @answers << Answer.new(answer_params(answer))
-    end
 
-    if @answers.all?(&:save!)
+    # @answers = []
+    # answers_params.each do |index, answer|
+    #   @answers << Answer.new(answer_params(answer))
+    # end
+
+
+    begin
+      Answer.transaction do
+        @answers = Service.create!(answers_params)
+      end
+
       redirect_to job_path(@job)
-    else
-      @services = @job.services
+
+    rescue ActiveRecord::RecordInvalid => exception
+      @errors = exception.record.errors
       render :new_answers, status: :unprocessable_entity
     end
+
   end
 
   private
 
   def answers_params
-    params.require(:answers)
-  end
+    params.require(:answers).permit(
 
-  def answer_params(answer)
-    answer.permit(:service_id, :kind, :label, details: [:unit, :value, :answer, :description, :other])
+      [
+        # This allows any number of nested hashes within 'answers'
+        # treating it as an array of hashes
+        :kind,
+        :service_id,
+        :label,
+        [ details: [:answer, :unit, :value, :description] ]
+      ]
+
+  )
   end
 end
