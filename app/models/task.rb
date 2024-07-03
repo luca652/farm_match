@@ -31,6 +31,7 @@ class Task < ApplicationRecord
 
   belongs_to :user
   has_many :services, dependent: :destroy
+  accepts_nested_attributes_for :services
 
   validates :category, :subcategory, :headline, :description, :latitude, :longitude, presence: true
   validates :category, inclusion: { in: CATEGORIES }

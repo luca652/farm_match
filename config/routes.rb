@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :tasks, only: [:new, :create, :show] do
     collection do
       get :subcategories
+      get :services_options
     end
 
     resources :services, only: [:new, :create, :index] do

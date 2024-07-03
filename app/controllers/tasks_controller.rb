@@ -30,6 +30,16 @@ class TasksController < ApplicationController
     end
   end
 
+  def services_options
+    @target = params[:target]
+    @subcategory = params[:subcategory]
+    @services = Service::SERVICES[@subcategory]
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   private
 
   def task_params

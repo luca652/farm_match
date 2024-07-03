@@ -39,6 +39,7 @@ class Service < ApplicationRecord
 
   belongs_to :task
   has_many :answers
+
   validates :name, presence: true
   validates :name, uniqueness: { scope: :task_id, message: "should be unique for the task" }
   # validate :valid_service_for_task
