@@ -11,7 +11,7 @@ export default class extends Controller {
   // connect() {
   //   console.log(this.formBuilderValue)
   // }
-  setSubcategoryOptions(event) {
+  setOptionsForSubcategory(event) {
 
     let category = encodeURIComponent(event.target.value)
     let target = this.subcategoryTarget.id

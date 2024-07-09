@@ -23,10 +23,10 @@ class TasksController < ApplicationController
     end
   end
 
-  def subcategories
+  def options_for_subcategory
     @target = params[:target]
     @category = params[:category]
-    @subcategories = Task::SUBCATEGORIES[@category]
+    @options_for_subcategory = Task::SUBCATEGORIES[@category]
 
     respond_to do |format|
       format.turbo_stream

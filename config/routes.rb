@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :tasks do
     collection do
-      get :subcategories
+      get :options_for_subcategory
       get :options_for_services
     end
 

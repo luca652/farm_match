@@ -23,22 +23,22 @@
           <%= f.input :latitude, wrapper_html: { class: "hidden"}, input_html: { data: { map_target: "latitude"}} %>
       </div>
 
-      <div data-controller="category"
-           data-category-subcategories-url-value="<%= subcategories_tasks_path %>"
-           data-category-services-url-value="<%= options_for_services_tasks_path  %>">
+      <div data-controller="options"
+           data-options-subcategories-url-value="<%= options_for_subcategory_tasks_path %>"
+           data-options-services-url-value="<%= options_for_services_tasks_path  %>">
 
         <%= f.input :category, collection: @categories,
                                   prompt: "- Select -",
-                              input_html: { data: { action: "change->category#setSubcategoryOptions", category_target: "category" }, class: "form-field" } %>
+                              input_html: { data: { action: "change->options#setOptionsForSubcategory", options_target: "category" }, class: "form-field" } %>
 
         <%= f.input :subcategory,
                     collection: [],
                     prompt: "- Select -",
-                    input_html: { data: { category_target: "subcategory", action: "change->category#setOptionsForServices"}, class: "form-field" } %>
+                    input_html: { data: { options_target: "subcategory", action: "change->options#setOptionsForServices"}, class: "form-field" } %>
 
         <h4>Services</h4>
 
-        <div data-category-target="services" id="services">
+        <div data-options-target="services" id="services">
           <%= render partial: "service_fields", locals: { f: f } %>
         </div>
       </div>
