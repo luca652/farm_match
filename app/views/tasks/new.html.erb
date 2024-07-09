@@ -36,10 +36,11 @@
                     prompt: "- Select -",
                     input_html: { data: { options_target: "subcategory", action: "change->options#setOptionsForServices"}, class: "form-field" } %>
 
-        <h4>Services</h4>
-
-        <div data-options-target="services" id="services">
-          <%= render partial: "service_fields", locals: { f: f } %>
+        <div class="hidden" data-options-target="servicesField">
+          <h4>Services</h4>
+          <div data-options-target="services" id="options_for_services">
+            <%= render partial: "fields_for_services" %>
+          </div>
         </div>
       </div>
 
