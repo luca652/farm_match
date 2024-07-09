@@ -11,18 +11,15 @@
   </div>
 <% end %>
 
-<%= simple_form_for :services,
-                    url: "/tasks/#{@task.id}/services",
-                    method: "post",
-                    html: { name: "services[]", data: { controller: "checkbox", action: "submit->checkbox#preventEmptySubmission" } } do |f| %>
-  <div>
-    <% @services_options.each_with_index do |service, index| %>
+<%= simple_form_for @task, html: { class: "form" } do |f| %>
+  <% @services_options.each_with_index do |service, index| %>
+    <%= f.fields_for :services, @task.services.build do |service_form| %>
       <div>
-        <%= check_box_tag 'services[][name]', service, false, id: "service_#{index}", data: { checkbox_target: "checkbox", action: "click->checkbox#consoleLogChecked" } %>
-        <%= label_tag "service_#{index}", service %>
+        <%= service_form.check_box :name, {}, service, nil %>
+        <%= service_form.label :name, service %>
       </div>
     <% end %>
-  </div>
+  <% end %>
 
   <%= f.submit "Create Services" %>
 <% end %>

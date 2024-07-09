@@ -1,0 +1,6 @@
+<% @options_for_services.each_with_index do |service, index| %>
+  <div>
+    <input type="checkbox" name="task[services_attributes][<%= index %>][name]" id="task_services_attributes_<%= index %>" value="<%= service %>">
+    <label for="task_services_attributes_<%= index %>"><%= service %></label>
+  </div>
+<% end %>

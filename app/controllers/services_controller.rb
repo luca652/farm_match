@@ -6,6 +6,7 @@ class ServicesController < ApplicationController
   end
 
   def create
+    raise
     @task = Task.find(params[:task_id])
     @services_options = Service::SERVICES[@task.subcategory]
 

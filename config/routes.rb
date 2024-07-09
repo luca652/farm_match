@@ -4,13 +4,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  resources :tasks, only: [:new, :create, :show] do
+  resources :tasks do
     collection do
       get :subcategories
-      get :services_options
+      get :options_for_services
     end
 
-    resources :services, only: [:new, :create, :index] do
+    resources :services do
       collection do
         get 'new_answers', to: 'answers#new_answers'
         post 'create_answers', to: 'answers#create_answers'
