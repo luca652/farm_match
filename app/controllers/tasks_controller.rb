@@ -27,8 +27,7 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
     @options_for_services = Service::SERVICES[@task.subcategory]
-    @selected_services = @task.services
-
+    @checked_services = set_checked_services(@task, @options_for_services)
   end
 
 
@@ -56,5 +55,12 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude, services_attributes: [:name])
+  end
+
+  def set_checked_services(task, options_for_services)
+    checked_services = options_for_services.select do |service|
+      task.services.any? { |s| s.name == service }
+    end
+    checked_services
   end
 end

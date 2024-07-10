@@ -1,11 +1,10 @@
 <% @options_for_services.each_with_index do |service, index| %>
   <div>
-    <% checked = @task.services.any? { |s| s.name == service } if @task%>
     <input type="checkbox"
            name="task[services_attributes][<%= index %>][name]"
            id="task_services_attributes_<%= index %>"
            value="<%= service %>"
-           <%= 'checked="checked"' if checked %> >
+           <%= 'checked="checked"' if @checked_services && @checked_services.include?(service) %>>
     <label for="task_services_attributes_<%= index %>"><%= service %></label>
   </div>
 <% end %>
