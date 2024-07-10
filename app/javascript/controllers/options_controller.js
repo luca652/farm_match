@@ -8,6 +8,14 @@ export default class extends Controller {
     servicesUrl: String
   }
 
+  // checks subcategory field on page load and toggles visibility of services options if a value is selected
+  // when re-rendering after failed validations ensures UI is what user expects
+  connect() {
+    if (this.subcategoryTarget !== "") {
+      this.toggleServicesField(true)
+    }
+  }
+
   setOptionsForSubcategory(event) {
     let category = encodeURIComponent(event.target.value)
     let target = this.subcategoryTarget.id

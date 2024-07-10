@@ -32,8 +32,9 @@
                               input_html: { data: { action: "change->options#setOptionsForSubcategory", options_target: "category" }, class: "form-field" } %>
 
         <%= f.input :subcategory,
-                    collection: [],
+                    collection: @options_for_subcategory,
                     prompt: "- Select -",
+                    selected: @task.subcategory,
                     input_html: { data: { options_target: "subcategory", action: "change->options#setOptionsForServices"}, class: "form-field" } %>
 
         <div class="hidden" data-options-target="servicesField">

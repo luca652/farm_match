@@ -7,6 +7,7 @@ class TasksController < ApplicationController
   def new
     @task = Task.new
     @categories = Task::CATEGORIES
+    @options_for_subcategory = []
     @options_for_services = []
   end
 
@@ -17,7 +18,8 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to task_path(@task), notice: 'Task was successfully created'
     else
-      @options_for_services = []
+      @task.category.present? ? @options_for_subcategory = Task::SUBCATEGORIES[@task.category] : @options_for_subcategory = []
+      @task.subcategory.present? ? @options_for_services = Service::SERVICES[@task.subcategory] : @options_for_services = []
       render :new, status: :unprocessable_entity
     end
   end
