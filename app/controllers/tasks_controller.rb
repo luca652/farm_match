@@ -31,6 +31,17 @@ class TasksController < ApplicationController
     @checked_services = find_checked_services(@task)
   end
 
+  def update
+    @task = Task.find(params[:id])
+
+    if @task.update(task_params)
+      redirect_to task_path(@task), notice: 'Task was successfully updated'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+
+  end
+
 
   def options_for_subcategory
     @target = params[:target]
