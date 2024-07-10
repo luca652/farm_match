@@ -20,6 +20,7 @@ class TasksController < ApplicationController
     else
       @task.category.present? ? @options_for_subcategory = Task::SUBCATEGORIES[@task.category] : @options_for_subcategory = []
       @task.subcategory.present? ? @options_for_services = Service::SERVICES[@task.subcategory] : @options_for_services = []
+      @checked_services = find_checked_services(@task)
       render :new, status: :unprocessable_entity
     end
   end
@@ -27,7 +28,7 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
     @options_for_services = Service::SERVICES[@task.subcategory]
-    @checked_services = set_checked_services(@task, @options_for_services)
+    @checked_services = find_checked_services(@task)
   end
 
 
@@ -57,10 +58,7 @@ class TasksController < ApplicationController
     params.require(:task).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude, services_attributes: [:name])
   end
 
-  def set_checked_services(task, options_for_services)
-    checked_services = options_for_services.select do |service|
-      task.services.any? { |s| s.name == service }
-    end
-    checked_services
+  def find_checked_services(task)
+    task.services.map { |s| s.name }
   end
 end
