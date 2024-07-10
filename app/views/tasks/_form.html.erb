@@ -1,37 +1,53 @@
-<h1>New Task</h1>
+<div class="container">
+  <div class="form-container">
 
-<%= simple_form_for @task do |f| %>
+    <h1>New Task</h1>
 
-  <% if @task.errors.any? %>
-    <div class="error-message">
-      <%= @task.errors.full_messages.to_sentence.capitalize %>
-    </div>
-  <% end %>
+    <%= simple_form_for @task, html: { class: "form" } do |f| %>
 
+      <% if @task.errors.any? %>
+        <div class="error-message">
+          <%= @task.errors.full_messages.to_sentence.capitalize %>
+        </div>
+      <% end %>
 
-  <%= f.input :headline %>
-  <%= f.input :description %>
-  <%= f.hidden_field :user_id, value: 1 %>
+      <%= f.input :headline, input_html: { autofocus: true, class: "form-field" } %>
+      <%= f.input :description, input_html: { class: "form-field" } %>
+      <%= f.hidden_field :user_id, value: 1 %>
 
-  <div data-controller="category" data-category-url-value="<%= subcategories_tasks_path %>">
-    <div>
-      <%= f.input :category, collection: @categories,
-                  input_html: { data: { action: "change->category#subcategory", category_target: "category" } } %>
-    </div>
-    <div>
-      <%= f.input :subcategory,
-                  collection: [],
-                  input_html: { data: { category_target: "subcategory"} } %>
-    </div>
-  </div>
+      <h4>Where do you want your task done?</h4>
+      <div data-controller="map" data-map-api-key-value="<%= Rails.application.credentials.mapbox_token %>">
+        <div style="height: 300px;" id="map"></div>
+        <%# <pre id="coordinates" class="coordinates" data-map-target="coordinates"></pre> %>
+          <%= f.input :longitude, wrapper_html: { class: "hidden"}, input_html: { data: { map_target: "longitude"}} %>
+          <%= f.input :latitude, wrapper_html: { class: "hidden"}, input_html: { data: { map_target: "latitude"}} %>
+      </div>
 
+      <div data-controller="options"
+           data-options-subcategories-url-value="<%= options_for_subcategory_tasks_path %>"
+           data-options-services-url-value="<%= options_for_services_tasks_path  %>">
 
-  <div>
-    <h4>Services</h4>
-    <%= f.fields_for :services, @services_options do |s| %>
-        <%= s.check_box :name%>
+        <%= f.input :category, collection: @categories,
+                                  prompt: "- Select -",
+                              input_html: { data: { action: "change->options#setOptionsForSubcategory", options_target: "category" }, class: "form-field" } %>
+
+        <%= f.input :subcategory,
+                    collection: @options_for_subcategory,
+                    prompt: "- Select -",
+                    selected: @task.subcategory,
+                    input_html: { data: { options_target: "subcategory", action: "change->options#setOptionsForServices"}, class: "form-field" } %>
+
+        <div class="hidden" data-options-target="servicesField">
+          <h4>Services</h4>
+          <div data-options-target="services" id="options_for_services">
+            <%= render partial: "fields_for_services" %>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-submit">
+        <%= f.button :submit, 'Create Task', class: "btn--primary" %>
+      </div>
     <% end %>
   </div>
-
-  <%= f.button :submit, 'Create Task' %>
-<% end %>
+</div>

@@ -24,6 +24,14 @@ class TasksController < ApplicationController
     end
   end
 
+  def edit
+    @task = Task.find(params[:id])
+    @options_for_services = Service::SERVICES[@task.subcategory]
+    @selected_services = @task.services
+
+  end
+
+
   def options_for_subcategory
     @target = params[:target]
     @category = params[:category]
