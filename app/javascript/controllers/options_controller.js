@@ -11,7 +11,7 @@ export default class extends Controller {
   // checks subcategory field on page load and toggles visibility of services options if a value is selected
   // when re-rendering after failed validations ensures UI is what user expects
   connect() {
-    if (this.subcategoryTarget !== "") {
+    if (this.subcategoryTarget.value !== "") {
       this.toggleServicesField(true)
     }
   }
