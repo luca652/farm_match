@@ -9,6 +9,7 @@ class TasksController < ApplicationController
     @categories = Task::CATEGORIES
     @options_for_subcategory = []
     @options_for_services = []
+
   end
 
   def create
@@ -29,7 +30,6 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @options_for_services = Service::SERVICES[@task.subcategory]
     @checked_services = find_checked_services(@task, @options_for_services)
-    raise
   end
 
   def update
@@ -38,6 +38,8 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to task_path(@task), notice: 'Task was successfully updated'
     else
+      @options_for_services = Service::SERVICES[@task.subcategory]
+      @checked_services = find_checked_services(@task, @options_for_services)
       render :edit, status: :unprocessable_entity
     end
 
@@ -67,10 +69,10 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude, services_attributes: [:name])
+    params.require(:task).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude, services_attributes: [:name, :id, :_destroy])
   end
 
   def find_checked_services(task, options_for_services)
-    task.services.map { |service| service if options_for_services.include?(service.name) }
+    task.services.select { |service| options_for_services.include?(service.name) }
   end
 end
