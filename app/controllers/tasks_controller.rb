@@ -28,6 +28,8 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:id])
+    @categories = Task::CATEGORIES
+    @options_for_subcategory = Task::SUBCATEGORIES[@task.category]
     @options_for_services = Service::SERVICES[@task.subcategory]
     @checked_services = find_checked_services(@task, @options_for_services)
   end
