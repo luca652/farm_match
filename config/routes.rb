@@ -6,8 +6,10 @@ Rails.application.routes.draw do
 
   resources :tasks do
     collection do
+      get :new_step_one
+      post :create_step_one
+      get :new_step_two
       get :options_for_subcategory
-      get :options_for_services
     end
 
     resources :services do
