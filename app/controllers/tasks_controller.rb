@@ -14,21 +14,21 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     if @task.valid?
       session[:task_params] = task_params
-      redirect_to new_step_two_task_path
+      redirect_to new_step_two_tasks_path
     else
-      render :new_step_one
+      render :new_step_one, status: :unprocessable_entity
     end
   end
 
   def new_step_two
     @task = Task.new(session[:task_params])
-    @services = Service::SERVICES[@task.subcategory]
+    @options_for_services = Service::SERVICES[@task.subcategory]
+    @task.services.build(@options_for_services.map { |service| { name: service } })
   end
 
   def create
     @task = Task.new(session[:task_params])
-    @task.services_attributes = params[:task][:services_attributes]
-
+    @task.assign_attributes(task_params)
     if @task.save
       session.delete(:task_params)
       redirect_to task_path(@task), notice: 'Task was successfully created'
@@ -37,6 +37,7 @@ class TasksController < ApplicationController
       render :new_step_two, status: :unprocessable_entity
     end
   end
+
   # def new
   #   @task = Task.new
   #   @categories = Task::CATEGORIES

@@ -38,7 +38,7 @@ class Task < ApplicationRecord
   validates :subcategory, inclusion: { in: SUBCATEGORIES.values.flatten }
   # inclusion expects an array, but SUBCATEGORIES.values returns an array of arrays --> flatten solves the issue
 
-  validates :services, presence: true
+  # validates :services, presence: true
   validate :valid_subcategory_for_category
   validate :location_is_present
 
