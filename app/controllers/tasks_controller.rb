@@ -21,9 +21,14 @@ class TasksController < ApplicationController
   end
 
   def new_step_two
+    unless session[:task_params]
+      redirect_to new_step_one_tasks_path, alert: 'Please start from the beginning'
+      return
+    end
+
     @task = Task.new(session[:task_params])
     @options_for_services = Service::SERVICES[@task.subcategory]
-    @task.services.build(@options_for_services.map { |service| { name: service } })
+    @task.services.build
   end
 
   def create
@@ -33,7 +38,8 @@ class TasksController < ApplicationController
       session.delete(:task_params)
       redirect_to task_path(@task), notice: 'Task was successfully created'
     else
-      @task.services_attributes = params[:task][:services_attributes]
+      @options_for_services = Service::SERVICES[@task.subcategory]
+      flash.now[:alert] = 'There was an error creating the task.'
       render :new_step_two, status: :unprocessable_entity
     end
   end
