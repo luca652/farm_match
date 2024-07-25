@@ -8,14 +8,6 @@ export default class extends Controller {
     servicesUrl: String
   }
 
-  // checks subcategory field on page load and toggles visibility of services options if a value is selected
-  // when re-rendering after failed validations ensures UI is what user expects
-  connect() {
-    if (this.subcategoryTarget.value !== "") {
-      this.toggleServicesField(true)
-    }
-  }
-
   setOptionsForSubcategory(event) {
     let category = encodeURIComponent(event.target.value)
     let target = this.subcategoryTarget.id
@@ -26,30 +18,5 @@ export default class extends Controller {
     get(`${url}?target=${target}&category=${category}`, {
       responseKind: "turbo-stream"
     })
-  }
-
-  setOptionsForServices(event) {
-    let subcategory = encodeURIComponent(event.target.value)
-    let target = this.servicesTarget.id
-    let url = this.servicesUrlValue
-
-    if (subcategory === "") {
-      this.toggleServicesField(false);
-      return; }
-
-    get(`${url}?target=${target}&subcategory=${subcategory}`, {
-      responseKind: "turbo-stream"
-    })
-
-    this.toggleServicesField(true);
-  }
-
-  toggleServicesField(visible) {
-    const servicesField = this.servicesFieldTarget;
-    if (visible) {
-      servicesField.classList.remove("hidden");
-    } else {
-      servicesField.classList.add("hidden");
-    }
   }
 }
