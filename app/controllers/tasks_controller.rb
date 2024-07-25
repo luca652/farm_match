@@ -77,9 +77,13 @@ class TasksController < ApplicationController
       @checked_services = @task.services
       render :edit, status: :unprocessable_entity
     end
-
   end
 
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+    # redirect_to tasks_path
+  end
 
   def options_for_subcategory
     @target = params[:target]
