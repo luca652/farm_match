@@ -1,6 +1,4 @@
-
 <%= simple_form_for @task, html: { class: "form" } do |f| %>
-
   <% if @task.errors.any? %>
     <div class="error-message">
       <%= @task.errors.full_messages.to_sentence.capitalize %>
@@ -9,15 +7,26 @@
 
   <h3>Select Services:</h3>
   <% @options_for_services.each_with_index do |service, index| %>
+    <% existing_service = @task.services.find_by(name: service) %>
     <div data-controller="service-checkbox">
       <input type="checkbox"
              name="task[services_attributes][<%= index %>][name]"
              id="task_services_attributes_<%= index %>"
              value="<%= service %>"
+             <%= 'checked="checked"' if existing_service %>
              data-action="change->service-checkbox#toggleDestroy">
       <label for="task_services_attributes_<%= index %>"><%= service %></label>
+      <% if existing_service %>
+        <input type="hidden"
+               name="task[services_attributes][<%= index %>][id]"
+               value="<%= existing_service.id %>">
+        <input type="hidden"
+               name="task[services_attributes][<%= index %>][_destroy]"
+               value="0"
+               data-service-checkbox-target="destroyInput">
+      <% end %>
     </div>
   <% end %>
 
-  <%= f.submit "Create Task", class: "btn--primary" %>
+  <%= f.submit "Update Task" %>
 <% end %>

@@ -12,6 +12,12 @@ Rails.application.routes.draw do
       get :options_for_subcategory
     end
 
+    member do
+      get :edit_step_one
+      patch :update_step_one
+      get :edit_step_two
+    end
+
     resources :services do
       collection do
         get 'new_answers', to: 'answers#new_answers'

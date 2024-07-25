@@ -28,7 +28,6 @@ class TasksController < ApplicationController
 
     @task = Task.new(session[:task_params])
     @options_for_services = Service::SERVICES[@task.subcategory]
-    @task.services.build
   end
 
   def create
@@ -65,22 +64,46 @@ class TasksController < ApplicationController
   #   end
   # end
 
-  def edit
+  # def edit
+  #   @task = Task.find(params[:id])
+  #   @categories = Task::CATEGORIES
+  #   @options_for_subcategory = Task::SUBCATEGORIES[@task.category]
+  #   @options_for_services = Service::SERVICES[@task.subcategory]
+  #   @checked_services = find_checked_services(@task, @options_for_services)
+  # end
+
+  def edit_step_one
     @task = Task.find(params[:id])
     @categories = Task::CATEGORIES
     @options_for_subcategory = Task::SUBCATEGORIES[@task.category]
+  end
+
+  def update_step_one
+      @task = Task.find(params[:id])
+    if @task.update(task_params)
+      session[:task_params] = @task.attributes
+      redirect_to edit_step_two_task_path(@task)
+    else
+      render :edit_step_one, status: :unprocessable_entity
+    end
+  end
+
+  def edit_step_two
+    @task = Task.find(params[:id])
     @options_for_services = Service::SERVICES[@task.subcategory]
-    @checked_services = find_checked_services(@task, @options_for_services)
+    @checked_services = @task.services
   end
 
   def update
     @task = Task.find(params[:id])
 
+    remove_invalid_services(@task)
+
     if @task.update(task_params)
       redirect_to task_path(@task), notice: 'Task was successfully updated'
     else
       @options_for_services = Service::SERVICES[@task.subcategory]
-      @checked_services = find_checked_services(@task, @options_for_services)
+      @checked_services = @task.services
       render :edit, status: :unprocessable_entity
     end
 
@@ -113,7 +136,10 @@ class TasksController < ApplicationController
     params.require(:task).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude, services_attributes: [:name, :id, :_destroy])
   end
 
-  def find_checked_services(task, options_for_services)
-    task.services.select { |service| options_for_services.include?(service.name) }
+  def remove_invalid_services(task)
+    valid_services = Service::SERVICES[task.subcategory]
+    task.services.each do |service|
+      service.mark_for_destruction unless valid_services.include?(service.name)
+    end
   end
 end

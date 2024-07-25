@@ -1,5 +1,5 @@
 
-<%= simple_form_for @task, html: { class: "form" } do |f| %>
+<%= simple_form_for @task, url: @task.new_record? ? tasks_path : task_path(@task), html: { class: "form" } do |f| %>
 
   <% if @task.errors.any? %>
     <div class="error-message">
@@ -35,5 +35,5 @@
 
     <% end %>
 
-  <%= f.submit task.new_record? ? "Create Task" : "Update Task" %>
+  <%= f.submit @task.new_record? ? "Create Task" : "Update Task" %>
 <% end %>
