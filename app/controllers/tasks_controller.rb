@@ -43,35 +43,6 @@ class TasksController < ApplicationController
     end
   end
 
-  # def new
-  #   @task = Task.new
-  #   @categories = Task::CATEGORIES
-  #   @options_for_subcategory = []
-  #   @options_for_services = []
-  # end
-
-  # def create
-  #   @task = Task.new(task_params)
-  #   @categories = Task::CATEGORIES
-
-  #   if @task.save
-  #     redirect_to task_path(@task), notice: 'Task was successfully created'
-  #   else
-  #     @task.category.present? ? @options_for_subcategory = Task::SUBCATEGORIES[@task.category] : @options_for_subcategory = []
-  #     @task.subcategory.present? ? @options_for_services = Service::SERVICES[@task.subcategory] : @options_for_services = []
-  #     @checked_services = find_checked_services(@task, @options_for_services)
-  #     render :new, status: :unprocessable_entity
-  #   end
-  # end
-
-  # def edit
-  #   @task = Task.find(params[:id])
-  #   @categories = Task::CATEGORIES
-  #   @options_for_subcategory = Task::SUBCATEGORIES[@task.category]
-  #   @options_for_services = Service::SERVICES[@task.subcategory]
-  #   @checked_services = find_checked_services(@task, @options_for_services)
-  # end
-
   def edit_step_one
     @task = Task.find(params[:id])
     @categories = Task::CATEGORIES
@@ -114,16 +85,6 @@ class TasksController < ApplicationController
     @target = params[:target]
     @category = params[:category]
     @options_for_subcategory = Task::SUBCATEGORIES[@category]
-
-    respond_to do |format|
-      format.turbo_stream
-    end
-  end
-
-  def options_for_services
-    @target = params[:target]
-    @subcategory = params[:subcategory]
-    @options_for_services = Service::SERVICES[@subcategory]
 
     respond_to do |format|
       format.turbo_stream
