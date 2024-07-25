@@ -6,12 +6,14 @@ class TasksController < ApplicationController
 
   def new_step_one
     @task = Task.new
+    @task.current_step = 'step_one'
     @categories = Task::CATEGORIES
     @options_for_subcategory = []
   end
 
   def create_step_one
     @task = Task.new(task_params)
+    @task.current_step = 'step_one'
     if @task.valid?
       session[:task_params] = task_params
       redirect_to new_step_two_tasks_path
@@ -27,11 +29,13 @@ class TasksController < ApplicationController
     end
 
     @task = Task.new(session[:task_params])
+    @task.current_step = 'step_two'
     @options_for_services = Service::SERVICES[@task.subcategory]
   end
 
   def create
     @task = Task.new(session[:task_params])
+    @task.current_step = 'step_two'
     @task.assign_attributes(task_params)
     if @task.save
       session.delete(:task_params)
@@ -75,7 +79,7 @@ class TasksController < ApplicationController
     else
       @options_for_services = Service::SERVICES[@task.subcategory]
       @checked_services = @task.services
-      render :edit, status: :unprocessable_entity
+      render :edit_step_two, status: :unprocessable_entity
     end
   end
 
@@ -98,7 +102,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude, services_attributes: [:name, :id, :_destroy])
+    params.fetch(:task, {}).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude, services_attributes: [:id, :name, :_destroy])
   end
 
   def remove_invalid_services(task)
