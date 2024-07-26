@@ -28,13 +28,13 @@
 
         <%= f.input :category, collection: @categories,
                                   prompt: "- Select -",
-                              input_html: { data: { action: "change->options#setOptionsForSubcategory", options_target: "category" }, class: "form-field" } %>
+                              input_html: { data: { action: "change->options#setOptionsForSubcategory" }, class: "form-field" } %>
 
         <%= f.input :subcategory,
                     collection: @options_for_subcategory,
                     prompt: "- Select -",
-                    selected: @task.subcategory,
-                    input_html: { data: { options_target: "subcategory", action: "change->options#setOptionsForServices"}, class: "form-field" } %>
+                    input_html: { data: { options_target: "subcategory"}, class: "form-field" },
+                    include_blank: false %>
       </div>
 
       <div class="form-submit">

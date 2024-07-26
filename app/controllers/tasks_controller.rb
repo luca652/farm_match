@@ -5,10 +5,9 @@ class TasksController < ApplicationController
   end
 
   def new_step_one
-    @task = Task.new
+    session[:task_params] ? @task = Task.new(session[:task_params]) : @task = Task.new
     @task.current_step = 'step_one'
-    @categories = Task::CATEGORIES
-    @options_for_subcategory = []
+    set_categories_and_subcategories
   end
 
   def create_step_one
@@ -18,6 +17,7 @@ class TasksController < ApplicationController
       session[:task_params] = task_params
       redirect_to new_step_two_tasks_path
     else
+      set_categories_and_subcategories
       render :new_step_one, status: :unprocessable_entity
     end
   end
@@ -109,6 +109,15 @@ class TasksController < ApplicationController
     valid_services = Service::SERVICES[task.subcategory]
     task.services.each do |service|
       service.mark_for_destruction unless valid_services.include?(service.name)
+    end
+  end
+
+  def set_categories_and_subcategories
+    @categories = Task::CATEGORIES
+    @options_for_subcategory = if @task.category.present?
+      Task::SUBCATEGORIES[@task.category] || []
+    else
+      []
     end
   end
 end
