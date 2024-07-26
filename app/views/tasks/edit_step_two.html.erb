@@ -1,4 +1,7 @@
 <%= simple_form_for @task, html: { class: "form" } do |f| %>
+
+  <%= link_to "Back", edit_step_one_task_path, class: "btn btn-secondary" %>
+
   <% if @task.errors.any? %>
     <div class="error-message">
       <%= @task.errors.full_messages.to_sentence.capitalize %>
