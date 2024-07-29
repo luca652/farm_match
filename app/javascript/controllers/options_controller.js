@@ -4,13 +4,15 @@ import { get } from "@rails/request.js"
 export default class extends Controller {
   static targets = ["category", "subcategory"]
   static values = {
-    url: String
+    subcategoriesUrl: String,
   }
 
-  subcategory(event) {
+  setOptionsForSubcategory(event) {
     let category = encodeURIComponent(event.target.value)
     let target = this.subcategoryTarget.id
-    let url = this.urlValue
+    let url = this.subcategoriesUrlValue
+
+    if (category === "") { return; }
 
     get(`${url}?target=${target}&category=${category}`, {
       responseKind: "turbo-stream"

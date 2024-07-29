@@ -39,19 +39,20 @@ class Service < ApplicationRecord
 
   belongs_to :task
   has_many :answers
+
   validates :name, presence: true
   validates :name, uniqueness: { scope: :task_id, message: "should be unique for the task" }
-  # validate :valid_service_for_task
+  validate :valid_service_for_task
 
-  # def valid_service_for_task
-  #   subcategory = task.subcategory
+  def valid_service_for_task
+    subcategory = task.subcategory
 
-  #   return if subcategory.blank?
-  #   valid_services = SERVICES[subcategory]
+    return if subcategory.blank?
+    valid_services = SERVICES[subcategory]
 
-  #   unless valid_services.include?(name)
-  #     errors.add(:name, "is not valid for this task")
-  #   end
-  # end
+    unless valid_services.include?(name)
+      errors.add(:name, "is not valid for this task")
+    end
+  end
 
 end
