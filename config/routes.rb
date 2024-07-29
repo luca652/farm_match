@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       get :edit_step_one
       patch :update_step_one
       get :edit_step_two
+      get :description
+      patch :update_description
     end
 
     resources :services do

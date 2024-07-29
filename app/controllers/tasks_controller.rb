@@ -39,7 +39,7 @@ class TasksController < ApplicationController
     @task.assign_attributes(task_params)
     if @task.save
       session.delete(:task_params)
-      redirect_to task_path(@task), notice: 'Task was successfully created'
+      redirect_to description_task_path(@task), notice: 'Task was successfully created'
     else
       @options_for_services = Service::SERVICES[@task.subcategory]
       flash.now[:alert] = 'There was an error creating the task.'
@@ -75,11 +75,26 @@ class TasksController < ApplicationController
     remove_invalid_services(@task)
 
     if @task.update(task_params)
-      redirect_to task_path(@task), notice: 'Task was successfully updated'
+      redirect_to description_task_path(@task), notice: 'Task was successfully updated'
     else
       @options_for_services = Service::SERVICES[@task.subcategory]
       @checked_services = @task.services
       render :edit_step_two, status: :unprocessable_entity
+    end
+  end
+
+  def description
+    @task = Task.find(params[:id])
+  end
+
+  def update_description
+    @task = Task.find(params[:id])
+
+    if @task.update(task_params)
+      session.delete(:task_params)
+      redirect_to task_path(@task), notice: 'Description was successfully added to your task'
+    else
+      render :description, status: :unprocessable_entity
     end
   end
 

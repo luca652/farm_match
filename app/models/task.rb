@@ -34,7 +34,7 @@ class Task < ApplicationRecord
   has_many :services, dependent: :destroy
   accepts_nested_attributes_for :services, allow_destroy: true
 
-  validates :category, :subcategory, :headline, :description, presence: true
+  validates :category, :subcategory, :headline, presence: true
   validates :category, inclusion: { in: CATEGORIES }
   validates :subcategory, inclusion: { in: SUBCATEGORIES.values.flatten }
   validates :services, presence: true, unless: :step_one?

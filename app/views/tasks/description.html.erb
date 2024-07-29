@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="form-container">
+    <%= simple_form_for @task, url: update_description_task_path(@task), html: { class: "form" } do |f| %>
+      <% if @task.errors.any? %>
+        <div class="error-message">
+          <%= @task.errors.full_messages.to_sentence.capitalize %>
+        </div>
+      <% end %>
+
+      <%= f.input :description, input_html: { autofocus: true, class: "form-field" } %>
+
+      <div class="form-submit">
+      <%= f.button :submit, "Save Description", class: "btn--primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>
