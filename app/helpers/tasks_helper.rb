@@ -10,4 +10,8 @@ module TasksHelper
   def submit_text
     @task.new_record? ? 'Create Task' : 'Update Task'
   end
+
+  def submit_text_step_two
+    @task.new_record? ? 'Add Services' : 'Update Services'
+  end
 end
