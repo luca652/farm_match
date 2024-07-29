@@ -1,8 +1,8 @@
 <div class="container">
   <div class="form-container">
-    <%= simple_form_for @task, html: { class: "form" } do |f| %>
+    <%= simple_form_for @task, url: url_for_step_two, html: { class: "form" } do |f| %>
 
-      <%= link_to "Back", url_for_back_button %>
+      <%= link_to "Back", back_to_step_one %>
 
       <% if @task.errors.any? %>
         <div class="error-message">
