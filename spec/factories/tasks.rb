@@ -9,7 +9,7 @@ FactoryBot.define do
     association :user
 
     after(:build) do |task|
-      task.services << build(:service, task: task)
+      task.services << build(:service, task: task) unless task.services.any?
     end
   end
 end
