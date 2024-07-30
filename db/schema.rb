@@ -10,15 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_02_154736) do
-  create_table "answers", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2024_07_30_133117) do
+  create_table "questions", force: :cascade do |t|
     t.string "label"
     t.integer "service_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.json "details", default: {}
     t.integer "kind"
-    t.index ["service_id"], name: "index_answers_on_service_id"
+    t.index ["service_id"], name: "index_questions_on_service_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -48,7 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_02_154736) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "answers", "services"
+  add_foreign_key "questions", "services"
   add_foreign_key "services", "tasks"
   add_foreign_key "tasks", "users"
 end

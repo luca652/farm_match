@@ -38,7 +38,8 @@ class Service < ApplicationRecord
   SERVICES.values.each(&:freeze)
 
   belongs_to :task
-  has_many :answers
+  has_many :questions, dependent: :destroy
+  accepts_nested_attributes_for :questions
 
   validates :name, presence: true
   validates :name, uniqueness: { scope: :task_id, message: "should be unique for the task" }
