@@ -1,4 +1,4 @@
-class Answer < ApplicationRecord
+class Question < ApplicationRecord
   belongs_to :service
 
   validates :label, presence: true

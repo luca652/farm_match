@@ -1,11 +1,11 @@
-class AnswersController < ApplicationController
+class QuestionsController < ApplicationController
 
-  def new_answers
+  def new_questions
     @task = Task.find(params[:task_id])
     @services = @task.services
   end
 
-  def create_answers
+  def create_questions
     @task = Task.find(params[:task_id])
 
 
@@ -31,7 +31,7 @@ class AnswersController < ApplicationController
 
   private
 
-  def answers_params
+  def questions_params
     params.require(:answers).permit(
 
       [
