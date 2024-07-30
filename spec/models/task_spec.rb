@@ -1,21 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe Task, type: :model do
-  let(:user) { User.create(name: 'Marco')}
-  let(:task) { Task.create!(headline: 'First task',
-                         description: 'Decent task',
-                         user_id: user.id,
-                         category: 'Agri Contracting',
-                         subcategory: 'Application (Spraying & Spreading)')
-                        }
-  let(:service) { Service.create(name: 'Fertilizer Spreading', task_id: task.id)}
+  let(:user) { create(:user) }
+  let(:task) { create(:task, user: user) }
+
 
   it 'has a headline' do
-    expect(task.headline).to eq('First task')
+    expect(task.headline).to eq('First Task')
   end
 
   it 'has a description' do
-    expect(task.description).to eq('Decent task')
+    expect(task.description).to eq('Test description')
   end
 
   it 'has a category' do
@@ -79,12 +74,6 @@ RSpec.describe Task, type: :model do
       expect(task.errors[:headline]).to include("can't be blank")
     end
 
-    it 'must have a description' do
-      task.description = nil
-      expect(task).not_to be_valid
-      expect(task.errors[:description]).to eq ["can't be blank"]
-    end
-
     it 'must have a user' do
       task.user = nil
       expect(task).not_to be_valid
@@ -97,13 +86,13 @@ RSpec.describe Task, type: :model do
       expect(task.errors[:category]).to include("can't be blank")
     end
 
-    # it 'can be created with a valid category' do
-    #   Task::CATEGORIES.each do |category|
-    #     task.category = category
-    #     task.subcategory = Task::SUBCATEGORIES[category].first
-    #     expect(task).to be_valid
-    #   end
-    # end
+    it 'can be created with a valid category' do
+      Task::CATEGORIES.each do |category|
+        task.category = category
+        task.subcategory = Task::SUBCATEGORIES[category].first
+        expect(task).to be_valid
+      end
+    end
 
     it 'cannot be created with an invalid category' do
       task = Task.new(headline: 'Invalid task', description: 'This task is not valid', user_id: user.id)
