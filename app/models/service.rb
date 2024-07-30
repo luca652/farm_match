@@ -1,4 +1,5 @@
 class Service < ApplicationRecord
+  include QuestionnaireGenerator
 
   SERVICES = {
     'Application (Spraying & Spreading)' => ['Fertilizer Spreading', 'Lime Spreading', 'Spraying (specialised)', 'Spraying (standard)'],
@@ -44,6 +45,14 @@ class Service < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: { scope: :task_id, message: "should be unique for the task" }
   validate :valid_service_for_task
+
+  after_create :generate_questions
+
+  private
+
+  def generate_questions
+    generate_questions_for_service(self)
+  end
 
   def valid_service_for_task
     subcategory = task.subcategory
