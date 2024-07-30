@@ -16,6 +16,12 @@ RSpec.describe Service, type: :model do
     it 'belongs to a task' do
       expect(service.task).to eq(task)
     end
+
+    it 'belongs to a task' do
+      task = create(:task)
+      service = task.services.first
+      expect(service.task).to eq(task)
+    end
   end
 
   describe 'SERVICES' do
@@ -38,18 +44,35 @@ RSpec.describe Service, type: :model do
     end
   end
 
-  describe 'Validations' do
+  describe 'validations' do
     it 'must have a name' do
       service.name = nil
       expect(service).not_to be_valid
       expect(service.errors[:name]).to include("can't be blank")
     end
 
-    # it 'must have a task' do
-    #   service = Service.new(name: 'Test Name')
-    #   expect(service).not_to be_valid
-    #   expect(service.errors).to include("Task must exist")
-    # end
+    it 'is valid with a valid name for the task subcategory' do
+      task = build(:task, subcategory: 'Application (Spraying & Spreading)')
+      service = task.services.first
+      expect(service).to be_valid
+    end
+
+    it 'is invalid with an invalid name for the task subcategory' do
+      task = build(:task, subcategory: 'Application (Spraying & Spreading)')
+      service = build(:service, task: task, name: 'Cereals - Drilling')
+      task.services << service
+      expect(service).to be_invalid
+      expect(service.errors[:name]).to include("is not valid for this task")
+    end
+
+    it 'prevents creation of service with duplicate name for a task' do
+      task = create(:task)
+      existing_service_name = task.services.first.name
+      duplicate_service = build(:service, task: task, name: existing_service_name)
+
+      expect(duplicate_service).to be_invalid
+      expect(duplicate_service.errors[:name]).to include("should be unique for the task")
+    end
 
     context 'depending on the task it belongs to' do
       it 'can be created with an allowed name' do
@@ -78,39 +101,6 @@ RSpec.describe Service, type: :model do
           expect(service.errors.full_messages).to include("Name is not valid for this task")
         end
       end
-    end
-  end
-
-  describe 'validations' do
-    it 'is valid with a valid name for the task subcategory' do
-      task = build(:task, subcategory: 'Application (Spraying & Spreading)')
-      service = task.services.first
-      expect(service).to be_valid
-    end
-
-    it 'is invalid with an invalid name for the task subcategory' do
-      task = build(:task, subcategory: 'Application (Spraying & Spreading)')
-      service = build(:service, task: task, name: 'Cereals - Drilling')
-      task.services << service
-      expect(service).to be_invalid
-      expect(service.errors[:name]).to include("is not valid for this task")
-    end
-
-    it 'prevents creation of service with duplicate name for a task' do
-      task = create(:task)
-      existing_service_name = task.services.first.name
-      duplicate_service = build(:service, task: task, name: existing_service_name)
-
-      expect(duplicate_service).to be_invalid
-      expect(duplicate_service.errors[:name]).to include("should be unique for the task")
-    end
-  end
-
-  describe 'associations' do
-    it 'belongs to a task' do
-      task = create(:task)
-      service = task.services.first
-      expect(service.task).to eq(task)
     end
   end
 
