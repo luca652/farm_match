@@ -165,7 +165,7 @@ class TasksController < ApplicationController
 
   # Build a task object from session data
   def build_task_from_session
-    Task.new(session[:task_params] || {})
+    @task = Task.new(session[:task_params] || {})
   end
 
   # Save task's attributes to the session
