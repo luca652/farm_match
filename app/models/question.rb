@@ -1,9 +1,11 @@
 class Question < ApplicationRecord
   belongs_to :service
+  store_accessor :answer, :unit, :value
 
-  validates :label, presence: true
+  # validates :unit, presence: true, if: -> { kind.to_sym == :area }
+  # validates :value, presence: true, numericality: true, if: -> { kind.to_sym == :area }
 
-  before_save :convert_and_store_area
+  # before_save :convert_and_store_area
 
   # kind is used to divide questions into categories, so that when iterating in the view
   # the correct mark-up is rendered.
@@ -15,8 +17,7 @@ class Question < ApplicationRecord
                distance: 5,
                short_length: 6,
                long_length: 7,
-               quantity: 8,
-               description: 9
+               quantity: 8
   }.freeze
 
   def convert_and_store_area

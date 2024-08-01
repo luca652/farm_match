@@ -11,6 +11,7 @@ export default class extends Controller {
 
   displayOther(event) {
     const choice = event.target.value;
+    console.log(choice)
     const otherFormField = this.otherTarget;
     if (choice === "Other") {
       otherFormField.classList.remove("hidden");

@@ -1,0 +1,24 @@
+<%= simple_form_for @task, url: submit_questionnaire_task_path(@task), method: :patch do |f| %>
+  <%= f.simple_fields_for :services do |service_form| %>
+    <h3><%= service_form.object.name %></h3>
+    <%= service_form.simple_fields_for :questions do |question_form| %>
+      <% question = question_form.object %>
+      <div class="question-field">
+        <% case question.kind.to_sym %>
+        <% when :multiple_choice %>
+          <%= question_form.input :answer, as: :select, collection: question.options, label: question.wording %>
+        <% when :area %>
+          <%= question_form.input :answer, as: :area, label: question.wording %>
+        <% when :multiple_choice_with_other %>
+          <div data-controller="question">
+          <%= question_form.input :answer, name: "task[services_attributes][#{service_form.index}][questions_attributes][#{question_form.index}][answer][value]", as: :select, collection: question.options, label: question.wording, input_html: { data: { action: "change->question#displayOther"}} %>
+          <%= question_form.input :answer, name: "task[services_attributes][#{service_form.index}][questions_attributes][#{question_form.index}][answer][other]", label: false, input_html: { class: 'other-input'}, wrapper_html: {class: "hidden", data: { question_target: "other"} } %>
+          </div>
+        <% else %>
+          <%= question_form.input :answer, label: question.wording %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+  <%= f.button :submit, 'Update Questionnaire' %>
+<% end %>

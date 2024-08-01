@@ -8,6 +8,7 @@ class TasksController < ApplicationController
   before_action :ensure_task_params, only: [:new_step_two, :create_step_two, :new_step_three, :create]
 
   def show
+    @questions = @task.services.flat_map(&:questions)
   end
 
   # Step 1: Collect basic task information
@@ -72,6 +73,21 @@ class TasksController < ApplicationController
     end
   end
 
+  def show_questionnaire
+    @task = Task.includes(services: :questions).find(params[:id])
+  end
+
+  def submit_questionnaire
+    @task = Task.find(params[:id])
+
+    if @task.update(task_params)
+      redirect_to @task, notice: 'Questionnaire updated successfully'
+    else
+      render :show_questionnaire
+    end
+  end
+
+
   def edit_step_one
     @categories = Task::CATEGORIES
     @options_for_subcategory = Task::SUBCATEGORIES[@task.category]
@@ -134,7 +150,9 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.fetch(:task, {}).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude, services_attributes: [:id, :name, :_destroy])
+    params.fetch(:task, {}).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude,
+                                   services_attributes: [:id, :name, :_destroy,
+                                   questions_attributes: [:id, :answer_title, :kind, :wording, :options, :answer, answer: [:unit, :value]]])
   end
 
   def set_task

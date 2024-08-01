@@ -24,8 +24,8 @@
         </div>
       <% when :area %>
         <div>
-          <%= f.input "[#{service_index}][#{question_index}][details][unit]", collection: question[:options], as: :select, label: question[:wording] %>
-          <%= f.input "[#{service_index}][#{question_index}][details][value]", label: false %>
+          <%= f.input "[#{service_index}][#{question_index}][answer][unit]", collection: question[:options], as: :select, label: question[:wording] %>
+          <%= f.input "[#{service_index}][#{question_index}][answer][value]", label: false %>
         </div>
       <% when :description %>
         <div>

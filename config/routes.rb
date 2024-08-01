@@ -22,6 +22,8 @@ Rails.application.routes.draw do
       get :edit_step_three
       get :description
       patch :update_description
+      get :show_questionnaire
+      patch :submit_questionnaire
     end
 
     resources :services do
