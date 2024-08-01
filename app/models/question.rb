@@ -1,14 +1,17 @@
 class Question < ApplicationRecord
   belongs_to :service
+  # store_accessor: method provided by ActiveRecord in Rails to work with serialized hash attributes,
+  # typically stored in a JSON or JSONB column in the database. It allows you to treat keys within the serialized hash
+  # as if they were regular attributes on the model.
   store_accessor :answer, :unit, :value
 
-  # validates :unit, presence: true, if: -> { kind.to_sym == :area }
-  # validates :value, presence: true, numericality: true, if: -> { kind.to_sym == :area }
+  # the validations are applied conditionally when the answers are provided by the user.
+  # this is necessary because we create all instances of Question connected to a Service with an after_create action in the Service model.
+  # This ensures that the question can be created with answer set to {} without failing the validations.
+  validates :answer, presence: true, if: :answer_provided?
+  validate :validate_answer_based_on_question_kind, if: :answer_provided?
 
-  # before_save :convert_and_store_area
-
-  # kind is used to divide questions into categories, so that when iterating in the view
-  # the correct mark-up is rendered.
+  # kind is used to divide questions into categories, so that when iterating in the view the correct mark-up is rendered.
   enum kind: { multiple_choice: 0,
                multiple_choice_with_other: 1,
                multiple_choice_with_effect_on_next: 2,
@@ -19,6 +22,42 @@ class Question < ApplicationRecord
                long_length: 7,
                quantity: 8
   }.freeze
+
+  # Given that the answer attribute is set to JSON and defaults to an empty hash, this method ensures that
+  # when the answer is a string, it is saved in the hash as a hash { value: string } to maintain data consistency
+  def answer=(value)
+    if value.is_a?(String)
+      super(value: value)
+      # super here is the original setter method provided by rails
+    else
+      super(value)
+    end
+  end
+
+  def answer_provided?
+    answer.present? && answer != {}
+  end
+
+  def validate_answer_based_on_question_kind
+    case kind.to_sym
+    when :multiple_choice
+      validate_multiple_choice
+    when :area
+      validate_area
+    when :text
+      validate_text
+    # Add more cases for other question types
+    end
+  end
+
+  def validate_multiple_choice
+    validates :value, presence: true
+  end
+
+  def validate_area
+    validates :unit, presence: true, if: :answer_provided?
+    validates :value, presence: true, numericality: true, if: :answer_provided?
+  end
 
   def convert_and_store_area
     if details["unit"] == "acres"

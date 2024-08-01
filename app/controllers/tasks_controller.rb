@@ -8,6 +8,7 @@ class TasksController < ApplicationController
   before_action :ensure_task_params, only: [:new_step_two, :create_step_two, :new_step_three, :create]
 
   def show
+    @services = @task.services
     @questions = @task.services.flat_map(&:questions)
   end
 
