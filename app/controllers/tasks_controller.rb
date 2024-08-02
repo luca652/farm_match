@@ -79,6 +79,7 @@ class TasksController < ApplicationController
   end
 
   def submit_questionnaire
+    raise
     @task = Task.find(params[:id])
 
     if @task.update(task_params)

@@ -25,12 +25,20 @@ class Question < ApplicationRecord
 
   # Given that the answer attribute is set to JSON and defaults to an empty hash, this method ensures that
   # when the answer is a string, it is saved in the hash as a hash { value: string } to maintain data consistency
-  def answer=(value)
-    if value.is_a?(String)
-      super(value: value)
-      # super here is the original setter method provided by rails
+  def answer=(input)
+    if input.is_a?(Hash) && input.key?(:answer)
+      selected_answer = input[:answer]
+      other_answer = input[:other_answer].presence
+
+      if selected_answer == 'other' && other_answer
+        super(value: other_answer)
+      else
+        super(value: selected_answer)
+      end
+    elsif input.is_a?(String)
+      super(value: input)
     else
-      super(value)
+      super(input)
     end
   end
 
