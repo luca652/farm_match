@@ -79,13 +79,12 @@ class TasksController < ApplicationController
   end
 
   def submit_questionnaire
-    raise
     @task = Task.find(params[:id])
 
     if @task.update(task_params)
       redirect_to @task, notice: 'Questionnaire updated successfully'
     else
-      render :show_questionnaire
+      render :show_questionnaire, status: :unprocessable_entity
     end
   end
 

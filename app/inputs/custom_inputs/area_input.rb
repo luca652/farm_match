@@ -9,7 +9,7 @@ module CustomInputs
           ff.label(:unit, "Unit") +
           ff.select(:unit, object.options, { prompt: "- Select -" }, class: 'area-unit form-field') +
           ff.label(:value, "Value") +
-          ff.number_field(:value, value: object.answer['value'], placeholder: "e.g. 25", class: 'area-value form-field')
+          ff.number_field(:value, value: object.answer['value'], placeholder: "e.g. 25", min: "1", class: 'area-value form-field')
         end
       end
     end

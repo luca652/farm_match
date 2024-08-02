@@ -9,7 +9,7 @@ class Question < ApplicationRecord
   # this is necessary because we create all instances of Question connected to a Service with an after_create action in the Service model.
   # This ensures that the question can be created with answer set to {} without failing the validations.
   validates :answer, presence: true, if: :answer_provided?
-  validate :validate_answer_based_on_question_kind, if: :answer_provided?
+  validates_with JsonAnswerValidator, if: :answer_provided?
 
   # kind is used to divide questions into categories, so that when iterating in the view the correct mark-up is rendered.
   enum kind: { multiple_choice: 0,
@@ -56,15 +56,6 @@ class Question < ApplicationRecord
       validate_text
     # Add more cases for other question types
     end
-  end
-
-  def validate_multiple_choice
-    validates :value, presence: true
-  end
-
-  def validate_area
-    validates :unit, presence: true, if: :answer_provided?
-    validates :value, presence: true, numericality: true, if: :answer_provided?
   end
 
   def convert_and_store_area
