@@ -9,10 +9,11 @@ module CustomInputs
           ff.input(:value,
             collection: object.options,
             prompt: "- Select -",
-            selected: object.answer["unit"] || nil,
+            selected: object.answer["value"] || nil,
             input_html: {
               class: 'area-unit form-field',
-                data: { action: "change->question#toggleOtherField"
+                data: { action: "change->question#toggleOtherField",
+                        question_target: "valueField"
               }
             }
           ) +
@@ -24,7 +25,7 @@ module CustomInputs
             input_html: {
               value: object.answer["other"] || nil,
               class: 'form-field',
-              placeholder: "Please enter"
+              placeholder: "Please fill in with another option"
             }
           )
         end
