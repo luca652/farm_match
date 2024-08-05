@@ -8,15 +8,19 @@
           <div class="question-field">
             <% case question.kind.to_sym %>
             <% when :multiple_choice %>
-              <%= question_form.input :answer, as: :select, collection: question.options, label: question.wording, prompt: "- Select a type of fertilizer -", input_html: { class: "form-field" } %>
+            <fieldset class="form-fieldset form-field">
+              <legend><%= question.wording %></legend>
+              <%= question_form.input :answer,
+                  as: :select,
+                  collection: question.options,
+                  label: false,
+                  prompt: "- Select -",
+                  input_html: { class: "form-field" } %>
+              </fieldset>
             <% when :area %>
               <%= question_form.input :answer, as: :area, label: false %>
             <% when :multiple_choice_with_other %>
-              <div data-controller="question">
-                <%= question_form.input :answer, as: :select, collection: question.options, label: question.wording, input_html: { id: "question_#{question_form.index}_answer", data: { action: "change->question#toggleOtherField" }} %>
-                <%= question_form.input :answer, name: "task[services_attributes][#{service_form.index}][questions_attributes][#{question_form.index}][answer][other]", label: false, input_html: { id: "question_#{question_form.index}_other_answer", class: 'other-input', style: 'display:none;', data: { question_target: "otherInput", action: "input->question#updateAnswer" }} %>
-                <%= hidden_field_tag "task[services_attributes][#{service_form.index}][questions_attributes][#{question_form.index}][answer][value]", question.answer['value'], id: "question_#{question_form.index}_final_answer", data: { question_target: "finalAnswer" } %>
-              </div>
+              <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>
             <% else %>
               <%= question_form.input :answer, label: question.wording %>
             <% end %>

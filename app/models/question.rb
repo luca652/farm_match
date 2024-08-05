@@ -1,5 +1,8 @@
 class Question < ApplicationRecord
+  before_validation :normalize_answer
+
   belongs_to :service
+
   # store_accessor: method provided by ActiveRecord in Rails to work with serialized hash attributes,
   # typically stored in a JSON or JSONB column in the database. It allows you to treat keys within the serialized hash
   # as if they were regular attributes on the model.
@@ -22,25 +25,6 @@ class Question < ApplicationRecord
                long_length: 7,
                quantity: 8
   }.freeze
-
-  # Given that the answer attribute is set to JSON and defaults to an empty hash, this method ensures that
-  # when the answer is a string, it is saved in the hash as a hash { value: string } to maintain data consistency
-  def answer=(input)
-    if input.is_a?(Hash) && input.key?(:answer)
-      selected_answer = input[:answer]
-      other_answer = input[:other_answer].presence
-
-      if selected_answer == 'other' && other_answer
-        super(value: other_answer)
-      else
-        super(value: selected_answer)
-      end
-    elsif input.is_a?(String)
-      super(value: input)
-    else
-      super(input)
-    end
-  end
 
   def answer_provided?
     answer.present? && answer != {}
@@ -68,5 +52,13 @@ class Question < ApplicationRecord
     end
     details.delete("unit")
     details.delete("value")
+  end
+
+  private
+
+  # Given that the answer attribute is set to JSON and defaults to an empty hash, this method ensures that
+  # when the answer is a string, it is saved in the hash as a hash { value: string } to maintain data consistency
+  def normalize_answer
+    self.answer = { value: answer } if answer.is_a?(String)
   end
 end

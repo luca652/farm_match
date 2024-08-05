@@ -84,6 +84,7 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to @task, notice: 'Questionnaire updated successfully'
     else
+      @task = Task.includes(services: :questions).find(params[:id])
       render :show_questionnaire, status: :unprocessable_entity
     end
   end
@@ -153,7 +154,7 @@ class TasksController < ApplicationController
   def task_params
     params.fetch(:task, {}).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude,
                                    services_attributes: [:id, :name, :_destroy,
-                                   questions_attributes: [:id, :answer_title, :kind, :wording, :options, :answer, answer: [:unit, :value]]])
+                                   questions_attributes: [:id, :answer_title, :kind, :wording, :options, :answer, answer: [:unit, :value, :other]]])
   end
 
   def set_task
