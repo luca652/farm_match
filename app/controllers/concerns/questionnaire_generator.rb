@@ -36,7 +36,7 @@ module QuestionnaireGenerator
 
                 }
 
-  FOLLOW_UP_OPTIONS =  {  "Round" => ["Round 120cm", "Round 150cm"], "Square" => ["Square - 120x130cm", "Square - 120x70cm", "Square - 120x90cm", "Square - 80x90cm", "Square - Small Conventional"]}
+  FOLLOW_UP_OPTIONS =  { "What type of bale do you want?" => {"Round" => ["Round 120cm", "Round 150cm"], "Square" => ["Square - 120x130cm", "Square - 120x70cm", "Square - 120x90cm", "Square - 80x90cm", "Square - Small Conventional"]}}
 
   def generate_questions_for_service(service)
     QUESTIONS[service.name].map do |question_attrs|

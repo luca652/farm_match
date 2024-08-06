@@ -10,7 +10,8 @@ module CustomInputs
           label: false,
           selected: object.answer["unit"] || nil,
           input_html: { class: 'unit form-field',
-                        data: { action: "change->options#setOptionsForQuestion" }}
+                        data: { action: "change->options#setOptionsForQuestion",
+                        options_question_wording: object.wording}}
         )
       end
     end
