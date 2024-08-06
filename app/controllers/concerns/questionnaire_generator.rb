@@ -1,7 +1,8 @@
 module QuestionnaireGenerator
   extend ActiveSupport::Concern
 
-  AREA_QUESTION = { kind: :area, wording: "Estimated number of acres/hectacres?", options: ["acres", "hectares"], answer_title: "Area"}
+  AREA_QUESTION = { kind: :unit_and_value, wording: "Estimated number of acres/hectacres?", options: ["acres", "hectares"], answer_title: "Area"}
+  LENGTH_OF_MOWING_QUESTION = { kind: :unit_and_value, wording: "Estimated length of mowing required? (Pick one measurement)", answer_title: "Estimated length", collection: ["Feet", "Meters", "Miles", "Kilometers"]}
 
   QUESTIONS = { 'Fertilizer Spreading' => [{ kind: :multiple_choice, wording: "What type of fertilizer do you want spread?", answer_title: "Type of fertilizer", options: ["granular", "liquid"]},
                                            AREA_QUESTION],
@@ -23,10 +24,19 @@ module QuestionnaireGenerator
                 'Sugar Beet - Drilling' => [AREA_QUESTION],
                 'Vegetables - Drilling' => [{ kind: :multiple_choice_with_other, wording: "What type of vegetables are you sowing?", answer_title: "Type of vegetable", options: [ "Broccoli", "Cabbage", "Carrots", "Cauliflower", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Rhubarb", "Turnip", "Other"]},
                                             AREA_QUESTION],
-                'Fence Erection' => [{ kind: :multiple_choice, wording: "What type of fence do you require?", answer_title: "Type of fence", collection: ["Post and four barb", "Post and three rails", "Post, stock, net and two barb"]},
-                                     { kind: :short_length, wording: "Estimated length of mowing required? (Pick one measurement)", answer_title: "Estimated length", collection: ["Feet", "Meters", "Miles", "Kilometers"]}]
+                # SERVICE: 'Fencing & Hedging'
+                'Fence Erection' => [{ kind: :multiple_choice, wording: "What type of fence do you require?", answer_title: "Type of fence", options: ["Post and four barb", "Post and three rails", "Post, stock, net and two barb"]},
+                                     LENGTH_OF_MOWING_QUESTION],
+                'Hedge Laying' => [LENGTH_OF_MOWING_QUESTION],
+                'Verge Bank Mowing' => [LENGTH_OF_MOWING_QUESTION],
+                # SERVICE: 'Grassland Harvesting'
+                'Baling - FULL SERVICE (Mow, Ted/Rake, Bale, Wrap, Transport etc)' => [AREA_QUESTION, { kind: :multiple_choice_with_effect_on_next, wording: "What type of bale do you want?", answer_title: "Type of bale", options: ["Round", "Square"]},
+                                                                                       { kind: :multiple_choice, wording: "What size of bale?", options: [] }
+                                                                                      ]
 
                 }
+
+  FOLLOW_UP_OPTIONS =  {  "Round" => ["Round 120cm", "Round 150cm"], "Square" => ["Square - 120x130cm", "Square - 120x70cm", "Square - 120x90cm", "Square - 80x90cm", "Square - Small Conventional"]}
 
   def generate_questions_for_service(service)
     QUESTIONS[service.name].map do |question_attrs|

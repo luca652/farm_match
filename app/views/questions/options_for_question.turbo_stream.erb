@@ -1,0 +1,3 @@
+<%= turbo_stream.update @target do %>
+  <%= options_for_select([["- Select -", ""]].concat(@options_for_question)) %>
+<% end %>

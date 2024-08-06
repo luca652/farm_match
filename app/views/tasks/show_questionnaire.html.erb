@@ -1,6 +1,6 @@
 <div class="container">
   <div class="form-container">
-    <%= simple_form_for @task, url: submit_questionnaire_task_path(@task), html: { class: "form" }, method: :patch do |f| %>
+    <%= simple_form_for @task, url: submit_questionnaire_task_path(@task), html: { class: "form", data: { controller: "options", options_questions_url_value: options_for_question_path } },  method: :patch do |f| %>
 
       <%= f.simple_fields_for :services do |service_form| %>
         <h3><%= service_form.object.name %></h3>
@@ -8,19 +8,24 @@
           <% question = question_form.object %>
           <div class="question-field">
 
-            <fieldset class="form-fieldset form-field" data-controller="question">
+            <fieldset class="form-fieldset form-field">
               <legend><%= question.wording %></legend>
                 <% case question.kind.to_sym %>
                 <% when :multiple_choice %>
                   <%= question_form.input :answer,
                       as: :select,
-                      collection: question.options,
+                      collection: question.options || [],
                       label: false,
-                      prompt: "- Select -",
+                      include_blank: "- Select -",
                       selected: question_form.object.answer["value"],
-                      input_html: { class: "form-field" } %>
+                      input_html: { class: "form-field",
+                                    data: { options_target: "followUp"} } %>
                 <% when :multiple_choice_with_other %>
-                  <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>
+                  <div data-controller="question">
+                    <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>
+                  </div>
+                <% when :multiple_choice_with_effect_on_next %>
+                  <%= question_form.input :answer, as: :multiple_choice_with_effect_on_next, label: false %>
                 <% when :unit_and_value %>
                   <%= question_form.input :answer, as: :unit_and_value, label: false %>
                 <% when :quantity %>

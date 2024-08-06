@@ -7,9 +7,11 @@ class JsonAnswerValidator < ActiveModel::Validator
     when "multiple_choice"
       validate_multiple_choice(record, answer)
     when "unit_and_value"
-      validate_area(record, answer)
+      validate_unit_and_value(record, answer)
     when "multiple_choice_with_other"
       validate_multiple_choice_with_other(record, answer)
+    when "multiple_choice_with_effect_on_next"
+      validate_multiple_choice(record, answer)
     # Add more cases for other types as needed
     else
       record.errors.add(:answer, 'has an invalid kind')
@@ -19,6 +21,7 @@ class JsonAnswerValidator < ActiveModel::Validator
   private
 
   def validate_multiple_choice(record, answer)
+
     unless answer.is_a?(Hash)
       record.errors.add(:answer, "There was a problem saving your answer, please try again later.")
       Rails.logger.error("Answer must be a JSON object. Provided answer: #{answer.inspect}")
@@ -51,7 +54,7 @@ class JsonAnswerValidator < ActiveModel::Validator
   end
 
 
-  def validate_area(record, answer)
+  def validate_unit_and_value(record, answer)
     unless answer.is_a?(Hash)
       record.errors.add(:answer, "There was a problem saving your answer, please try again later.")
       Rails.logger.error("Answer must be a JSON object. Provided answer: #{answer.inspect}")
@@ -63,10 +66,7 @@ class JsonAnswerValidator < ActiveModel::Validator
     end
 
     unless answer['value'].is_a?(String) && answer['value'].match?(/\A\d+\z/) && answer['value'].to_i > 0
-      p "number validation failed!!!!"
       record.errors.add(:answer, "You must enter a positive number.")
-      p "record errors: #{record.errors.inspect}"
-      p "answer error: #{}"
     end
   end
 end
