@@ -4,38 +4,27 @@ module CustomInputs
       merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
 
       @builder.fields_for :answer, object.answer || {} do |ff|
-        template.content_tag(:fieldset, class: 'multiple-with-other-input form-field', data: { controller: "question"}) do
-          template.content_tag(:legend, object.wording) +
-          ff.input(:value,
-            label: false,
-            collection: object.options,
-            as: :radio_buttons,
-            prompt: "- Select -",
-            selected: object.answer["value"] || nil,
-            input_html: {
-              class: 'area-unit',
-                data: { action: "change->question#toggleOtherField",
-                        question_target: "valueField"
-              }
-            },
-            wrapper_html: {
-              class: "radio-buttons"
+        ff.collection_radio_buttons(:value, object.options, :to_s, :to_s) do |b|
+          b.radio_button(
+            checked: object.answer["value"] == b.value,
+            data: {
+              action: "change->question#toggleOtherField",
+              question_target: "valueField"
             }
-          ) +
-          ff.input(:other,
-            label: false,
-            wrapper_html: {
-              class: "hidden",
-
-              data: { question_target: "otherInput" }
-            },
-            input_html: {
-              value: object.answer["other"] || nil,
-              class: 'form-field',
-              placeholder: "Please fill in with another option"
-            }
-          )
-        end
+          ) + b.label { b.text }
+        end +
+        ff.input(:other,
+          label: false,
+          wrapper_html: {
+            class: object.answer["value"] == "Other" ? "" : "hidden",
+            data: { question_target: "otherInput" }
+          },
+          input_html: {
+            value: object.answer["other"],
+            class: 'form-field',
+            placeholder: "Please fill in with another option"
+          }
+        )
       end
     end
   end

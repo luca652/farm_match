@@ -84,7 +84,11 @@ class TasksController < ApplicationController
     if @task.update(task_params)
       redirect_to @task, notice: 'Questionnaire updated successfully'
     else
-      @task = Task.includes(services: :questions).find(params[:id])
+      @task.services.each do |service|
+        service.questions.each do |question|
+          question.valid?  # This will trigger the JsonAnswerValidator
+        end
+      end
       render :show_questionnaire, status: :unprocessable_entity
     end
   end

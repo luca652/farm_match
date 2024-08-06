@@ -1,29 +1,34 @@
 <div class="container">
   <div class="form-container">
     <%= simple_form_for @task, url: submit_questionnaire_task_path(@task), html: { class: "form" }, method: :patch do |f| %>
+
       <%= f.simple_fields_for :services do |service_form| %>
         <h3><%= service_form.object.name %></h3>
         <%= service_form.simple_fields_for :questions do |question_form| %>
           <% question = question_form.object %>
           <div class="question-field">
-            <% case question.kind.to_sym %>
-            <% when :multiple_choice %>
-            <fieldset class="form-fieldset form-field">
+
+            <fieldset class="form-fieldset form-field" data-controller="question">
               <legend><%= question.wording %></legend>
-              <%= question_form.input :answer,
-                  as: :select,
-                  collection: question.options,
-                  label: false,
-                  prompt: "- Select -",
-                  input_html: { class: "form-field" } %>
+                <% case question.kind.to_sym %>
+                <% when :multiple_choice %>
+                  <%= question_form.input :answer,
+                      as: :select,
+                      collection: question.options,
+                      label: false,
+                      prompt: "- Select -",
+                      selected: question_form.object.answer["value"],
+                      input_html: { class: "form-field" } %>
+                <% when :area %>
+                  <%= question_form.input :answer, as: :area, label: false %>
+                <% when :multiple_choice_with_other %>
+                  <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>
+                <% else %>
+                  <%= question_form.input :answer, label: question.wording %>
+                <% end %>
+
+
               </fieldset>
-            <% when :area %>
-              <%= question_form.input :answer, as: :area, label: false %>
-            <% when :multiple_choice_with_other %>
-              <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>
-            <% else %>
-              <%= question_form.input :answer, label: question.wording %>
-            <% end %>
           </div>
         <% end %>
       <% end %>
