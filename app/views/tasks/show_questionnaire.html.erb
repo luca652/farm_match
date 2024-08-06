@@ -19,10 +19,15 @@
                       prompt: "- Select -",
                       selected: question_form.object.answer["value"],
                       input_html: { class: "form-field" } %>
-                <% when :area %>
-                  <%= question_form.input :answer, as: :area, label: false %>
                 <% when :multiple_choice_with_other %>
                   <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>
+                <% when :unit_and_value %>
+                  <%= question_form.input :answer, as: :unit_and_value, label: false %>
+                <% when :quantity %>
+                  <%= question_form.input :answer,
+                      label: false,
+                      prompt: "Please enter quantity"
+                   %>
                 <% else %>
                   <%= question_form.input :answer, label: question.wording %>
                 <% end %>

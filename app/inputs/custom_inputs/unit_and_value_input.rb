@@ -1,5 +1,5 @@
 module CustomInputs
-  class AreaInput < SimpleForm::Inputs::Base
+  class UnitAndValueInput < SimpleForm::Inputs::Base
     def input(wrapper_options)
       merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
 
@@ -9,7 +9,7 @@ module CustomInputs
           prompt: "- Select a unit -",
           label: false,
           selected: object.answer["unit"] || nil,
-          input_html: { class: 'area-unit form-field' }
+          input_html: { class: 'unit form-field' }
         ) +
         ff.input(:value,
           as: :numeric,
@@ -17,7 +17,7 @@ module CustomInputs
           input_html: {
             value: object.answer["value"] || nil,
             min: 1,
-            class: 'area-value form-field',
+            class: 'value form-field',
             placeholder: "e.g. 10",
             data: { action: "change->validation#isPositiveInteger" },
             'aria-describedby': "value-description"

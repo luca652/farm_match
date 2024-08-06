@@ -19,10 +19,7 @@ class Question < ApplicationRecord
                multiple_choice_with_other: 1,
                multiple_choice_with_effect_on_next: 2,
                yes_no_with_optional: 3,
-               area: 4,
-               distance: 5,
-               short_length: 6,
-               long_length: 7,
+               unit_and_value: 4,
                quantity: 8
   }.freeze
 

@@ -6,7 +6,7 @@ class JsonAnswerValidator < ActiveModel::Validator
     case kind
     when "multiple_choice"
       validate_multiple_choice(record, answer)
-    when "area"
+    when "unit_and_value"
       validate_area(record, answer)
     when "multiple_choice_with_other"
       validate_multiple_choice_with_other(record, answer)
