@@ -7,20 +7,27 @@ module CustomInputs
         template.content_tag(:fieldset, class: 'multiple-with-other-input form-field', data: { controller: "question"}) do
           template.content_tag(:legend, object.wording) +
           ff.input(:value,
+            label: false,
             collection: object.options,
+            as: :radio_buttons,
             prompt: "- Select -",
             selected: object.answer["value"] || nil,
             input_html: {
-              class: 'area-unit form-field',
+              class: 'area-unit',
                 data: { action: "change->question#toggleOtherField",
                         question_target: "valueField"
               }
+            },
+            wrapper_html: {
+              class: "radio-buttons"
             }
           ) +
           ff.input(:other,
+            label: false,
             wrapper_html: {
               class: "hidden",
-              data: { question_target: "otherInput", action: "input->question#updateAnswer" }
+
+              data: { question_target: "otherInput" }
             },
             input_html: {
               value: object.answer["other"] || nil,

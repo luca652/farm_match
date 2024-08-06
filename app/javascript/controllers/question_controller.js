@@ -6,13 +6,14 @@ export default class extends Controller {
 
   connect() {
     console.log("Question controller connected");
-    this.toggleOtherField();
   }
 
   toggleOtherField(event) {
-    const selectedValue = this.valueFieldTarget.value;
+    const selectedValue = event.target.value;
     const otherFormField = this.otherInputTarget;
 
+
+    console.log(selectedValue)
     if (selectedValue === "Other") {
       otherFormField.classList.remove("hidden");
     } else {
