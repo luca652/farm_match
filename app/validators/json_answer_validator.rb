@@ -6,12 +6,14 @@ class JsonAnswerValidator < ActiveModel::Validator
     case kind
     when "multiple_choice"
       validate_multiple_choice(record, answer)
-    when "unit_and_value"
-      validate_unit_and_value(record, answer)
     when "multiple_choice_with_other"
       validate_multiple_choice_with_other(record, answer)
     when "multiple_choice_with_effect_on_next"
       validate_multiple_choice(record, answer)
+    when "unit_and_value"
+      validate_unit_and_value(record, answer)
+    when "quantity"
+      validate_quantity(record, answer)
     # Add more cases for other types as needed
     else
       record.errors.add(:answer, 'has an invalid kind')
@@ -65,6 +67,14 @@ class JsonAnswerValidator < ActiveModel::Validator
       record.errors.add(:answer, "You must select an option.")
     end
 
+    must_enter_positive_number(record, answer)
+  end
+
+  def validate_quantity(record, answer)
+    must_enter_positive_number(record, answer)
+  end
+
+  def must_enter_positive_number(record, answer)
     unless answer['value'].is_a?(String) && answer['value'].match?(/\A\d+\z/) && answer['value'].to_i > 0
       record.errors.add(:answer, "You must enter a positive number.")
     end

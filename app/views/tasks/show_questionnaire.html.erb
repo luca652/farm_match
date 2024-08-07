@@ -30,8 +30,10 @@
                   <%= question_form.input :answer, as: :unit_and_value, label: false %>
                 <% when :quantity %>
                   <%= question_form.input :answer,
+                      as: :numeric,
                       label: false,
-                      prompt: "Please enter quantity"
+                      prompt: "Please enter quantity",
+                      input_html: { class: "form-field"}
                    %>
                 <% else %>
                   <%= question_form.input :answer, label: question.wording %>

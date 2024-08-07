@@ -22,7 +22,7 @@ module QuestionnaireGenerator
     options: ["Round", "Square"]
   }
 
-  BALE_SIZE_QUESTION => {
+  BALE_SIZE_QUESTION = {
     kind: :multiple_choice,
     wording: "What size of bale?",
     options: []
@@ -264,6 +264,14 @@ module QuestionnaireGenerator
     'Forage Wagon - Harvesting only' => [
       AREA_QUESTION,
       DISTANCE_FROM_FURTHEST_FIELD_QUESTION
+    ],
+    # SUBCATEGORY: 'Crop Harvesting'
+    'Beet Harvesting' => [
+      {
+        kind: :multiple_choice,
+        wording: "What type of beet is it?",
+        options: ["Fodder beet", "Sugar beet"]
+      }
     ]
   }
 
