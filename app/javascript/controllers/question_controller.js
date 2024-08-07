@@ -2,22 +2,22 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="question"
 export default class extends Controller {
-  static targets = ["valueField", "otherInput"]
+  static targets = ["valueField", "optionalField"]
 
   connect() {
     console.log("Question controller connected");
   }
 
-  toggleOtherField(event) {
+  toggleOptionalField(event) {
     const selectedValue = event.target.value;
-    const otherFormField = this.otherInputTarget;
-
+    const optionalField = this.optionalFieldTarget;
+    const triggerValues = ["Other", "yes"];
 
     console.log(selectedValue)
-    if (selectedValue === "Other") {
-      otherFormField.classList.remove("hidden");
+    if (triggerValues.includes(selectedValue)) {
+      optionalField.classList.remove("hidden");
     } else {
-      otherFormField.classList.add("hidden");
+      optionalField.classList.add("hidden");
     }
   }
 

@@ -10,6 +10,8 @@ class JsonAnswerValidator < ActiveModel::Validator
       validate_multiple_choice_with_other(record, answer)
     when "multiple_choice_with_effect_on_next"
       validate_multiple_choice(record, answer)
+    when "multiple_choice_with_optional"
+      validate_multiple_choice(record, answer)
     when "unit_and_value"
       validate_unit_and_value(record, answer)
     when "quantity"
@@ -23,12 +25,14 @@ class JsonAnswerValidator < ActiveModel::Validator
   private
 
   def validate_multiple_choice(record, answer)
+    # this prevents optional questions with no answer from being validated
+    return if record.optional? && answer[:value].blank?
 
     unless answer.is_a?(Hash)
       record.errors.add(:answer, "There was a problem saving your answer, please try again later.")
       Rails.logger.error("Answer must be a JSON object. Provided answer: #{answer.inspect}")
+      p "Failed validate_multiple_choice"
       return
-      # returning here prevents the other checks from running and raising errors.
     end
 
     unless answer.key?('value') && answer['value'].is_a?(String) && answer['value'].present?
@@ -37,11 +41,12 @@ class JsonAnswerValidator < ActiveModel::Validator
   end
 
   def validate_multiple_choice_with_other(record, answer)
+
     unless answer.is_a?(Hash)
       record.errors.add(:answer, "There was a problem saving your answer, please try again later.")
       Rails.logger.error("Answer must be a JSON object. Provided answer: #{answer.inspect}")
+       p "Failed validate_multiple_choice_with_other"
       return
-      # returning here prevents the other checks from running and raising errors.
     end
 
     unless answer.key?('value') && answer['value'].is_a?(String) && answer['value'].present?
@@ -55,8 +60,10 @@ class JsonAnswerValidator < ActiveModel::Validator
     end
   end
 
-
   def validate_unit_and_value(record, answer)
+     # this prevents optional questions with no answer from being validated
+    return if record.optional? && answer[:value].blank? && answer[:unit].blank?
+
     unless answer.is_a?(Hash)
       record.errors.add(:answer, "There was a problem saving your answer, please try again later.")
       Rails.logger.error("Answer must be a JSON object. Provided answer: #{answer.inspect}")
@@ -71,6 +78,9 @@ class JsonAnswerValidator < ActiveModel::Validator
   end
 
   def validate_quantity(record, answer)
+
+    return if record.optional? && answer.blank?
+
     must_enter_positive_number(record, answer)
   end
 

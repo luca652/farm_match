@@ -12,7 +12,7 @@ module QuestionnaireGenerator
     kind: :unit_and_value,
     wording: "Estimated length of mowing required? (Pick one measurement)",
     answer_title: "Estimated length",
-    collection: ["Feet", "Meters", "Miles", "Kilometers"]
+    options: ["Feet", "Meters", "Miles", "Kilometers"]
   }
 
   BALE_TYPE_QUESTION = {
@@ -271,7 +271,19 @@ module QuestionnaireGenerator
         kind: :multiple_choice,
         wording: "What type of beet is it?",
         options: ["Fodder beet", "Sugar beet"]
-      }
+      },
+      {
+        kind: :multiple_choice_with_optional,
+        wording: "Do you require transportation/carting?",
+        options: ["Yes", "No"]
+      },
+      {
+        kind: :unit_and_value,
+        wording: "What is the estimated distance for haulage?",
+        options: ["Miles", "Kilometers"],
+        optional: true
+      },
+      AREA_QUESTION
     ]
   }
 

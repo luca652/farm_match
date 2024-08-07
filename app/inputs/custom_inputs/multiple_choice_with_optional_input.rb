@@ -1,5 +1,5 @@
 module CustomInputs
-  class MultipleChoiceWithEffectOnNextInput < SimpleForm::Inputs::Base
+  class MultipleChoiceWithOptionalInput < SimpleForm::Inputs::Base
     def input(wrapper_options)
       merged_input_options = merge_wrapper_options(input_html_options, wrapper_options)
 
@@ -10,8 +10,10 @@ module CustomInputs
           label: false,
           selected: object.answer["value"] || nil,
           input_html: { class: 'value form-field',
-                        data: { action: "change->dynamic-form#setOptionsForQuestion",
-                        dynamic_form_question_wording: object.wording}}
+                         data: { action: "change->dynamic-form#toggleOptionalField",
+                          dynamic_form_target: "valueField"
+                        }
+                      }
         )
       end
     end

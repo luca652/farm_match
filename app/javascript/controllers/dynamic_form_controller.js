@@ -2,14 +2,14 @@ import { Controller } from "@hotwired/stimulus"
 import { get } from "@rails/request.js"
 
 export default class extends Controller {
-  static targets = ["category", "subcategory", "followUp", "wording"]
+  static targets = ["category", "subcategory", "followUp", "wording", "valueField", "optionalField"]
   static values = {
     subcategoriesUrl: String,
-    questionsUrl: String
+    selectOptionsUrl: String
   }
 
   connect() {
-    console.log("options controller connected")
+    console.log("Dynamic Form Controller Connected");
   }
 
   setOptionsForSubcategory(event) {
@@ -27,8 +27,8 @@ export default class extends Controller {
   setOptionsForQuestion(event) {
     let answer = event.target.value
     let target = this.followUpTarget.id
-    let url = this.questionsUrlValue
-    let questionWording = event.target.dataset.optionsQuestionWording
+    let url = this.selectOptionsUrlValue
+    let questionWording = event.target.dataset.dynamicFormQuestionWording
 
     console.log("wording: ", questionWording)
     console.log("url: ", url)
@@ -39,5 +39,19 @@ export default class extends Controller {
     get(`${url}?target=${target}&answer=${answer}&question_wording=${encodeURIComponent(questionWording)}`, {
       responseKind: "turbo-stream"
     })
+  }
+
+  toggleOptionalField(event) {
+    const selectedValue = event.target.value;
+    const optionalField = this.optionalFieldTarget;
+    const triggerValues = ["Other", "Yes"];
+
+    console.log(selectedValue)
+    console.log("optional_field: ", optionalField)
+    if (triggerValues.includes(selectedValue)) {
+      optionalField.classList.remove("hidden");
+    } else {
+      optionalField.classList.add("hidden");
+    }
   }
 }

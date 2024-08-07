@@ -1,17 +1,20 @@
 <div class="container">
   <div class="form-container">
-    <%= simple_form_for @task, url: submit_questionnaire_task_path(@task), html: { class: "form", data: { controller: "options", options_questions_url_value: options_for_question_path } },  method: :patch do |f| %>
+    <%= simple_form_for @task, url: submit_questionnaire_task_path(@task), html: { class: "form", data: { controller: "dynamic-form", dynamic_form_select_options_url_value: options_for_question_path } },  method: :patch do |f| %>
 
       <%= f.simple_fields_for :services do |service_form| %>
         <h3><%= service_form.object.name %></h3>
         <%= service_form.simple_fields_for :questions do |question_form| %>
           <% question = question_form.object %>
-          <div class="question-field">
 
+          <% hidden_class = question.optional ? 'hidden' : '' %>
+          <div class="question-field <%= hidden_class %>"
+               <%= "data-dynamic-form-target=optionalField" if question.optional %>>
             <fieldset class="form-fieldset form-field">
               <legend><%= question.wording %></legend>
                 <% case question.kind.to_sym %>
                 <% when :multiple_choice %>
+
                   <%= question_form.input :answer,
                       as: :select,
                       collection: question.options || [],
@@ -19,13 +22,14 @@
                       include_blank: "- Select -",
                       selected: question_form.object.answer["value"],
                       input_html: { class: "form-field",
-                                    data: { options_target: "followUp"} } %>
+                                    data: { dynamic_form_target: "followUp"}
+                                  } %>
                 <% when :multiple_choice_with_other %>
-                  <div data-controller="question">
-                    <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>
-                  </div>
+                  <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>
                 <% when :multiple_choice_with_effect_on_next %>
                   <%= question_form.input :answer, as: :multiple_choice_with_effect_on_next, label: false %>
+                <% when :multiple_choice_with_optional %>
+                  <%= question_form.input :answer, as: :multiple_choice_with_optional, label: false %>
                 <% when :unit_and_value %>
                   <%= question_form.input :answer, as: :unit_and_value, label: false %>
                 <% when :quantity %>

@@ -18,7 +18,7 @@ class Question < ApplicationRecord
   enum kind: { multiple_choice: 0,
                multiple_choice_with_other: 1,
                multiple_choice_with_effect_on_next: 2,
-               yes_no_with_optional: 3,
+               multiple_choice_with_optional: 3,
                unit_and_value: 4,
                quantity: 8
   }.freeze

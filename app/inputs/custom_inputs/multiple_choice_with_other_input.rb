@@ -8,8 +8,8 @@ module CustomInputs
           b.radio_button(
             checked: object.answer["value"] == b.value,
             data: {
-              action: "change->question#toggleOtherField",
-              question_target: "valueField"
+              action: "change->dynamic-form#toggleOptionalField",
+              dynamic_form_target: "valueField"
             }
           ) + b.label { b.text }
         end +
@@ -17,7 +17,7 @@ module CustomInputs
           label: false,
           wrapper_html: {
             class: object.answer["value"] == "Other" ? "" : "hidden",
-            data: { question_target: "otherInput" }
+            data: { dynamic_form_target: "optionalField" }
           },
           input_html: {
             value: object.answer["other"],
