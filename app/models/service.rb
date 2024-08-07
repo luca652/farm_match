@@ -9,7 +9,7 @@ class Service < ApplicationRecord
     'Grassland Harvesting' => ['Baling - FULL SERVICE (Mow, Ted/Rake, Bale, Wrap, Transport etc)', 'Mowing', 'Tedding',
                                'Raking', 'Baling', 'Wrapping', 'Bale Chasing/Haulage', 'Topping',
                                'Silage Harvesting - Complete Service (wholecrop, Harvesting, trailers, pit building, clamping)',
-                               'Silage Harvesting - Harvesting, trailers, Pit building, clamping', 'Silage Harvesting only',
+                               'Silage Harvesting - Harvesting, trailers, Pit building, clamping', 'Silage Harvesting - Harvesting only',
                                'Forage Wagon - Complete Service (Wholecrop, Pit Building, Clamping)',
                                'Forage Wagon - Harvesting, Pit Building & Clamping', 'Forage Wagon - Harvesting only',
                                'Maize Harvesting - Complete Service (wholecrop, Harvesting, trailers, pit building, clamping)',
