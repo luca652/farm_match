@@ -14,7 +14,7 @@ class Service < ApplicationRecord
                                'Forage Wagon - Harvesting, Pit Building & Clamping', 'Forage Wagon - Harvesting only',
                                'Maize Harvesting - Complete Service (wholecrop, Harvesting, trailers, pit building, clamping)',
                                'Maize Harvesting - Harvesting, trailers, Pit building, clamping', 'Maize Harvesting only'],
-    'Crop Harvesting' => ['Beet Harvesting', 'Cereal Harvesting', 'Potato Harvesting', 'Vegtable Harvesting'],
+    'Crop Harvesting' => ['Beet Harvesting', 'Cereal Harvesting', 'Potato Harvesting', 'Vegetable Harvesting'],
     'Hedge Cutting' => ['Hedge cutting - Saw', 'Hedge cutting - Flail'],
     'Machine & Tractor Hire' => ['Forklift Hire', 'Loader Hire', 'Tractor Hire', 'Teleporter Hire'],
     'Maize Harvesting' => ['Maize Harvesting - Complete Service (wholecrop, Harvesting, trailers, pit building, clamping)',

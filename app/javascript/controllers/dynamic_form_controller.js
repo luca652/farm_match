@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import { get } from "@rails/request.js"
 
 export default class extends Controller {
-  static targets = ["category", "subcategory", "followUp", "wording", "valueField", "optionalField"]
+  static targets = ["category", "subcategory", "nextQuestion", "wording", "optionalField"]
   static values = {
     subcategoriesUrl: String,
     selectOptionsUrl: String
@@ -26,7 +26,7 @@ export default class extends Controller {
 
   setOptionsForQuestion(event) {
     let answer = event.target.value
-    let target = this.followUpTarget.id
+    let target = this.nextQuestionTarget.id
     let url = this.selectOptionsUrlValue
     let questionWording = event.target.dataset.dynamicFormQuestionWording
 

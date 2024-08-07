@@ -8,8 +8,7 @@ module CustomInputs
           b.radio_button(
             checked: object.answer["value"] == b.value,
             data: {
-              action: "change->dynamic-form#toggleOptionalField",
-              dynamic_form_target: "valueField"
+              action: "change->dynamic-form#toggleOptionalField"
             }
           ) + b.label { b.text }
         end +

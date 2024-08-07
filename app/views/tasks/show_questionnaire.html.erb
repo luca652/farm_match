@@ -22,7 +22,7 @@
                       include_blank: "- Select -",
                       selected: question_form.object.answer["value"],
                       input_html: { class: "form-field",
-                                    data: { dynamic_form_target: "followUp"}
+                                    data: { dynamic_form_target: "nextQuestion"}
                                   } %>
                 <% when :multiple_choice_with_other %>
                   <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>

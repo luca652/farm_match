@@ -69,6 +69,55 @@ module QuestionnaireGenerator
     options: ["Yes", "No"]
   }
 
+  TRANSPORTATION_CARTING_QUESTION = {
+    kind: :multiple_choice_with_optional,
+    wording: "Do you require transportation/carting?",
+    options: ["Yes", "No"]
+  }
+
+  DISTANCE_FOR_HAULAGE_QUESTION = {
+    kind: :unit_and_value,
+    wording: "What is the estimated distance for haulage?",
+    options: ["Miles", "Kilometers"],
+    optional: true
+  }
+
+  AMOUNT_OF_HEDGES_QUESTION = {
+    kind: :unit_and_value,
+    wording: "Estimated amount of hedges to be cut",
+    options: ["Meters", "Feet"],
+  }
+
+  REQUIRE_A_DRIVER_QUESTION = {
+      kind: :multiple_choice,
+      wording: "Do you require a driver?",
+      options: ["Yes", "No"]
+  }
+
+  NUMBER_OF_HOURS_QUESTION = {
+    kind: :quantity,
+    wording: "Estimated number of hours required?"
+  }
+
+  ESTIMATED_AMOUNT_TONNES_KILOS_QUESTION = {
+    kind: :unit_and_value,
+    wording: "Estimated amount?",
+    options: ["Tonnes", "Kilos"]
+  }
+
+  NEED_A_LOADER_QUESTION = {
+    kind: :multiple_choice,
+    wording: "Do you need a loader?",
+    options: ["yes", "no"],
+    answer_title: "Loader"
+  }
+
+  TYPE_OF_MANURE_QUESTION = {
+    kind: :multiple_choice,
+    wording: "What type of manure?",
+    options: ["Chicken litter", "Farmyard manure", "Wood chip"]
+  }
+
   QUESTIONS = {
     # SUBCATEGORY: 'Application (Spraying & Spreading)'
     'Fertilizer Spreading' => [
@@ -81,12 +130,7 @@ module QuestionnaireGenerator
       AREA_QUESTION
     ],
     'Lime Spreading' => [
-      {
-        kind: :multiple_choice,
-        wording: "Do you need a loader?",
-        options: ["yes", "no"],
-        answer_title: "Loader"
-      },
+      NEED_A_LOADER_QUESTION,
       AREA_QUESTION
     ],
     'Spraying (specialised)' => [
@@ -272,21 +316,136 @@ module QuestionnaireGenerator
         wording: "What type of beet is it?",
         options: ["Fodder beet", "Sugar beet"]
       },
+      TRANSPORTATION_CARTING_QUESTION,
+      DISTANCE_FOR_HAULAGE_QUESTION,
+      AREA_QUESTION
+    ],
+    'Cereal Harvesting' => [
       {
-        kind: :multiple_choice_with_optional,
-        wording: "Do you require transportation/carting?",
+        kind: :multiple_choice_with_other,
+        wording: "What type of crop is it?",
+        options: ["Barley", "Flax", "Millet", "Oats", "Rye", "Soyabean", "Wheat", "Other"]
+      },
+      {
+        kind: :multiple_choice,
+        wording: "Do you require straw chopping?",
+        options: ["Yes", "No"]
+      },
+      TRANSPORTATION_CARTING_QUESTION,
+      DISTANCE_FOR_HAULAGE_QUESTION,
+      AREA_QUESTION
+    ],
+    'Potato Harvesting' => [
+      TRANSPORTATION_CARTING_QUESTION,
+      DISTANCE_FOR_HAULAGE_QUESTION,
+      AREA_QUESTION
+    ],
+    'Vegetable Harvesting' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What type of crop do you need harvested?",
+        options: [ "Broccoli", "Cabbage", "Carrots", "Cauliflower", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Rhubarb", "Turnip", "Other"]
+      },
+      TRANSPORTATION_CARTING_QUESTION,
+      DISTANCE_FOR_HAULAGE_QUESTION,
+      AREA_QUESTION
+    ],
+    # SERVICE: 'Hedge Cutting'
+    'Hedge cutting - Saw' => [
+      {
+        kind: :unit_and_value,
+        wording: "Estimated amount of hedges to be cut",
+        options: ["Meters", "Feet"],
+      }
+    ],
+    'Hedge cutting - Flail' => [
+      AMOUNT_OF_HEDGES_QUESTION
+    ],
+    # SERVICE: 'Machine & Tractor Hire'
+    'Forklift Hire' => [
+      REQUIRE_A_DRIVER_QUESTION,
+      NUMBER_OF_HOURS_QUESTION
+    ],
+    'Loader Hire' => [
+      REQUIRE_A_DRIVER_QUESTION,
+      NUMBER_OF_HOURS_QUESTION
+    ],
+    'Tractor Hire' => [
+      REQUIRE_A_DRIVER_QUESTION,
+      {
+        kind: :multiple_choice,
+        wording: "Do you require a trailer?",
         options: ["Yes", "No"]
       },
       {
-        kind: :unit_and_value,
-        wording: "What is the estimated distance for haulage?",
-        options: ["Miles", "Kilometers"],
-        optional: true
+        kind: :multiple_choice,
+        wording: "What sized tractor do you require?",
+        options: ["<100", "100-150", "150-220", "220-300", "300+"]
       },
+      NUMBER_OF_HOURS_QUESTION
+    ],
+    'Teleporter Hire' => [
+      REQUIRE_A_DRIVER_QUESTION,
+      NUMBER_OF_HOURS_QUESTION
+    ],
+    # SERVICE: 'Maize Harvesting'
+    'Maize Harvesting - Complete Service (wholecrop, Harvesting, trailers, pit building, clamping)' => [
+      CROP_CONDITIONED_QUESTION,
+      AREA_QUESTION,
+      DISTANCE_FROM_FURTHEST_FIELD_QUESTION,
+      PIT_COVERED_QUESTION,
+      SILAGE_ADDITIVES_QUESTION
+    ],
+    'Maize Harvesting - Harvesting, trailers, Pit building, clamping' => [
+      AREA_QUESTION,
+      DISTANCE_FROM_FURTHEST_FIELD_QUESTION,
+      PIT_COVERED_QUESTION,
+      SILAGE_ADDITIVES_QUESTION
+    ],
+    'Maize Harvesting only' => [
       AREA_QUESTION
+    ],
+    # SERVICE: 'Mobile feeding'
+    'Milling/Mixing' => [
+      ESTIMATED_AMOUNT_TONNES_KILOS_QUESTION
+    ],
+    'Grain Crimping' => [
+      ESTIMATED_AMOUNT_TONNES_KILOS_QUESTION
+    ],
+    # SERVICE: 'Muck & Slurry'
+    'Muck Spreading' => [
+      TYPE_OF_MANURE_QUESTION,
+      NEED_A_LOADER_QUESTION,
+      DISTANCE_FROM_FURTHEST_FIELD_QUESTION
+    ],
+    'Muck Haulage' => [
+      TYPE_OF_MANURE_QUESTION,
+      NEED_A_LOADER_QUESTION,
+      DISTANCE_FOR_HAULAGE_QUESTION
+    ],
+    'Slurry Spreading' => [
+      {
+        kind: :multiple_choice,
+        wording: "What type of slurry do you need spread?",
+        options: ["Cattle", "Pig", "Sheep"]
+      },
+      {
+        kind: :multiple_choice,
+        wording: "Do you need an agitator?",
+        options: ["Yes", "No"]
+      },
+      DISTANCE_FROM_FURTHEST_FIELD_QUESTION,
+      {
+        kind: :multiple_choice,
+        wording: "What type of spreading do you want?",
+        options: ["Injection", "Dribble bar"]
+      }
     ]
   }
 
+  # For multiple_choice_with_effect_on_next questions.
+  # The outer keys in the hash are the questions, and the inner keys the possible answers
+  # which map to the options for the follow up question.
   FOLLOW_UP_OPTIONS =  { "What type of bale do you want?" => {"Round" => ["Round 120cm", "Round 150cm"], "Square" => ["Square - 120x130cm", "Square - 120x70cm", "Square - 120x90cm", "Square - 80x90cm", "Square - Small Conventional"]}}
 
   def generate_questions_for_service(service)
