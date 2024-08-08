@@ -9,7 +9,8 @@
 
           <% hidden_class = question.optional ? 'hidden' : '' %>
           <div class="question-field <%= hidden_class %>"
-               <%= "data-dynamic-form-target=optionalField" if question.optional %>>
+               data-question-index=<%= question_form.index %>
+               data-dynamic-form-target="<%= question.optional ? 'question optionalField' : 'question' %>">
             <fieldset class="form-fieldset form-field">
               <legend><%= question.wording %></legend>
                 <% case question.kind.to_sym %>
@@ -22,7 +23,8 @@
                       include_blank: "- Select -",
                       selected: question_form.object.answer["value"],
                       input_html: { class: "form-field",
-                                    data: { dynamic_form_target: "nextQuestion"}
+                                    data: { dynamic_form_target: "selectFieldToUpdate",
+                                    question_index: question_form.index }
                                   } %>
                 <% when :multiple_choice_with_other %>
                   <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>

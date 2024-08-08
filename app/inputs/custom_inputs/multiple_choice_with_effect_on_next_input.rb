@@ -11,7 +11,7 @@ module CustomInputs
           selected: object.answer["value"] || nil,
           input_html: { class: 'value form-field',
                         data: { action: "change->dynamic-form#setOptionsForQuestion",
-                        dynamic_form_question_wording: object.wording}}
+                        dynamic_form_question_wording: object.wording }}
         )
       end
     end

@@ -34,7 +34,8 @@ class Service < ApplicationRecord
     'General Yard Duties' => ['Cleaning/Power Washing', 'Construction', 'Machinery Maintenance', 'Mucking out sheds', 'Painting',
                               'Silage pit clamping', 'Strimming', 'Welding', 'Yard Scaping', 'Other'],
     'Picking' => ['Fruit Picking', 'Stone Picking', 'Vegetable Picking'],
-    'Machinery Driving & Operation' => ['Large Machinery Driving & Operation', 'Tractor Driving & Operation']
+    'Machinery Driving & Operation' => ['Large Machinery Driving & Operation', 'Tractor Driving & Operation'],
+    'test' => ['test']
   }.freeze
   SERVICES.values.each(&:freeze)
 

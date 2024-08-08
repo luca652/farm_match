@@ -440,6 +440,19 @@ module QuestionnaireGenerator
         wording: "What type of spreading do you want?",
         options: ["Injection", "Dribble bar"]
       }
+    ],
+    'test' => [
+      DISTANCE_FOR_HAULAGE_QUESTION,
+      TRANSPORTATION_CARTING_QUESTION,
+      DISTANCE_FOR_HAULAGE_QUESTION,
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What type of crop do you need harvested?",
+        options: [ "Broccoli", "Cabbage", "Carrots", "Cauliflower", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Rhubarb", "Turnip", "Other"]
+      },
+      BALE_SIZE_QUESTION,
+      BALE_TYPE_QUESTION,
+      BALE_SIZE_QUESTION
     ]
   }
 

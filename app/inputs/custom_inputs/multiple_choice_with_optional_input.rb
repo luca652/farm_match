@@ -10,7 +10,7 @@ module CustomInputs
           label: false,
           selected: object.answer["value"] || nil,
           input_html: { class: 'value form-field',
-                         data: { action: "change->dynamic-form#toggleOptionalField" }
+                         data: { action: "change->dynamic-form#toggleOptionalQuestion" }
                       }
         )
       end
