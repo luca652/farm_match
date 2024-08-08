@@ -4,7 +4,7 @@ module QuestionnaireGenerator
   AREA_QUESTION = {
     kind: :unit_and_value,
     wording: "Estimated number of acres/hectacres?",
-    options: ["acres", "hectares"],
+    options: ["Acres", "Hectares"],
     answer_title: "Area"
   }
 
@@ -108,7 +108,7 @@ module QuestionnaireGenerator
   NEED_A_LOADER_QUESTION = {
     kind: :multiple_choice,
     wording: "Do you need a loader?",
-    options: ["yes", "no"],
+    options: ["Yes", "No"],
     answer_title: "Loader"
   }
 
@@ -118,6 +118,12 @@ module QuestionnaireGenerator
     options: ["Chicken litter", "Farmyard manure", "Wood chip"]
   }
 
+  SCAFFOLDING_QUESTION = {
+    kind: :multiple_choice,
+    wording: "Is any scaffolding required?",
+    options: ["Yes", "No"]
+  }
+
   QUESTIONS = {
     # SUBCATEGORY: 'Application (Spraying & Spreading)'
     'Fertilizer Spreading' => [
@@ -125,7 +131,7 @@ module QuestionnaireGenerator
         kind: :multiple_choice,
         wording: "What type of fertilizer do you want spread?",
         answer_title: "Type of fertilizer",
-        options: ["granular", "liquid"]
+        options: ["Granular", "Liquid"]
       },
       AREA_QUESTION
     ],
@@ -441,18 +447,96 @@ module QuestionnaireGenerator
         options: ["Injection", "Dribble bar"]
       }
     ],
-    'test' => [
-      DISTANCE_FOR_HAULAGE_QUESTION,
-      TRANSPORTATION_CARTING_QUESTION,
-      DISTANCE_FOR_HAULAGE_QUESTION,
+    # SERVICE: 'Painting & Powerwashing'
+    'Painting' => [
       {
-        kind: :multiple_choice_with_other,
-        wording: "What type of crop do you need harvested?",
-        options: [ "Broccoli", "Cabbage", "Carrots", "Cauliflower", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Rhubarb", "Turnip", "Other"]
+        kind: :multiple_choice,
+        wording: "Will you supply your own paint?",
+        options: ["Yes", "No"]
       },
-      BALE_SIZE_QUESTION,
-      BALE_TYPE_QUESTION,
-      BALE_SIZE_QUESTION
+      SCAFFOLDING_QUESTION
+    ],
+    'Powerwashing' => [
+      SCAFFOLDING_QUESTION
+    ],
+    # SERVICE: 'Soil Preparation'
+    'Bed tilling' => [
+      AREA_QUESTION
+    ],
+    'Harrowing' => [
+      {
+        kind: :multiple_choice,
+        wording: "What type of harrowing do you need?",
+        options: ["Chain harrowing", "Disk harrowing", "Power Harrowing - shallow", "Power harrowing - deep", "Spring - tine harrowing"]
+      },
+      AREA_QUESTION
+    ],
+    'Land levelling' => [
+      AREA_QUESTION
+    ],
+    'One pass tillage train' => [
+      AREA_QUESTION
+    ],
+    'Ploughing' => [
+      {
+        kind: :multiple_choice_with_optional,
+        wording: "What type of ploughing do you want?",
+        options: ["Deep ploughing", "Mole Ploughing", "Ploughing - deep land", "Ploughing - light land"]
+      },
+      {
+        kind: :multiple_choice,
+        wording: "Do you want a furrow press following the plough?",
+        options: ["Yes", "No"],
+        optional: true
+      },
+      AREA_QUESTION
+    ],
+    'Pressing/Cultipress' => [
+      AREA_QUESTION
+    ],
+    'Rolling' => [
+      {
+        kind: :multiple_choice,
+        wording: "What type of roller do you want?",
+        options: ["Flat roller", "Ring roller"]
+      },
+      AREA_QUESTION
+    ],
+    'Rotavating' => [
+      AREA_QUESTION
+    ],
+    'Stubble Raking' => [
+      AREA_QUESTION
+    ],
+    # SERVICE: 'Tree Cutting & Forestry'
+    'Chainsaw & Operator' => [
+      {
+        kind: :unit_and_value,
+        wording: "Estimated height of tallest tree?",
+        options: ["Feet", "Meters"]
+      },
+      {
+        kind: :quantity,
+        wording: "Estimated number of trees?",
+      }
+    ],
+    'Timber Harvesting' => [
+      {
+        kind: :multiple_choice,
+        wording: "What type of timber?",
+        options: ["Hardwood", "Softwood"]
+      },
+      {
+        kind: :multiple_choice,
+        wording: "Do you require a Skidder?",
+        options: ["Yes", "No"]
+      },
+      {
+        kind: :multiple_choice,
+        wording: "Do You require a forwarder?",
+        options: ["Yes", "No"]
+      },
+      AREA_QUESTION
     ]
   }
 

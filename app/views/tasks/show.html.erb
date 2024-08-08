@@ -15,23 +15,6 @@
 <h4>Services</h4>
   <ul>
     <% @services.each do |service| %>
-      <li><%= service.name %></li>
+      <li><%= link_to service.name, task_service_path(@task, service) %></li>
     <% end %>
   </ul>
-
-<h4>Questionnaire</h4>
-<% @questions.each do |question| %>
-  <p><%= question.answer_title %>:</p>
-    <% case question.kind.to_sym %>
-      <% when :multiple_choice %>
-        <%= question.answer["value"] %>
-      <% when :area %>
-        <p><%= question.answer["unit"] %> <%= question.answer["value"] %></p>
-      <% when :multiple_choice_with_other %>
-        <% if question.answer["question"].nil? %>
-          <%= question.answer["other"] %>
-        <% else %>
-          <%= question.answer["answer"]%>
-        <% end %>
-      <% end %>
-    <% end %>

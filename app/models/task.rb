@@ -4,8 +4,7 @@ class Task < ApplicationRecord
   CATEGORIES = ['Agri Contracting',
                 'Forestry',
                 'Plant Hire & Earthworks',
-                'Farm Labour',
-                'test'].freeze
+                'Farm Labour'].freeze
   CATEGORIES.each(&:freeze)
 
   SUBCATEGORIES = {
@@ -27,8 +26,7 @@ class Task < ApplicationRecord
                     'Milking',
                     'General Yard Duties',
                     'Picking',
-                    'Machinery Driving & Operation'],
-    'test' => ['test']
+                    'Machinery Driving & Operation']
   }.freeze
   SUBCATEGORIES.values.each(&:freeze)
 

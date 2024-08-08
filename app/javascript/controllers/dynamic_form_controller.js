@@ -81,7 +81,7 @@ export default class extends Controller {
     const optionalField = nextQuestionElement;
     // At the moment the only trigger value is "Yes". Other trigger values can be added to the array.
     // Potential issues: this will work as long as the array is small and we don't expect the same words (e.g. "Yes"), to have different results for different questions.
-    const triggerValues = ["Yes"];
+    const triggerValues = ["Yes", "Ploughing - deep land", "Ploughing - light land"];
 
     if (triggerValues.includes(selectedValue)) {
       optionalField.classList.remove("hidden");
