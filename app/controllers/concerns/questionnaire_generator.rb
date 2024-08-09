@@ -124,6 +124,45 @@ module QuestionnaireGenerator
     options: ["Yes", "No"]
   }
 
+  DUMPER_QUESTION = {
+    kind: :multiple_choice,
+    wording: "Is a dumper required?",
+    options: ["Yes", "No"]
+  }
+
+  NUMBER_OF_ANIMALS_QUESTION = {
+    kind: :quantity,
+    wording: "Estimated number of animals?"
+  }
+
+  HOW_MANY_SHEEP_QUESTION = {
+    kind: :quantity,
+    wording: "How many sheep?"
+  }
+
+  HOW_MANY_RAMS_QUESTION = {
+    kind: :quantity,
+    wording: "How many rams?"
+  }
+
+  WORK_FROM_A_HEIGHT_QUESTION = {
+    kind: :multiple_choice,
+    wording: "Will any of the work be done from a height?",
+    options: ["Yes", "No"]
+  }
+
+  MAXIMUM_HEIGHT_QUESTION = {
+    kind: :unit_and_value,
+    wording: "What is the maximum height?",
+    options: ["Feet", "Meters"]
+  }
+
+  OWN_EQUIPMENT_QUESTION = {
+    kind: :multiple_choice,
+    wording: "Do you have your own equipment?",
+    options: ["Yes", "No"]
+  }
+
   QUESTIONS = {
     # SUBCATEGORY: 'Application (Spraying & Spreading)'
     'Fertilizer Spreading' => [
@@ -544,12 +583,12 @@ module QuestionnaireGenerator
         kind: :multiple_choice_with_check_boxes,
         wording: "Pick the type of machine(s) that are required",
         options: ["Track machine", "Wheeled Digger", "Bulldozer", "Dumper"]
+      },
+      {
+        kind: :unit_and_value,
+        wording: "Estimated length of time required?",
+        options: ["Hours", "Days"]
       }
-      # {
-      #   kind: :unit_and_value,
-      #   wording: "Estimated length of time required?",
-      #   options: ["Hours", "Days"]
-      # }
     ],
     'Escavation & Sitework' => [
       {
@@ -567,10 +606,284 @@ module QuestionnaireGenerator
         wording: "Will a rock-breaker be required?",
         options: ["Yes", "No"]
       },
+      DUMPER_QUESTION
+    ],
+    'Land Clearing' => [
       {
         kind: :multiple_choice,
-        wording: "Do you require a dumper to remove escavated material?",
+        wording: "Is tree stump removal required?",
         options: ["Yes", "No"]
+      },
+      {
+        kind: :multiple_choice,
+        wording: "Are there any large rocks/boulders to remove?",
+        options: ["Yes", "No"]
+      },
+      DUMPER_QUESTION,
+      AREA_QUESTION
+    ],
+    'Land Drainage' => [
+      DUMPER_QUESTION,
+      AREA_QUESTION
+    ],
+    'Tree Stump Removal' => [
+      AREA_QUESTION
+    ],
+    'Ditch removal' => [
+      {
+        kind: :multiple_choice_with_optional,
+        wording: "Do you want the ditch buried or removed?",
+        options: ["Yes", "No"]
+      },
+      {
+        kind: :unit_and_value,
+        wording: "Do you want the ditch buried or removed?",
+        options: ["Miles", "Kilometers"],
+        optional: true
+      },
+      {
+        kind: :unit_and_value,
+        wording: "Estimated length of ditch?",
+        options: ["Feet", "Meters"]
+      }
+    ],
+    'Roadways' => [
+      {
+        kind: :unit_and_value,
+        wording: "Estimated length of road?",
+        options: ["Feet", "Meters"]
+      }
+    ],
+    'Land Levelling' => [
+      AREA_QUESTION
+    ],
+    'Stone Removal' => [
+      AREA_QUESTION
+    ],
+    # SERVICE: 'Animal Care'
+    'Castration' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Horses", "Pigs", "Other"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION
+    ],
+    'Crutching (Dagging)' => [
+      HOW_MANY_SHEEP_QUESTION,
+      HOW_MANY_RAMS_QUESTION
+    ],
+    'De-horning' => [
+      {
+        kind: :multiple_choice,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Goat"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION
+    ],
+    'Dipping' => [
+      HOW_MANY_SHEEP_QUESTION,
+      HOW_MANY_RAMS_QUESTION
+    ],
+    'Docking (tail removal)' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Horses", "Pigs", "Other"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION
+    ],
+    'Dosing' => [
+      {
+        kind: :multiple_choice,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Horses", "Pigs"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION
+    ],
+    'Feeding' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Horses", "Poultry", "Pigs", "Other"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION,
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What type of feeding?",
+        options: ["Diet Feeder", "Automated Feeding System", "Front Loader", "Manual Feeding", "Other"]
+      },
+      {
+        kind: :unit_and_value,
+        wording: "For how long do you require the animals to be feed?",
+        options: ["Weeks", "Days"]
+      }
+    ],
+    'Foot Trimming' => [
+      {
+        kind: :multiple_choice,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Goat"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION
+    ],
+    'Injection' => [
+      {
+        kind: :multiple_choice,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Horses", "Pigs"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION
+    ],
+    'Lambing/Calfing/Animal Birthing' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Horses", "Pigs", "Other"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION,
+      {
+        kind: :unit_and_value,
+        wording: "Estimated length period that assistance is required?",
+        options: ["Weeks", "Days"]
+      }
+    ],
+    'Shearing' => [
+      HOW_MANY_SHEEP_QUESTION,
+      HOW_MANY_RAMS_QUESTION,
+      {
+        kind: :multiple_choice,
+        wording: "Are any wool packs required?",
+        options: ["Yes", "No"]
+      }
+    ],
+    'Shifting/Loading Livestock' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Horses", "Poultry", "Pigs", "Other"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION,
+    ],
+    'Tagging' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Horses", "Goats", "Pigs", "Other"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION
+    ],
+    'Testing' => [
+      {
+        kind: :multiple_choice,
+        wording: "What kind of animal?",
+        options: ["Cattle", "Sheep", "Horses", "Pigs"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION
+    ],
+    # SERVICE: 'Milking'
+    'Milking' => [
+      {
+        kind: :multiple_choice_with,
+        wording: "What kind of animal?",
+        options: ["Cow", "Sheep", "Goat"]
+      },
+      NUMBER_OF_ANIMALS_QUESTION,
+      {
+        kind: :unit_and_value,
+        wording: "Estimated period of time that milking reflief is required?",
+        options: ["Weeks", "Days"]
+      }
+    ],
+    # SERVICE: 'General Yard Duties'
+    'Cleaning/Power Washing' => [
+      OWN_EQUIPMENT_QUESTION,
+      {
+        kind: :multiple_choice,
+        wording: "What needs to be cleaned?",
+        options: ["Buildings & structures", "Machinery", "Both"]
+      },
+      WORK_FROM_A_HEIGHT_QUESTION,
+      MAXIMUM_HEIGHT_QUESTION
+    ],
+    'Construction' => [
+      OWN_EQUIPMENT_QUESTION,
+      WORK_FROM_A_HEIGHT_QUESTION,
+      MAXIMUM_HEIGHT_QUESTION
+    ],
+    'Machinery Maintenance' => [
+      OWN_EQUIPMENT_QUESTION,
+      {
+        kind: :multiple_choice,
+        wording: "What type of machinery?",
+        options: ["Combine Harvester", "Forage harvester", "General Farm implements", "Tractors"]
+      }
+    ],
+    # 'Mucking out sheds' => []
+    'Painting' => [
+      OWN_EQUIPMENT_QUESTION,
+      {
+        kind: :multiple_choice,
+        wording: "What needs to be painted?",
+        options: ["Buildings & structures", "Machinery", "Both"]
+      },
+      WORK_FROM_A_HEIGHT_QUESTION,
+      MAXIMUM_HEIGHT_QUESTION
+    ],
+    # 'Silage pit clamping' => []
+    # 'Strimming' => []
+    'Welding' => [
+      OWN_EQUIPMENT_QUESTION,
+      WORK_FROM_A_HEIGHT_QUESTION,
+      MAXIMUM_HEIGHT_QUESTION
+    ],
+    # 'Yard Scaping' => []
+    # 'Other' => []
+    # SERVICE: 'Picking'
+    'Fruit Picking' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What type of fruit?",
+        options: ["Apples", "Blackcurrants", "Cherries", "Pears", "Plums", "Raspberries", "Strawberries", "Other"]
+      },
+      WORK_FROM_A_HEIGHT_QUESTION,
+      MAXIMUM_HEIGHT_QUESTION,
+      AREA_QUESTION
+    ],
+    'Stone Picking' => [
+      AREA_QUESTION
+    ],
+    'Vegetable Picking' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What type of vegetables?",
+        options: ["Broccoli", "Cabbage", "Carrots", "Cauliflower", "Kale", "Leek", "Lettuce", "Onion", "Peas", "Rhubarb", "Turnip", "Other"]
+      },
+      AREA_QUESTION
+    ],
+    # SERVICE: 'Machinery Driving & Operation'
+    'Large Machinery Driving & Operation' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What type of machine is required to be driven?",
+        options: ["Combine Harvester", "Forage harvester", "Self propelled mower", "Self propelled sprayer", "Other"]
+      },
+      {
+        kind: :unit_and_value,
+        wording: "Estimated lenght of time required?",
+        options: ["Days", "Weeks"]
+      }
+    ],
+    'Tractor Driving & Operation' => [
+      {
+        kind: :multiple_choice_with_other,
+        wording: "What is the main type of work to be carried out?",
+        options: ["Loader Work", "Tractor and Trailer/dumper", "Tractor & Farm implement", "Other"]
+      },
+      {
+        kind: :unit_and_value,
+        wording: "Estimated lenght of time required?",
+        options: ["Days", "Weeks"]
       }
     ]
   }

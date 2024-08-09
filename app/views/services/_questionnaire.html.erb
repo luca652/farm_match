@@ -9,7 +9,7 @@
         <%= value %>
       <% end %>
     <% when :multiple_choice_with_other %>
-      <% question.answer["value"] == "Other" ? question.answer["other"] : question.answer["answer"] %>
+      <%= question.answer["value"] == "Other" ? question.answer["other"] : question.answer["value"] %>
     <% when :unit_and_value %>
       <%= question.answer["unit"] %> <%= question.answer["value"] %>
   <% end %>
