@@ -15,7 +15,6 @@
               <legend><%= question.wording %></legend>
                 <% case question.kind.to_sym %>
                 <% when :multiple_choice %>
-
                   <%= question_form.input :answer,
                       as: :select,
                       collection: question.options || [],
@@ -26,6 +25,19 @@
                                     data: { dynamic_form_target: "selectFieldToUpdate",
                                     question_index: question_form.index }
                                   } %>
+                <% when :multiple_choice_with_check_boxes %>
+                  <%= question_form.input :answer,
+                      as: :check_boxes,
+                      collection: question.options,
+                      label: false,
+                      checked: question_form.object.answer["values"] || [],
+                      input_html: {
+                        data: {
+                          dynamic_form_target: "selectFieldToUpdate",
+                          question_index: question_form.index
+                        }
+                      }
+                  %>
                 <% when :multiple_choice_with_other %>
                   <%= question_form.input :answer, as: :multiple_choice_with_other, label: false %>
                 <% when :multiple_choice_with_effect_on_next %>

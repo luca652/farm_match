@@ -16,7 +16,9 @@ class JsonAnswerValidator < ActiveModel::Validator
       validate_unit_and_value(record, answer)
     when "quantity"
       validate_quantity(record, answer)
-    # Add more cases for other types as needed
+    when "multiple_choice_with_check_boxes"
+      validate_multiple_choice_with_check_boxes(record, answer)
+      # Add more cases for other types as needed
     else
       record.errors.add(:answer, 'has an invalid kind')
     end
@@ -57,6 +59,20 @@ class JsonAnswerValidator < ActiveModel::Validator
       if answer['other'].blank?
         record.errors.add(:answer, "You must enter a value.")
       end
+    end
+  end
+
+  def validate_multiple_choice_with_check_boxes(record, answer)
+
+    unless answer.is_a?(Hash)
+      record.errors.add(:answer, "There was a problem saving your answer, please try again later.")
+      Rails.logger.error("Answer must be a JSON object. Provided answer: #{answer.inspect}")
+       p "Failed validate_multiple_choice_with_other"
+      return
+    end
+
+    unless answer.key?('values') && answer['values'].is_a?(Array) && answer['values'].present?
+      record.errors.add(:answer, "You must select at least an option from the list.")
     end
   end
 

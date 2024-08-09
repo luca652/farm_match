@@ -136,7 +136,17 @@
   margin-bottom: 0.25rem;
 }
 
-.radio-buttons {
+.radio-button {
   display: flex;
-  flex-direction: column
+  flex-direction: column;
+}
+
+
+.checkbox {
+  display: flex;
+  flex-direction: column;
+
+  .check-boxes {
+    margin-right: var(--space-xs);
+  }
 }

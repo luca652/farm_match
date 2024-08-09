@@ -537,6 +537,41 @@ module QuestionnaireGenerator
         options: ["Yes", "No"]
       },
       AREA_QUESTION
+    ],
+    # SERVICE: 'Plant Hire & Earthworks'
+    'Plant Hire (Self Drive)' => [
+      {
+        kind: :multiple_choice_with_check_boxes,
+        wording: "Pick the type of machine(s) that are required",
+        options: ["Track machine", "Wheeled Digger", "Bulldozer", "Dumper"]
+      }
+      # {
+      #   kind: :unit_and_value,
+      #   wording: "Estimated length of time required?",
+      #   options: ["Hours", "Days"]
+      # }
+    ],
+    'Escavation & Sitework' => [
+      {
+        kind: :multiple_choice,
+        wording: "What type of machine is required?",
+        options: ["Track machine", "Wheeled Digger", "Bulldozer"]
+      },
+      {
+        kind: :multiple_choice,
+        wording: "Do you require foundations dug?",
+        options: ["Yes", "No"]
+      },
+      {
+        kind: :multiple_choice,
+        wording: "Will a rock-breaker be required?",
+        options: ["Yes", "No"]
+      },
+      {
+        kind: :multiple_choice,
+        wording: "Do you require a dumper to remove escavated material?",
+        options: ["Yes", "No"]
+      }
     ]
   }
 
