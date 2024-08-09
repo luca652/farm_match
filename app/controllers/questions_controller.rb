@@ -1,48 +1,14 @@
 class QuestionsController < ApplicationController
 
-  def new_questions
-    @task = Task.find(params[:task_id])
-    @services = @task.services
-  end
+  def options_for_question
+    @target = params[:target]
+    @answer = params[:answer]
+    @question_wording = params[:question_wording]
+    @options_for_question = QuestionnaireGenerator::FOLLOW_UP_OPTIONS[@question_wording][@answer]
 
-  def create_questions
-    @task = Task.find(params[:task_id])
-
-
-    # @answers = []
-    # answers_params.each do |index, answer|
-    #   @answers << Answer.new(answer_params(answer))
-    # end
-
-
-    begin
-      Answer.transaction do
-        @answers = Service.create!(answers_params)
-      end
-
-      redirect_to task_path(@task)
-
-    rescue ActiveRecord::RecordInvalid => exception
-      @errors = exception.record.errors
-      render :new_answers, status: :unprocessable_entity
+    respond_to do |format|
+      format.turbo_stream
     end
-
   end
 
-  private
-
-  def questions_params
-    params.require(:answers).permit(
-
-      [
-        # This allows any number of nested hashes within 'answers'
-        # treating it as an array of hashes
-        :kind,
-        :service_id,
-        :label,
-        [ details: [:answer, :unit, :value, :description] ]
-      ]
-
-  )
-  end
 end

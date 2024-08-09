@@ -9,25 +9,12 @@
     <p> subcategory: <%= @task.subcategory %> </p>
     <p> description: <%= @task.description %></p>
 
-  <h4>Services</h4>
-  <% @task.services.each do |service| %>
-    <%= service.name %>
-    <% service.answers.each do |answer| %>
-      <%= answer.label %>
-      <% case answer.kind.to_sym %>
-        <% when :multiple_choice %>
-          <%= answer.details["answer"] %>
-        <% when :area %>
-          <p><%= answer.details["acres"] %> acres / <%= answer.details["hectares"] %> hectares</p>
-        <% when :description %>
-          <%= answer.details["description"] %>
-        <% when :multiple_choice_with_other %>
-          <% if answer.details["answer"].nil? %>
-            <%= answer.details["other"] %>
-          <% else %>
-           <%= answer.details["answer"]%>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% end %>
+    <%= link_to "Answer questions about your services", show_questionnaire_task_path(@task) %>
 </div>
+
+<h4>Services</h4>
+  <ul>
+    <% @services.each do |service| %>
+      <li><%= link_to service.name, task_service_path(@task, service) %></li>
+    <% end %>
+  </ul>

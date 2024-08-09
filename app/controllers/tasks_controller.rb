@@ -8,6 +8,8 @@ class TasksController < ApplicationController
   before_action :ensure_task_params, only: [:new_step_two, :create_step_two, :new_step_three, :create]
 
   def show
+    @services = @task.services
+    @questions = @task.services.flat_map(&:questions)
   end
 
   # Step 1: Collect basic task information
@@ -72,6 +74,28 @@ class TasksController < ApplicationController
     end
   end
 
+  def show_questionnaire
+    @task = Task.includes(services: :questions).find(params[:id])
+  end
+
+  def submit_questionnaire
+    Rails.logger.debug "Params: #{params.inspect}"
+    Rails.logger.debug "Task Params: #{task_params.inspect}"
+    @task = Task.find(params[:id])
+
+    if @task.update(task_params)
+      redirect_to @task, notice: 'Questionnaire updated successfully'
+    else
+      @task.services.each do |service|
+        service.questions.each do |question|
+          question.valid?  # This will trigger the JsonAnswerValidator
+        end
+      end
+      render :show_questionnaire, status: :unprocessable_entity
+    end
+  end
+
+
   def edit_step_one
     @categories = Task::CATEGORIES
     @options_for_subcategory = Task::SUBCATEGORIES[@task.category]
@@ -134,7 +158,19 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.fetch(:task, {}).permit(:headline, :description, :category, :subcategory, :user_id, :latitude, :longitude, services_attributes: [:id, :name, :_destroy])
+    # Here I used to have "params.fetch(:task, {}).permit(" but I can't remember exactly why
+    # There was a scenario where the :task key was not present, and fetch fixed it.
+    # Change back if you get errors with a missing :task key
+    params.require(:task).permit(
+      :headline, :description, :category, :subcategory, :user_id, :latitude, :longitude,
+      services_attributes: [:id, :name, :_destroy,
+        questions_attributes: [:id, :answer_title, :kind, :wording, :options,
+          :answer,  # This allows a string
+          { answer: [:unit, :value, :other] },  # This allows a hash with specific keys
+          { answer: [] }  # This allows an array
+        ]
+      ]
+    )
   end
 
   def set_task

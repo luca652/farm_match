@@ -1,0 +1,16 @@
+<h4>Questionnaire</h4>
+<% @questions.each do |question| %>
+  <p><%= question.wording %></p>
+  <% case question.kind.to_sym %>
+    <% when :multiple_choice, :multiple_choice_with_effect_on_next, :multiple_choice_with_optional, :quantity %>
+      <%= question.answer["value"] %>
+    <% when :multiple_choice_with_check_boxes %>
+      <% question.answer["values"].each do |value| %>
+        <%= value %>
+      <% end %>
+    <% when :multiple_choice_with_other %>
+      <%= question.answer["value"] == "Other" ? question.answer["other"] : question.answer["value"] %>
+    <% when :unit_and_value %>
+      <%= question.answer["unit"] %> <%= question.answer["value"] %>
+  <% end %>
+<% end %>

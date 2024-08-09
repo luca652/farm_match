@@ -22,14 +22,11 @@ Rails.application.routes.draw do
       get :edit_step_three
       get :description
       patch :update_description
+      get :show_questionnaire
+      patch :submit_questionnaire
     end
 
-    resources :services do
-      collection do
-        get 'new_answers', to: 'answers#new_answers'
-        post 'create_answers', to: 'answers#create_answers'
-      end
-    end
-
+    resources :services
   end
+  get 'options_for_question', to: 'questions#options_for_question'
 end

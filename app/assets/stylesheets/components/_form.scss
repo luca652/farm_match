@@ -55,7 +55,7 @@
     box-shadow: 0 0 0 0.25rem rgb(241, 230, 145);
   }
 
-  label {
+  label, legend {
     font-family: var(--font-family-sans);
     color: var(--color-primary);
   }
@@ -134,4 +134,19 @@
 }
 .checkbox-container > label {
   margin-bottom: 0.25rem;
+}
+
+.radio-button {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.checkbox {
+  display: flex;
+  flex-direction: column;
+
+  .check-boxes {
+    margin-right: var(--space-xs);
+  }
 }

@@ -1,4 +1,5 @@
 class Service < ApplicationRecord
+  include QuestionnaireGenerator
 
   SERVICES = {
     'Application (Spraying & Spreading)' => ['Fertilizer Spreading', 'Lime Spreading', 'Spraying (specialised)', 'Spraying (standard)'],
@@ -8,12 +9,12 @@ class Service < ApplicationRecord
     'Grassland Harvesting' => ['Baling - FULL SERVICE (Mow, Ted/Rake, Bale, Wrap, Transport etc)', 'Mowing', 'Tedding',
                                'Raking', 'Baling', 'Wrapping', 'Bale Chasing/Haulage', 'Topping',
                                'Silage Harvesting - Complete Service (wholecrop, Harvesting, trailers, pit building, clamping)',
-                               'Silage Harvesting - Harvesting, trailers, Pit building, clamping', 'Silage Harvesting only',
+                               'Silage Harvesting - Harvesting, trailers, Pit building, clamping', 'Silage Harvesting - Harvesting only',
                                'Forage Wagon - Complete Service (Wholecrop, Pit Building, Clamping)',
                                'Forage Wagon - Harvesting, Pit Building & Clamping', 'Forage Wagon - Harvesting only',
                                'Maize Harvesting - Complete Service (wholecrop, Harvesting, trailers, pit building, clamping)',
                                'Maize Harvesting - Harvesting, trailers, Pit building, clamping', 'Maize Harvesting only'],
-    'Crop Harvesting' => ['Beet Harvesting', 'Cereal Harvesting', 'Potato Harvesting', 'Vegtable Harvesting'],
+    'Crop Harvesting' => ['Beet Harvesting', 'Cereal Harvesting', 'Potato Harvesting', 'Vegetable Harvesting'],
     'Hedge Cutting' => ['Hedge cutting - Saw', 'Hedge cutting - Flail'],
     'Machine & Tractor Hire' => ['Forklift Hire', 'Loader Hire', 'Tractor Hire', 'Teleporter Hire'],
     'Maize Harvesting' => ['Maize Harvesting - Complete Service (wholecrop, Harvesting, trailers, pit building, clamping)',
@@ -44,6 +45,14 @@ class Service < ApplicationRecord
   validates :name, presence: true
   validates :name, uniqueness: { scope: :task_id, message: "should be unique for the task" }
   validate :valid_service_for_task
+
+  after_create :generate_questions
+
+  private
+
+  def generate_questions
+    generate_questions_for_service(self)
+  end
 
   def valid_service_for_task
     subcategory = task.subcategory

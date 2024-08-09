@@ -18,15 +18,15 @@
         <%= f.input :latitude, wrapper_html: { class: "hidden"}, input_html: { data: { map_target: "latitude"}} %>
       </div>
 
-      <div data-controller="options"
-           data-options-subcategories-url-value="<%= options_for_subcategory_tasks_path %>">
+      <div data-controller="dynamic-form"
+           data-dynamic-form-subcategories-url-value="<%= options_for_subcategory_tasks_path %>">
         <%= f.input :category, collection: @categories,
                                prompt: "- Select -",
-                               input_html: { data: { action: "change->options#setOptionsForSubcategory" }, class: "form-field" } %>
+                               input_html: { data: { action: "change->dynamic-form#setOptionsForSubcategory" }, class: "form-field" } %>
         <%= f.input :subcategory,
                     collection: @options_for_subcategory,
                     prompt: "- Select -",
-                    input_html: { data: { options_target: "subcategory"}, class: "form-field" },
+                    input_html: { data: { dynamic_form_target: "subcategory"}, class: "form-field" },
                     include_blank: false %>
       </div>
 
